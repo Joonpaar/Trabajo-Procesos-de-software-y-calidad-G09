@@ -114,6 +114,50 @@ public class Resource {
       
 		}
 	}
+	
+	
+	//FALTA POR HACER
+	@POST
+	@Path("/login")
+	public Response loginUser(UserData userData) {
+		try
+        {	
+            tx.begin();
+            logger.info("Checking whether the user already exits or not: '{}'", userData.getLogin());
+			User user = null;
+			try {
+				user = pm.getObjectById(User.class, userData.getLogin());
+			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
+				logger.info("Exception launched: {}", jonfe.getMessage());
+			}
+			logger.info("User: {}", user);
+			if (user != null) {
+				logger.info("Setting password user: {}", user);
+				user.setPassword(userData.getPassword());
+				logger.info("Password set user: {}", user);
+			} else {
+				logger.info("Creating user: {}", user);
+				user = new User(userData.getLogin(), userData.getPassword());
+				pm.makePersistent(user);					 
+				logger.info("User created: {}", user);
+			}
+			tx.commit();
+			
+			UserData userDat = new UserData();
+			userDat.setLogin(user.getLogin());
+			userDat.setPassword(user.getPassword());
+			userDat.setTipoUser(user.getTipoUser());
+			return Response.ok(userDat).build();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+      
+		}
+	}
 
 	@GET
 	@Path("/hello")

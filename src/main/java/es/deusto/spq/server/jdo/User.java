@@ -13,6 +13,7 @@ public class User {
 	@PrimaryKey
 	String login=null;
 	String password=null;
+	int tipoUser;
 	
 	@Persistent(mappedBy="user", dependentElement="true")
 	@Join
@@ -25,6 +26,23 @@ public class User {
 		this.password = password;
 	}
 	
+	
+	
+	public User(String login, String password, int tipoUser) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.tipoUser = tipoUser;
+	}
+
+	public int getTipoUser() {
+		return tipoUser;
+	}
+
+	public void setTipoUser(int tipoUser) {
+		this.tipoUser = tipoUser;
+	}
+
 	public void addMessage(Message message) {
 		messages.add(message);
 	}

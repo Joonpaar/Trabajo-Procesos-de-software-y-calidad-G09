@@ -4,8 +4,11 @@ public class UserData {
 
     private String login;
     private String password;
+    private int tipoUser;
 
-    public UserData() {
+   
+
+	public UserData() {
         // required by serialization
     }
 
@@ -24,8 +27,16 @@ public class UserData {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public int getTipoUser() {
+		return tipoUser;
+	}
+
+	public void setTipoUser(int tipoUser) {
+		this.tipoUser = tipoUser;
+	}
 
     public String toString() {
-        return "[login=" + login + ", password=" + password + "]";
+        return "[login=" + login + ", password=" + password + ", tipoUser=" + tipoUser + "]";
     }
 }
