@@ -91,8 +91,7 @@ public class VentanaLogin {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ExampleClient.registerUser(textFieldUsuario.getText(), textFieldContraseña.getText());
-				
+				ExampleClient.loginUser(textFieldUsuario.getText(), textFieldContraseña.getText());
 			}
 		});
 	}

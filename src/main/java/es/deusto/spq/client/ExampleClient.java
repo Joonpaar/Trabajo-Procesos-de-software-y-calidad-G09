@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 import es.deusto.spq.pojo.DirectMessage;
 import es.deusto.spq.pojo.MessageData;
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.jdo.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +49,7 @@ public class ExampleClient {
 	}
 	
 	//FALTA POR HACER
-	public void loginUser(String login, String password) {
+	public static void loginUser(String login, String password) {
 		WebTarget loginUserWebTarget = webTarget.path("login");
 		Invocation.Builder invocationBuilder = loginUserWebTarget.request(MediaType.APPLICATION_JSON);
 		
@@ -59,7 +60,9 @@ public class ExampleClient {
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
-			logger.info("User correctly registered");
+			User usuario = response.readEntity(User.class);
+			logger.info("User logeado correctamente: " + usuario.getTipoUser());
+			logger.info("Usuario logeado correctamente!");
 		}
 	}
 
@@ -99,7 +102,7 @@ public class ExampleClient {
 		ExampleClient exampleClient = new ExampleClient(hostname, port);
 		exampleClient.registerUser(USER, PASSWORD);
 		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
-		VentanaLogin window = new VentanaLogin();
-		window.frame.setVisible(true);
+//		VentanaLogin window = new VentanaLogin();
+//		window.frame.setVisible(true);
 	}
 }
