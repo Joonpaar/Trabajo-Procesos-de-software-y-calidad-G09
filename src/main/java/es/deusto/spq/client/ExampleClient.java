@@ -7,7 +7,6 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import es.deusto.spq.pojo.DirectMessage;
@@ -26,14 +25,14 @@ public class ExampleClient {
 
 
 	private Client client;
-	private WebTarget webTarget;
+	private static WebTarget webTarget;
 
 	public ExampleClient(String hostname, String port) {
 		client = ClientBuilder.newClient();
 		webTarget = client.target(String.format("http://%s:%s/rest/resource", hostname, port));
 	}
 
-	public void registerUser(String login, String password) {
+	public static void registerUser(String login, String password) {
 		WebTarget registerUserWebTarget = webTarget.path("register");
 		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
 		
@@ -50,8 +49,8 @@ public class ExampleClient {
 	
 	//FALTA POR HACER
 	public void loginUser(String login, String password) {
-		WebTarget registerUserWebTarget = webTarget.path("register");
-		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
+		WebTarget loginUserWebTarget = webTarget.path("login");
+		Invocation.Builder invocationBuilder = loginUserWebTarget.request(MediaType.APPLICATION_JSON);
 		
 		UserData userData = new UserData();
 		userData.setLogin(login);
@@ -100,5 +99,7 @@ public class ExampleClient {
 		ExampleClient exampleClient = new ExampleClient(hostname, port);
 		exampleClient.registerUser(USER, PASSWORD);
 		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
+		VentanaLogin window = new VentanaLogin();
+		window.frame.setVisible(true);
 	}
 }

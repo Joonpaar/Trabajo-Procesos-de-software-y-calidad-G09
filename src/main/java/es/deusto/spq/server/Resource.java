@@ -132,22 +132,20 @@ public class Resource {
 			}
 			logger.info("User: {}", user);
 			if (user != null) {
-				logger.info("Setting password user: {}", user);
-				user.setPassword(userData.getPassword());
-				logger.info("Password set user: {}", user);
+				if (user.getPassword().equals(userData.getPassword())) {
+					logger.info("Setting password user: {}", user);
+					UserData userDat = new UserData();
+					userDat.setLogin(user.getLogin());
+					userDat.setPassword(user.getPassword());
+					userDat.setTipoUser(user.getTipoUser());
+					return Response.ok(userDat).build();
+				}
 			} else {
-				logger.info("Creating user: {}", user);
-				user = new User(userData.getLogin(), userData.getPassword());
-				pm.makePersistent(user);					 
-				logger.info("User created: {}", user);
+				logger.info("No existe el usuario {}", user);			 
 			}
 			tx.commit();
-			
-			UserData userDat = new UserData();
-			userDat.setLogin(user.getLogin());
-			userDat.setPassword(user.getPassword());
-			userDat.setTipoUser(user.getTipoUser());
-			return Response.ok(userDat).build();
+
+			return Response.ok().build();
         }
         finally
         {
