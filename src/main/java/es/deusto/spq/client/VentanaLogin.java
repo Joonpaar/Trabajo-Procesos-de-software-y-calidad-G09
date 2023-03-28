@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response.Status;
 import es.deusto.spq.pojo.UserData;
 
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class VentanaLogin {
 
@@ -66,7 +67,7 @@ public class VentanaLogin {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnLogin.setBounds(144, 151, 117, 21);
+		btnLogin.setBounds(102, 147, 117, 21);
 		panel.add(btnLogin);
 		
 		textFieldUsuario = new JTextField();
@@ -80,12 +81,18 @@ public class VentanaLogin {
 		textFieldContraseña.setColumns(10);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(67, 59, 67, 13);
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsuario.setBounds(34, 60, 67, 13);
 		panel.add(lblUsuario);
 		
 		JLabel lblContraseña = new JLabel("Contraseña:");
-		lblContraseña.setBounds(53, 104, 81, 13);
+		lblContraseña.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContraseña.setBounds(34, 105, 81, 13);
 		panel.add(lblContraseña);
+		
+		JButton btnRegistro = new JButton("REGISTRARSE");
+		btnRegistro.setBounds(102, 189, 117, 23);
+		panel.add(btnRegistro);
 		
 		btnLogin.addActionListener(new ActionListener() {
 			
