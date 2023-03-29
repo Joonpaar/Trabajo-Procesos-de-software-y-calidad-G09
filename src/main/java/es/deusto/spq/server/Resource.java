@@ -3,11 +3,17 @@ package es.deusto.spq.server;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.Transaction;
 
 import es.deusto.spq.server.jdo.User;
 import es.deusto.spq.server.jdo.Message;
+import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.pojo.DirectMessage;
 import es.deusto.spq.pojo.MessageData;
 import es.deusto.spq.pojo.UserData;
@@ -155,6 +161,37 @@ public class Resource {
             }
       
 		}
+	}
+	
+	
+	@POST
+	@Path("/getProductos")
+	public List<Producto> getAll() {
+		// TODO Auto-generated method stub
+		
+		List<Producto> productos = new ArrayList<>();
+
+		try {
+			tx.begin();
+			
+			Extent<Producto> prodExtent = pm.getExtent(Producto.class, true);
+			
+			for (Producto p : prodExtent) {
+				productos.add(p);
+			}
+						
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error querying all users: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+		
+		return productos;
 	}
 
 	@GET

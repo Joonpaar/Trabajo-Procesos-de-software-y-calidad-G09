@@ -65,6 +65,21 @@ public class ExampleClient {
 			logger.info("Usuario logeado correctamente!");
 		}
 	}
+	
+	public static void getProductos() {
+		WebTarget getProductosUserWebTarget = webTarget.path("getProductos");
+		Invocation.Builder invocationBuilder = getProductosUserWebTarget.request(MediaType.APPLICATION_JSON);
+		
+		
+//		Response response = invocationBuilder.post(Entity.entity(, MediaType.APPLICATION_JSON));
+//		if (response.getStatus() != Status.OK.getStatusCode()) {
+//			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+//		} else {
+//			User usuario = response.readEntity(User.class);
+//			logger.info("User logeado correctamente: " + usuario.getTipoUser());
+//			logger.info("Usuario logeado correctamente!");
+//		}
+	}
 
 	public void sayMessage(String login, String password, String message) {
 		WebTarget sayHelloWebTarget = webTarget.path("sayMessage");
