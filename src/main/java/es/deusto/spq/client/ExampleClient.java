@@ -75,33 +75,17 @@ public class ExampleClient {
 		}
 	}
 	
-	public static void getProductos() {
+	public static ArrayList<Producto> getProductos() {
 		WebTarget getProductosUserWebTarget = webTarget.path("getProductos");
 		Invocation.Builder invocationBuilder = getProductosUserWebTarget.request(MediaType.APPLICATION_JSON);
-		logger.info("Usuario logeado correctamente1!");
 		Response response = invocationBuilder.post(null);
-		logger.info("Usuario logeado correctamente!");
-//		Response response = invocationBuilder.pos
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
-
-//		Response response = invocationBuilder.post(Entity.entity(, MediaType.APPLICATION_JSON));
-//		if (response.getStatus() != Status.OK.getStatusCode()) {
-//			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+			return null;
 		} else {
-//			GenericType<List<User>> listType = new GenericType<List<User>>(){};
-//			List<Producto> productos = response.readEntity(listType);
-			logger.info("Usuario logeado correctamente3!");
 			GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>(){};
 			ArrayList<Producto> productos = response.readEntity(listType);
-			logger.info("Usuario logeado correctamente!4");
-			int i=0;
-			logger.info("Usuario logeado correctamente!5" + productos.size());
-			while (i<productos.size()) {
-				logger.info("User logeado correctamente: " + i);
-			}
-//			logger.info("User logeado correctamente: " + usuario.getTipoUser());
-//			logger.info("Usuario logeado correctamente!");
+			return productos;
 		}
 	}
 
@@ -139,7 +123,6 @@ public class ExampleClient {
 		String port = args[1];
 
 		ExampleClient exampleClient = new ExampleClient(hostname, port);
-		exampleClient.getProductos();
 //		exampleClient.registerUser(USER, PASSWORD);
 //		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
 //		VentanaLogin window = new VentanaLogin();
