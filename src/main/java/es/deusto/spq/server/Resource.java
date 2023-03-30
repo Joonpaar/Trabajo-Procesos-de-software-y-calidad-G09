@@ -125,7 +125,7 @@ public class Resource {
 	//FALTA POR HACER
 	@POST
 	@Path("/login")
-	public Response loginUser(UserData userData) {
+	public int loginUser(UserData userData) {
 		try
         {	
             tx.begin();
@@ -144,14 +144,15 @@ public class Resource {
 					userDat.setLogin(user.getLogin());
 					userDat.setPassword(user.getPassword());
 					userDat.setTipoUser(user.getTipoUser());
-					return Response.ok(userDat).build();
-				}
+					return 2;
+				}else
+					return 1;
 			} else {
 				logger.info("No existe el usuario {}", user);			 
 			}
 			tx.commit();
 
-			return Response.ok().build();
+			return 0;
         }
         finally
         {

@@ -63,15 +63,18 @@ public class ExampleClient {
 		userData.setLogin(login);
 		userData.setPassword(password);
 		Response response = invocationBuilder.post(Entity.entity(userData, MediaType.APPLICATION_JSON));
-//		Response response = builder.post(null);
-//		Response response = invocationBuilder.pos
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
-//			List<User> users = response.readEntity(listType);
-
 		} else {
-			User usuario = response.readEntity(User.class);
-			logger.info("User logeado correctamente: " + usuario.getTipoUser());
+			int valor = response.readEntity(Integer.class);
+			logger.info("El valor es: " + valor);
+			if (valor == 0) {
+				logger.info("El nombre de usuario no es correcto");
+			}else if (valor == 1) {
+				logger.info("La constrasenia es incorrecta!");
+			}else if (valor == 2) {
+				logger.info("Usuario logeado correctamente!");
+			}
 			logger.info("Usuario logeado correctamente!");
 		}
 	}
@@ -142,9 +145,10 @@ public class ExampleClient {
 		String port = args[1];
 
 		ExampleClient exampleClient = new ExampleClient(hostname, port);
-//		exampleClient.registerUser(USER, PASSWORD);
-//		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
-//		VentanaLogin window = new VentanaLogin();
-//		window.frame.setVisible(true);
+	
+		exampleClient.registerUser(USER, PASSWORD);
+		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
+		VentanaLogin v1 = new VentanaLogin();
+		v1.setVisible(true);
 	}
 }
