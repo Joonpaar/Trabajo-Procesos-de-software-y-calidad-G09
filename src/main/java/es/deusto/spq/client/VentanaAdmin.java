@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import es.deusto.ingenieria.sd.strava.server.data.dto.RetoDTO;
 import es.deusto.spq.server.jdo.Producto;
 
 import java.awt.BorderLayout;
@@ -72,7 +73,10 @@ public class VentanaAdmin extends JFrame {
 		modeloTablaProductos=new DefaultTableModel();
 		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
 		modeloTablaProductos.setColumnIdentifiers(nombreColumnas);
-		//TODO bucle con todos los productos para la tabla
+//		for (Producto producto: ExampleClient.getProductos()) {
+//			String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
+//			modeloTablaProductos.addRow(pr);
+//		}
 		tablaProductos = new JTable(modeloTablaProductos);
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
