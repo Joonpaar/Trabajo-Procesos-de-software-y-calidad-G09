@@ -17,6 +17,7 @@ import es.deusto.spq.pojo.DirectMessage;
 import es.deusto.spq.pojo.MessageData;
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.jdo.Producto;
+import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.server.jdo.User;
 
 import org.apache.logging.log4j.LogManager;
@@ -72,6 +73,24 @@ public class ExampleClient {
 			User usuario = response.readEntity(User.class);
 			logger.info("User logeado correctamente: " + usuario.getTipoUser());
 			logger.info("Usuario logeado correctamente!");
+		}
+	}
+	
+	//Falta por verificar
+	public static void insertarProducto(String nombre, int precio, int stock, TipoProducto tipo) {
+		WebTarget insertarProductoWebTarget = webTarget.path("insertarProducto");
+		Invocation.Builder invocationBuilder = insertarProductoWebTarget.request(MediaType.APPLICATION_JSON);
+		
+		Producto producto = new Producto();
+		producto.setNombre(nombre);
+		producto.setPrecio(precio);
+		producto.setStock(stock);
+		producto.setTipo(tipo);
+		Response response = invocationBuilder.post(Entity.entity(producto, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+		} else {
+			logger.info("Producto insertado correctamente");
 		}
 	}
 	

@@ -31,45 +31,33 @@ import es.deusto.spq.pojo.UserData;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class VentanaLogin {
-
-	JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
+public class VentanaLogin extends JFrame{
+	
+	private JFrame ventanaActual;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					VentanaLogin window = new VentanaLogin();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
+	
 	public VentanaLogin() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
+		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		ventanaActual = this;
 		
 		//Panel principal
 		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		//Boton
@@ -103,10 +91,10 @@ public class VentanaLogin {
 		lblContraseña.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblContraseña);
 		
-		JLabel loginlabel = new JLabel("¿No tienes cuenta? Regístrate");
-		loginlabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		loginlabel.setBounds(135, 210, 180, 23);
-		panel.add(loginlabel);
+		JLabel registroLabel = new JLabel("¿No tienes cuenta? Regístrate");
+		registroLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		registroLabel.setBounds(135, 210, 180, 23);
+		panel.add(registroLabel);
 		
 		//Acciones de los componentes
 		btnLogin.addActionListener(new ActionListener() {
@@ -116,29 +104,29 @@ public class VentanaLogin {
 				ExampleClient.loginUser(textFieldUsuario.getText(), passwordFieldContraseña.getText());
 			}
 		});
-		// MouseListener loginlabel
-		loginlabel.addMouseListener(new MouseAdapter() {
+		// MouseListeners registroLabel
+		registroLabel.addMouseListener(new MouseAdapter() {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public void mouseEntered(MouseEvent evt) {
-				Font font = loginlabel.getFont();
+				Font font = registroLabel.getFont();
 				Map attributes = font.getAttributes();
 				attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-				loginlabel.setFont(font.deriveFont(attributes));
-				loginlabel.setForeground(new Color(20,115,191));
-				loginlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				registroLabel.setFont(font.deriveFont(attributes));
+				registroLabel.setForeground(new Color(20,115,191));
+				registroLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			public void mouseExited(MouseEvent evt) {
-				loginlabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-				loginlabel.setForeground(Color.BLACK);
+				registroLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
+				registroLabel.setForeground(Color.BLACK);
 			}
 		});
 				
-		loginlabel.addMouseListener(new MouseAdapter() {	
+		registroLabel.addMouseListener(new MouseAdapter() {	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				ventanaActual.dispose();
-//				VentanaLogin v1 = new VentanaLogin(MainProgram.loginController);
+				ventanaActual.dispose();
+//				VentanaRegistro v1 = new VentanaRegistro();
 //				v1.setVisible(true);	
 			}
 		});
