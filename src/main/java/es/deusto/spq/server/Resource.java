@@ -121,6 +121,41 @@ public class Resource {
 		}
 	}
 	
+	@POST
+	@Path("/insertarProducto")
+	public Response insertarProducto(Producto productoData) {
+		try
+        {	
+            tx.begin();
+            logger.info("Checking whether the product already exits or not: '{}'", productoData.getNombre());
+			Producto producto = null;
+			try {
+				producto = pm.getObjectById(Producto.class, productoData.getNombre());
+			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
+				logger.info("Exception launched: {}", jonfe.getMessage());
+			}
+			logger.info("Product: {}", producto);
+			if (producto != null) {
+				logger.info("The product already exits: {}", producto);
+			} else {
+				logger.info("Creating producto: {}", producto);
+				producto = new Producto(productoData.getNombre(), productoData.getPrecio(), productoData.getStock(), productoData.getTipo());
+				pm.makePersistent(producto);					 
+				logger.info("Product created: {}", producto);
+			}
+			tx.commit();
+			return Response.ok().build();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+      
+		}
+	}
+	
 	
 	//FALTA POR HACER
 	@POST

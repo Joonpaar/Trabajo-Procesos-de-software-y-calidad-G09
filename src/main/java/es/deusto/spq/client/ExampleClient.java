@@ -84,12 +84,12 @@ public class ExampleClient {
 		WebTarget insertarProductoWebTarget = webTarget.path("insertarProducto");
 		Invocation.Builder invocationBuilder = insertarProductoWebTarget.request(MediaType.APPLICATION_JSON);
 		
-		Producto producto = new Producto();
-		producto.setNombre(nombre);
-		producto.setPrecio(precio);
-		producto.setStock(stock);
-		producto.setTipo(tipo);
-		Response response = invocationBuilder.post(Entity.entity(producto, MediaType.APPLICATION_JSON));
+		Producto productoData = new Producto();
+		productoData.setNombre(nombre);
+		productoData.setPrecio(precio);
+		productoData.setStock(stock);
+		productoData.setTipo(tipo);
+		Response response = invocationBuilder.post(Entity.entity(productoData, MediaType.APPLICATION_JSON));
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
