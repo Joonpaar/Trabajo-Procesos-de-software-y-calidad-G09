@@ -29,10 +29,11 @@ public class ExampleClient {
 
 	private static final String USER = "dipina";
 	private static final String PASSWORD = "dipina";
-
-
+	
+	protected static boolean admin;
 	private Client client;
 	private static WebTarget webTarget;
+
 
 	public ExampleClient(String hostname, String port) {
 		client = ClientBuilder.newClient();
@@ -42,7 +43,7 @@ public class ExampleClient {
 	public static void registerUser(String login, String password) {
 		WebTarget registerUserWebTarget = webTarget.path("register");
 		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
-		
+
 		UserData userData = new UserData();
 		userData.setLogin(login);
 		userData.setPassword(password);
@@ -53,12 +54,12 @@ public class ExampleClient {
 			logger.info("User correctly registered");
 		}
 	}
-	
-	//FALTA POR HACER
+
+	// FALTA POR HACER
 	public static void loginUser(String login, String password) {
 		WebTarget loginUserWebTarget = webTarget.path("login");
 		Invocation.Builder invocationBuilder = loginUserWebTarget.request(MediaType.APPLICATION_JSON);
-		
+
 		UserData userData = new UserData();
 		userData.setLogin(login);
 		userData.setPassword(password);
@@ -70,20 +71,26 @@ public class ExampleClient {
 			logger.info("El valor es: " + valor);
 			if (valor == 0) {
 				logger.info("El nombre de usuario no es correcto");
-			}else if (valor == 1) {
+			} else if (valor == 1) {
 				logger.info("La constrasenia es incorrecta!");
-			}else if (valor == 2) {
+			} else if (valor == 2) {
+				admin=false;
 				logger.info("Usuario logeado correctamente!");
+			} else if (valor == 3) {
+				admin=true;
+				logger.info("Usuario administrador logeado correctamente!");
 			}
+
 			logger.info("Usuario logeado correctamente!");
 		}
+
 	}
-	
-	//Falta por verificar
+
+	// Falta por verificar
 	public static void insertarProducto(String nombre, int precio, int stock, TipoProducto tipo) {
 		WebTarget insertarProductoWebTarget = webTarget.path("insertarProducto");
 		Invocation.Builder invocationBuilder = insertarProductoWebTarget.request(MediaType.APPLICATION_JSON);
-		
+
 		Producto productoData = new Producto();
 		productoData.setNombre(nombre);
 		productoData.setPrecio(precio);
@@ -96,7 +103,7 @@ public class ExampleClient {
 			logger.info("Producto insertado correctamente");
 		}
 	}
-	
+
 	public static ArrayList<Producto> getProductos() {
 		WebTarget getProductosUserWebTarget = webTarget.path("getProductos");
 		Invocation.Builder invocationBuilder = getProductosUserWebTarget.request(MediaType.APPLICATION_JSON);
@@ -105,7 +112,8 @@ public class ExampleClient {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 			return null;
 		} else {
-			GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>(){};
+			GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {
+			};
 			ArrayList<Producto> productos = response.readEntity(listType);
 			return productos;
 		}
@@ -128,10 +136,42 @@ public class ExampleClient {
 
 		Response response = invocationBuilder.post(Entity.entity(directMessage, MediaType.APPLICATION_JSON));
 		if (response.getStatus() != Status.OK.getStatusCode()) {
-			logger.error("Error connecting with the server. Code: {}",response.getStatus());
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
 			String responseMessage = response.readEntity(String.class);
 			logger.info("* Message coming from the server: '{}'", responseMessage);
+		}
+	}
+
+	public static void borrarProducto(String nombre) {
+		WebTarget registerUserWebTarget = webTarget.path("register");
+		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
+
+		Producto productoData = new Producto();
+		productoData.setNombre(nombre);
+
+		Response response = invocationBuilder.post(Entity.entity(productoData, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+		} else {
+			logger.info("User correctly registered");
+		}
+	}
+
+	public static void editarProducto(String tipo, int stock, int precio) {
+		WebTarget registerUserWebTarget = webTarget.path("register");
+		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
+
+		Producto productoData = new Producto();
+		productoData.setTipo(TipoProducto.valueOf(tipo));
+		productoData.setStock(stock);
+		productoData.setPrecio(precio);
+
+		Response response = invocationBuilder.post(Entity.entity(productoData, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+		} else {
+			logger.info("User correctly registered");
 		}
 	}
 
@@ -145,7 +185,7 @@ public class ExampleClient {
 		String port = args[1];
 
 		ExampleClient exampleClient = new ExampleClient(hostname, port);
-	
+
 		exampleClient.registerUser(USER, PASSWORD);
 		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
 		VentanaLogin v1 = new VentanaLogin();

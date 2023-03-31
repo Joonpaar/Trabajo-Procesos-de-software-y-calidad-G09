@@ -3,6 +3,9 @@ package es.deusto.spq.client;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -10,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import es.deusto.spq.server.jdo.Producto;
@@ -66,8 +71,8 @@ public class VentanaAdmin extends JFrame {
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnAnyadir = new JButton("AÑADIR");
-		panel_2.add(btnAnyadir);
+		JButton btnAdmin = new JButton("ADMIN");
+		panel_2.add(btnAdmin);
 		
 		modeloTablaProductos=new DefaultTableModel();
 		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
@@ -76,11 +81,21 @@ public class VentanaAdmin extends JFrame {
 			String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
 			modeloTablaProductos.addRow(pr);
 		}
-		tablaProductos = new JTable(modeloTablaProductos);
+		tablaProductos = new JTable(modeloTablaProductos) {
+			public boolean isCellEditable(int row,int column){
+				if (ExampleClient.admin == true) {
+					if (column == 0) {
+						return false;
+					}
+					return true;
+				}else return false;
+
+			}
+		};
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
 		
-		btnAnyadir.addActionListener(new ActionListener() {
+		btnAdmin.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -90,6 +105,32 @@ public class VentanaAdmin extends JFrame {
 				
 			}
 		});
+		
+		tablaProductos.getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				int fil = e.getFirstRow();
+				
+				String tipo =  String.valueOf(modeloTablaProductos.getValueAt(fil, 1));
+				int stock =  Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 2)));
+				int precio = Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 3)));			
+				ExampleClient.editarProducto(tipo, stock, precio);
+			}
+		});
+		tablaProductos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE) {
+					int fil = tablaProductos.getSelectedRow();
+					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
+					ExampleClient.borrarProducto(nombre);
+					modeloTablaProductos.removeRow(fil);
+				}			
+			}
+		});
 	}
+	
+	
 
 }

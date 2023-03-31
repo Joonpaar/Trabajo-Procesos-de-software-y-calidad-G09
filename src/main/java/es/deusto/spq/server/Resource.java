@@ -179,6 +179,9 @@ public class Resource {
 					userDat.setLogin(user.getLogin());
 					userDat.setPassword(user.getPassword());
 					userDat.setTipoUser(user.getTipoUser());
+					if(user.getTipoUser()==1) {
+						return 3;
+					}
 					return 2;
 				}else
 					return 1;
