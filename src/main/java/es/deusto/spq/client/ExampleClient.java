@@ -56,7 +56,7 @@ public class ExampleClient {
 	}
 
 	// FALTA POR HACER
-	public static void loginUser(String login, String password) {
+	public static boolean loginUser(String login, String password) {
 		WebTarget loginUserWebTarget = webTarget.path("login");
 		Invocation.Builder invocationBuilder = loginUserWebTarget.request(MediaType.APPLICATION_JSON);
 
@@ -71,19 +71,24 @@ public class ExampleClient {
 			logger.info("El valor es: " + valor);
 			if (valor == 0) {
 				logger.info("El nombre de usuario no es correcto");
+				return false;
 			} else if (valor == 1) {
 				logger.info("La constrasenia es incorrecta!");
+				return false;
 			} else if (valor == 2) {
 				admin=false;
 				logger.info("Usuario logeado correctamente!");
+				return true;
 			} else if (valor == 3) {
 				admin=true;
 				logger.info("Usuario administrador logeado correctamente!");
+				return true;
 			}
 
-			logger.info("Usuario logeado correctamente!");
+			logger.info("Error de login correctamente!");
+			return false;
 		}
-
+		return false;
 	}
 
 	// Falta por verificar
@@ -187,7 +192,6 @@ public class ExampleClient {
 		ExampleClient exampleClient = new ExampleClient(hostname, port);
 
 		exampleClient.registerUser(USER, PASSWORD);
-		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
 		VentanaLogin v1 = new VentanaLogin();
 		v1.setVisible(true);
 	}

@@ -99,7 +99,12 @@ public class VentanaLogin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ExampleClient.loginUser(textFieldUsuario.getText(), passwordFieldContraseña.getText());
+				boolean login=ExampleClient.loginUser(textFieldUsuario.getText(), passwordFieldContraseña.getText());
+				if(login) {
+					VentanaAdmin frame = new VentanaAdmin();
+					frame.setVisible(true);
+					dispose();
+				}
 			}
 		});
 		// MouseListeners registroLabel
