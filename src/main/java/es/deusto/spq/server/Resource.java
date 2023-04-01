@@ -292,7 +292,7 @@ public class Resource {
 				logger.info("Error borrando el producto: {}", producto);
 			} else {
 				logger.info("Borrando producto: {}", producto);
-				pm.removeUserObject(producto);
+				pm.deletePersistent(producto);
 				logger.info("Producto borrado: {}", producto);
 			}
 			tx.commit();

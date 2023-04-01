@@ -159,7 +159,7 @@ public class ExampleClient {
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
-			logger.info("User correctly registered");
+			logger.info("Producto borrado");
 		}
 	}
 
@@ -177,7 +177,7 @@ public class ExampleClient {
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
-			logger.info("User correctly registered");
+			logger.info("Producto editado");
 		}
 	}
 

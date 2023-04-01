@@ -128,7 +128,9 @@ public class VentanaAdmin extends JFrame {
 					int fil = tablaProductos.getSelectedRow();
 					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
 					ExampleClient.borrarProducto(nombre);
-					modeloTablaProductos.removeRow(fil);
+					try {modeloTablaProductos.removeRow(fil);
+					} catch (ArrayIndexOutOfBoundsException e2) {
+					}
 					tablaProductos.repaint();
 				}			
 			}
