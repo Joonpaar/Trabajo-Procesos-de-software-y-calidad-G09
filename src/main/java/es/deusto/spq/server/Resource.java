@@ -157,7 +157,6 @@ public class Resource {
 	}
 	
 	
-	//FALTA POR HACER
 	@POST
 	@Path("/login")
 	public int loginUser(UserData userData) {
@@ -206,7 +205,6 @@ public class Resource {
 	@POST
 	@Path("/getProductos")
 	public List<Producto> getAll() {
-		// TODO Auto-generated method stub
 		
 		List<Producto> productos = new ArrayList<>();
 
@@ -238,5 +236,75 @@ public class Resource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response sayHello() {
 		return Response.ok("Hello world!").build();
+	}
+
+	@POST
+	@Path("/editarProducto")
+	public Response editarProducto(Producto productoData) {
+		try
+	    {	
+	        tx.begin();
+	        logger.info("Checking whether the product exits or not: '{}'", productoData.getNombre());
+			Producto producto = null;
+			try {
+				producto = pm.getObjectById(Producto.class, productoData.getNombre());
+			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
+				logger.info("Exception launched: {}", jonfe.getMessage());
+			}
+			logger.info("Product: {}", producto);
+			if (producto == null) {
+				logger.info("Error editando el producto: {}", producto);
+			} else {
+				logger.info("Editando producto: {}", producto);
+				producto = new Producto(productoData.getNombre(), productoData.getPrecio(), productoData.getStock(), productoData.getTipo());
+				producto.setPrecio(productoData.getPrecio());
+				producto.setStock(productoData.getStock());
+				producto.setTipo(productoData.getTipo());
+				logger.info("Producto editado: {}", producto);
+			}
+			tx.commit();
+			return Response.ok().build();
+	    }
+	    finally
+	    {
+	        if (tx.isActive())
+	        {
+	            tx.rollback();
+	        }
+	  
+		}
+	}
+	@POST
+	@Path("/borrarProducto")
+	public Response borrarProducto(Producto productoData) {
+		try
+	    {	
+	        tx.begin();
+	        logger.info("Checking whether the product exits or not: '{}'", productoData.getNombre());
+			Producto producto = null;
+			try {
+				producto = pm.getObjectById(Producto.class, productoData.getNombre());
+			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
+				logger.info("Exception launched: {}", jonfe.getMessage());
+			}
+			logger.info("Product: {}", producto);
+			if (producto == null) {
+				logger.info("Error borrando el producto: {}", producto);
+			} else {
+				logger.info("Borrando producto: {}", producto);
+				pm.removeUserObject(producto);
+				logger.info("Producto borrado: {}", producto);
+			}
+			tx.commit();
+			return Response.ok().build();
+	    }
+	    finally
+	    {
+	        if (tx.isActive())
+	        {
+	            tx.rollback();
+	        }
+	  
+		}
 	}
 }
