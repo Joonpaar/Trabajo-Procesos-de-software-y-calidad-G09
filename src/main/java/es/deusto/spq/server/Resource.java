@@ -256,10 +256,10 @@ public class Resource {
 				logger.info("Error editando el producto: {}", producto);
 			} else {
 				logger.info("Editando producto: {}", producto);
-				producto = new Producto(productoData.getNombre(), productoData.getPrecio(), productoData.getStock(), productoData.getTipo());
 				producto.setPrecio(productoData.getPrecio());
 				producto.setStock(productoData.getStock());
 				producto.setTipo(productoData.getTipo());
+				pm.flush();
 				logger.info("Producto editado: {}", producto);
 			}
 			tx.commit();

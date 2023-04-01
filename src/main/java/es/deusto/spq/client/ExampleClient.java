@@ -149,8 +149,8 @@ public class ExampleClient {
 	}
 
 	public static void borrarProducto(String nombre) {
-		WebTarget registerUserWebTarget = webTarget.path("register");
-		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
+		WebTarget borrarProductoWebTarget = webTarget.path("borrarProducto");
+		Invocation.Builder invocationBuilder = borrarProductoWebTarget.request(MediaType.APPLICATION_JSON);
 
 		Producto productoData = new Producto();
 		productoData.setNombre(nombre);
@@ -163,11 +163,12 @@ public class ExampleClient {
 		}
 	}
 
-	public static void editarProducto(String tipo, int stock, int precio) {
-		WebTarget registerUserWebTarget = webTarget.path("register");
-		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
+	public static void editarProducto(String nombre, String tipo, int stock, int precio) {
+		WebTarget editarProductoWebTarget = webTarget.path("editarProducto");
+		Invocation.Builder invocationBuilder = editarProductoWebTarget.request(MediaType.APPLICATION_JSON);
 
 		Producto productoData = new Producto();
+		productoData.setNombre(nombre);
 		productoData.setTipo(TipoProducto.valueOf(tipo));
 		productoData.setStock(stock);
 		productoData.setPrecio(precio);

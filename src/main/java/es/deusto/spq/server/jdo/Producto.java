@@ -6,11 +6,12 @@ import java.util.Set;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 public class Producto {
-	
-	String nombre;
+	@PrimaryKey
+	String nombre=null;
 	int precio;
 	int stock;
 	TipoProducto tipo;

@@ -127,6 +127,7 @@
 				<artifactId>datanucleus-maven-plugin</artifactId>
 				<version>6.0.0-release</version>
 				<configuration>
+				<fork>false</fork>
 					<api>JDO</api>
 					<verbose>true</verbose>
 					<props>${config.files.dir}/datanucleus.properties</props>

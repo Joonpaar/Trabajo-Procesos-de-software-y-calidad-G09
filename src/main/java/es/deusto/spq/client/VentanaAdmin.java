@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -92,6 +93,7 @@ public class VentanaAdmin extends JFrame {
 
 			}
 		};
+		tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
 		
@@ -112,20 +114,22 @@ public class VentanaAdmin extends JFrame {
 			public void tableChanged(TableModelEvent e) {
 				int fil = e.getFirstRow();
 				
+				String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
 				String tipo =  String.valueOf(modeloTablaProductos.getValueAt(fil, 1));
 				int stock =  Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 2)));
 				int precio = Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 3)));			
-				ExampleClient.editarProducto(tipo, stock, precio);
+				ExampleClient.editarProducto(nombre, tipo, stock, precio);
 			}
 		});
 		tablaProductos.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE) {
+				if(e.getKeyCode()==KeyEvent.VK_DELETE) {
 					int fil = tablaProductos.getSelectedRow();
 					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
 					ExampleClient.borrarProducto(nombre);
 					modeloTablaProductos.removeRow(fil);
+					tablaProductos.repaint();
 				}			
 			}
 		});
