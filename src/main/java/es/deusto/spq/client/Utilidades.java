@@ -74,7 +74,7 @@ public class Utilidades {
 				text.setOpaque(true);
 				text.setBackground(new Color(20, 115, 191));
 				popup = PopupFactory.getSharedInstance().getPopup(evt.getComponent(), text,
-						(int) label.getLocationOnScreen().getX()-100, (int) label.getLocationOnScreen().getY());
+						(int) label.getLocationOnScreen().getX()+20, (int) label.getLocationOnScreen().getY()-15);
 				popup.show();
 			}
 
@@ -92,8 +92,8 @@ public class Utilidades {
 		Border empty = new EmptyBorder(0, 5, 0, 0);
 		CompoundBorder border = new CompoundBorder(line, empty);
 		field.setBorder(border);
-		field.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		field.setForeground(Color.GRAY);
+		char passwordChar = field.getEchoChar();
 		field.setEchoChar((char) 0);
 
 		field.addFocusListener(new FocusAdapter() {
@@ -104,6 +104,7 @@ public class Utilidades {
 				CompoundBorder border = new CompoundBorder(line, empty);
 				field.setBorder(border);
 				field.setForeground(Color.BLACK);
+				field.setEchoChar(passwordChar);
 				super.focusGained(e);
 			}
 
@@ -114,13 +115,14 @@ public class Utilidades {
 				CompoundBorder border = new CompoundBorder(line, empty);
 				field.setBorder(border);
 				field.setForeground(Color.GRAY);
+				field.setEchoChar(passwordChar);
 				super.focusLost(e);
 			}
 		});
 		return field;
 	}
 	
-	public static JTextField modifyTextField(JTextField field) {
+	public static JTextField modifyTextField(JTextField field, boolean opcion) {
 		Border line = BorderFactory.createLineBorder(new Color(194, 194, 194), 1);
 		Border empty = new EmptyBorder(0, 5, 0, 0);
 		CompoundBorder border = new CompoundBorder(line, empty);
@@ -145,7 +147,10 @@ public class Utilidades {
 				Border empty = new EmptyBorder(0, 5, 0, 0);
 				CompoundBorder border = new CompoundBorder(line, empty);
 				field.setBorder(border);
-				field.setForeground(Color.GRAY);
+				if (opcion == true) {
+					field.setForeground(Color.GRAY);
+				}
+				
 				super.focusLost(e);
 			}
 		});

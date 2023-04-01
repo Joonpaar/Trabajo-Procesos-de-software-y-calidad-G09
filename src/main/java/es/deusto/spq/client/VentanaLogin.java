@@ -33,8 +33,6 @@ import javax.swing.SwingConstants;
 
 public class VentanaLogin extends JFrame{
 	
-	private JFrame ventanaActual;
-	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,7 +51,7 @@ public class VentanaLogin extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		ventanaActual = this;
+		setTitle("Login");
 		
 		//Panel principal
 		JPanel panel = new JPanel();
@@ -70,7 +68,7 @@ public class VentanaLogin extends JFrame{
 		JTextField textFieldUsuario = new JTextField();
 		textFieldUsuario.setBounds(200, 56, 115, 19);
 		panel.add(textFieldUsuario);
-		Utilidades.modifyTextField(textFieldUsuario);
+		Utilidades.modifyTextField(textFieldUsuario, true);
 		textFieldUsuario.setColumns(10);
 		
 		JPasswordField passwordFieldContraseña = new JPasswordField();
@@ -125,9 +123,9 @@ public class VentanaLogin extends JFrame{
 		registroLabel.addMouseListener(new MouseAdapter() {	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ventanaActual.dispose();
-//				VentanaRegistro v1 = new VentanaRegistro();
-//				v1.setVisible(true);	
+				dispose();
+				VentanaRegistro v1 = new VentanaRegistro();
+				v1.setVisible(true);	
 			}
 		});
 	}
