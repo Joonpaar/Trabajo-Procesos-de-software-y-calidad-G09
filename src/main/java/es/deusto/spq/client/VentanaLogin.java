@@ -101,7 +101,7 @@ public class VentanaLogin extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				boolean login=ExampleClient.loginUser(textFieldUsuario.getText(), passwordFieldContraseña.getText());
 				if(login) {
-					VentanaAdmin frame = new VentanaAdmin();
+					VentanaCatalogo frame = new VentanaCatalogo();
 					frame.setVisible(true);
 					dispose();
 				}

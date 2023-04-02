@@ -13,12 +13,7 @@ public class User {
 	@PrimaryKey
 	String login=null;
 	String password=null;
-	int tipoUser;
-	
-	@Persistent(mappedBy="user", dependentElement="true")
-	@Join
-	Set<Message> messages = new HashSet<>();
-	
+	int tipoUser;	
 	
 	
 	public User(String login, String password) {
@@ -43,14 +38,6 @@ public class User {
 		this.tipoUser = tipoUser;
 	}
 
-	public void addMessage(Message message) {
-		messages.add(message);
-	}
-
-	public void removeMessage(Message message) {
-		messages.remove(message);
-	}
-
 	public String getLogin() {
 		return this.login;
 	}
@@ -63,13 +50,4 @@ public class User {
 		this.password = password;
 	}
 	
-	 public Set<Message> getMessages() {return this.messages;}
-	 
-	 public String toString() {
-		StringBuilder messagesStr = new StringBuilder();
-		for (Message message: this.messages) {
-			messagesStr.append(message.toString() + " - ");
-		}
-        return "User: login --> " + this.login + ", password -->  " + this.password + ", messages --> [" + messagesStr + "]";
-    }
 }

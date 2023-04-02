@@ -127,7 +127,7 @@ public class VentanaAnyadir extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ExampleClient.insertarProducto(txtNombre.getText(),Integer.parseInt(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),(TipoProducto) combo.getSelectedItem());
 				dispose();
-				VentanaAdmin v1 = new VentanaAdmin();
+				VentanaCatalogo v1 = new VentanaCatalogo();
 				v1.setVisible(true);
 			}
 		});
@@ -137,7 +137,7 @@ public class VentanaAnyadir extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				VentanaAdmin v1 = new VentanaAdmin();
+				VentanaCatalogo v1 = new VentanaCatalogo();
 				v1.setVisible(true);	
 			}
 		});

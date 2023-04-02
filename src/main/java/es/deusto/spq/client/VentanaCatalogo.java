@@ -25,7 +25,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class VentanaAdmin extends JFrame {
+public class VentanaCatalogo extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tablaProductos;
@@ -41,7 +41,7 @@ public class VentanaAdmin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaAdmin frame = new VentanaAdmin();
+					VentanaCatalogo frame = new VentanaCatalogo();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +53,7 @@ public class VentanaAdmin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaAdmin() {
+	public VentanaCatalogo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 475, 300);
 		contentPane = new JPanel();
@@ -143,7 +143,7 @@ public class VentanaAdmin extends JFrame {
 		tablaProductos.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_DELETE) {
+				if(e.getKeyCode()==KeyEvent.VK_DELETE && ExampleClient.admin==true) {
 					int fil = tablaProductos.getSelectedRow();
 					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
 					ExampleClient.borrarProducto(nombre);
