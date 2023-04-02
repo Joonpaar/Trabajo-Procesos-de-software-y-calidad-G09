@@ -2,6 +2,8 @@ package es.deusto.spq.client;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -111,8 +113,16 @@ public class VentanaAnyadir extends JFrame {
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnConfirmar = new JButton("AÑADIR");
-		Utilidades.modifyButton(btnConfirmar);
-		panel_2.add(btnConfirmar);
+		JButton btnAnyadir = new JButton("AÑADIR");
+		Utilidades.modifyButton(btnAnyadir);
+		panel_2.add(btnAnyadir);
+		
+		btnAnyadir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ExampleClient.insertarProducto(txtNombre.getText(),Integer.parseInt(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),(TipoProducto) combo.getSelectedItem());
+			}
+		});
 	}
 }
