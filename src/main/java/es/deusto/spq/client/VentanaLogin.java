@@ -91,7 +91,7 @@ public class VentanaLogin extends JFrame{
 		
 		JLabel registroLabel = new JLabel("¿No tienes cuenta? Regístrate");
 		registroLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		registroLabel.setBounds(135, 210, 180, 23);
+		registroLabel.setBounds(135, 210, 200, 23);
 		panel.add(registroLabel);
 		
 		//Acciones de los componentes

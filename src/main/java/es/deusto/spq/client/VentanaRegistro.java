@@ -2,6 +2,8 @@ package es.deusto.spq.client;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -43,7 +45,7 @@ public class VentanaRegistro extends JFrame {
 	 */
 	public VentanaRegistro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 345);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
@@ -119,5 +121,22 @@ public class VentanaRegistro extends JFrame {
 		lblRepetirContra.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		Utilidades.JLabelWithPopup(lblRepetirContra);
 		panel_1.add(lblRepetirContra);
+		
+		JPanel panel_2 = new JPanel();
+		contentPane.add(panel_2, BorderLayout.SOUTH);
+		
+		JButton btnVolver = new JButton("VOLVER");
+		panel_2.add(btnVolver);
+		Utilidades.modifyButton(btnVolver);
+		
+		btnVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaLogin v1 = new VentanaLogin();
+				v1.setVisible(true);
+			}
+		});
 	}
 }

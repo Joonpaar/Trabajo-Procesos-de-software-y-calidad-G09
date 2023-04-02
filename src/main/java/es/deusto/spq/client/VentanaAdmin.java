@@ -18,6 +18,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.jdo.Producto;
 
 import java.awt.BorderLayout;
@@ -30,6 +31,7 @@ public class VentanaAdmin extends JFrame {
 	private JTable tablaProductos;
 	public static DefaultTableModel modeloTablaProductos;
 	public static List<Producto> productos;
+	private ExampleClient cliente;
 
 
 	/**
@@ -53,7 +55,7 @@ public class VentanaAdmin extends JFrame {
 	 */
 	public VentanaAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 475, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -63,7 +65,7 @@ public class VentanaAdmin extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JLabel lblTitulo = new JLabel("GESTION DEL BAZAR");
+		JLabel lblTitulo = new JLabel("CATALOGO DEL BAZAR");
 		panel.add(lblTitulo);
 		
 		JPanel panel_1 = new JPanel();
@@ -73,7 +75,14 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
 		JButton btnAdmin = new JButton("ADMIN");
-		panel_2.add(btnAdmin);
+		Utilidades.modifyButton(btnAdmin);
+		if(cliente.admin == true) {
+			panel_2.add(btnAdmin);
+		}
+		
+		JButton btnVolver = new JButton("CERRAR SESION");
+		Utilidades.modifyButton(btnVolver);
+		panel_2.add(btnVolver);
 		
 		modeloTablaProductos=new DefaultTableModel();
 		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
@@ -105,6 +114,16 @@ public class VentanaAdmin extends JFrame {
 				ventana.setVisible(true);
 				dispose();
 				
+			}
+		});
+		
+		btnVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaLogin v1 = new VentanaLogin();
+				v1.setVisible(true);
 			}
 		});
 		

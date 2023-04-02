@@ -113,6 +113,10 @@ public class VentanaAnyadir extends JFrame {
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
+		JButton btnVolver = new JButton("VOLVER");
+		Utilidades.modifyButton(btnVolver);
+		panel_2.add(btnVolver);
+		
 		JButton btnAnyadir = new JButton("AÑADIR");
 		Utilidades.modifyButton(btnAnyadir);
 		panel_2.add(btnAnyadir);
@@ -122,6 +126,19 @@ public class VentanaAnyadir extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ExampleClient.insertarProducto(txtNombre.getText(),Integer.parseInt(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),(TipoProducto) combo.getSelectedItem());
+				dispose();
+				VentanaAdmin v1 = new VentanaAdmin();
+				v1.setVisible(true);
+			}
+		});
+		
+		btnVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaAdmin v1 = new VentanaAdmin();
+				v1.setVisible(true);	
 			}
 		});
 	}
