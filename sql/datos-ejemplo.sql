@@ -1,0 +1,11 @@
+use messagesdb;
+insert into producto values ('Semillas', 2, 40, 'Jardineria');
+insert into producto values ('Aspiradora', 40, 5, 'Limpieza');
+insert into producto values ('Lampara', 30, 4, 'Hogar');
+insert into producto values ('Regadera', 10, 50, 'Jardineria');
+insert into producto values ('Fregona', 15, 40, 'Limpieza');
+insert into producto values ('Sofa', 60, 4, 'Hogar');
+insert into producto values ('Roomba', 60, 20, 'Limpieza');
+insert into producto values ('Television', 100, 10, 'Hogar');
+insert into user values("admin", "admin", 1);
+insert into user values("Mikel", "1234", 0);
