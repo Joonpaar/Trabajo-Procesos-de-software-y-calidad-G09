@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
@@ -91,20 +92,20 @@ public class VentanaRegistro extends JFrame {
 		Utilidades.modifyPasswordField(passwordField);
 		panel_1.add(passwordField);
 		
-		JRadioButton radioAdmin = new JRadioButton("ADMIN");
-		radioAdmin.setBounds(132, 153, 85, 23);
-		radioAdmin.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		panel_1.add(radioAdmin);
+//		JRadioButton radioAdmin = new JRadioButton("ADMIN");
+//		radioAdmin.setBounds(132, 153, 85, 23);
+//		radioAdmin.setFont(new Font("Segoe UI", Font.BOLD, 13));
+//		panel_1.add(radioAdmin);
+//		
+//		JRadioButton radioUser = new JRadioButton("USUARIO");
+//		radioUser.setBounds(212, 153, 85, 23);
+//		radioUser.setFont(new Font("Segoe UI", Font.BOLD, 13));
+//		panel_1.add(radioUser);
 		
-		JRadioButton radioUser = new JRadioButton("USUARIO");
-		radioUser.setBounds(212, 153, 85, 23);
-		radioUser.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		panel_1.add(radioUser);
-		
-		ButtonGroup group = new ButtonGroup();
-		group.add(radioAdmin);
-		group.add(radioUser);
-		
+//		ButtonGroup group = new ButtonGroup();
+//		group.add(radioAdmin);
+//		group.add(radioUser);
+//		
 		JButton btnCrear = new JButton("REGISTRARSE");
 		btnCrear.setBounds(154, 193, 118, 23);
 		Utilidades.modifyButton(btnCrear);
@@ -136,6 +137,21 @@ public class VentanaRegistro extends JFrame {
 				dispose();
 				VentanaLogin v1 = new VentanaLogin();
 				v1.setVisible(true);
+			}
+		});
+		btnCrear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(passwordField.getText().equals(passwordField_1.getText())) {
+					ExampleClient.registerUser(txtNombre.getText(), passwordField.getText());
+					dispose();
+					VentanaLogin v=new VentanaLogin();
+					v.setVisible(true);
+				}else JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+
+				
+				
 			}
 		});
 	}
