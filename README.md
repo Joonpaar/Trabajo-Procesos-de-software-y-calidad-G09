@@ -4,7 +4,7 @@ Abre una consola de comandos desde el directorio donde se encuentra el archivo .
 
 Luego hay que ir al MySQL Workbench y ejecutar el contenido del archivo “create-message.sql” dentro de la carpeta sql. Después volvemos a la consola y ejecutamos el siguiente comando para crear el esquema de la base de datos. La carpeta también contiene el archivo datos-ejemplo.sql, que se puede ejecutar en MySQL para tener algunos datos iniciales.
 
-      datanucleus:schema-create
+      mvn datanucleus:schema-create
 
 Una vez se construye exitosamente toca lanzar el servidor con el comando 
 
