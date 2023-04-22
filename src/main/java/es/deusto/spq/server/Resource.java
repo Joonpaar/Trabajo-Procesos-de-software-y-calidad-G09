@@ -13,8 +13,6 @@ import javax.jdo.Transaction;
 
 import es.deusto.spq.server.jdo.User;
 import es.deusto.spq.server.jdo.Producto;
-import es.deusto.spq.pojo.DirectMessage;
-import es.deusto.spq.pojo.MessageData;
 import es.deusto.spq.pojo.UserData;
 
 import javax.ws.rs.GET;

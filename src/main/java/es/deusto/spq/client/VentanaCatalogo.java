@@ -31,7 +31,7 @@ public class VentanaCatalogo extends JFrame {
 	private JTable tablaProductos;
 	public static DefaultTableModel modeloTablaProductos;
 	public static List<Producto> productos;
-	private ExampleClient cliente;
+	private Cliente cliente;
 
 
 	/**
@@ -87,13 +87,13 @@ public class VentanaCatalogo extends JFrame {
 		modeloTablaProductos=new DefaultTableModel();
 		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
 		modeloTablaProductos.setColumnIdentifiers(nombreColumnas);
-		for (Producto producto: ExampleClient.getProductos()) {
+		for (Producto producto: Cliente.getProductos()) {
 			String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
 			modeloTablaProductos.addRow(pr);
 		}
 		tablaProductos = new JTable(modeloTablaProductos) {
 			public boolean isCellEditable(int row,int column){
-				if (ExampleClient.admin == true) {
+				if (Cliente.admin == true) {
 					if (column == 0) {
 						return false;
 					}
@@ -137,16 +137,16 @@ public class VentanaCatalogo extends JFrame {
 				String tipo =  String.valueOf(modeloTablaProductos.getValueAt(fil, 1));
 				int stock =  Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 2)));
 				int precio = Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 3)));			
-				ExampleClient.editarProducto(nombre, tipo, stock, precio);
+				Cliente.editarProducto(nombre, tipo, stock, precio);
 			}
 		});
 		tablaProductos.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_DELETE && ExampleClient.admin==true) {
+				if(e.getKeyCode()==KeyEvent.VK_DELETE && Cliente.admin==true) {
 					int fil = tablaProductos.getSelectedRow();
 					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
-					ExampleClient.borrarProducto(nombre);
+					Cliente.borrarProducto(nombre);
 					try {modeloTablaProductos.removeRow(fil);
 					} catch (ArrayIndexOutOfBoundsException e2) {
 					}

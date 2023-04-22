@@ -144,7 +144,7 @@ public class VentanaRegistro extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(passwordField.getText().equals(passwordField_1.getText())) {
-					ExampleClient.registerUser(txtNombre.getText(), passwordField.getText());
+					Cliente.registerUser(txtNombre.getText(), passwordField.getText());
 					dispose();
 					VentanaLogin v=new VentanaLogin();
 					v.setVisible(true);

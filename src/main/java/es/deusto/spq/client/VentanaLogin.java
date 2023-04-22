@@ -99,7 +99,7 @@ public class VentanaLogin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean login=ExampleClient.loginUser(textFieldUsuario.getText(), passwordFieldContraseña.getText());
+				boolean login=Cliente.loginUser(textFieldUsuario.getText(), passwordFieldContraseña.getText());
 				if(login) {
 					VentanaCatalogo frame = new VentanaCatalogo();
 					frame.setVisible(true);

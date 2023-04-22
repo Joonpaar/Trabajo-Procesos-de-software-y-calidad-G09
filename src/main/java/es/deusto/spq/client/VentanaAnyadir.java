@@ -125,7 +125,7 @@ public class VentanaAnyadir extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ExampleClient.insertarProducto(txtNombre.getText(),Integer.parseInt(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),(TipoProducto) combo.getSelectedItem());
+				Cliente.insertarProducto(txtNombre.getText(),Integer.parseInt(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),(TipoProducto) combo.getSelectedItem());
 				dispose();
 				VentanaCatalogo v1 = new VentanaCatalogo();
 				v1.setVisible(true);
