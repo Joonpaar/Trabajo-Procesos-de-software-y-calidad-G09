@@ -32,6 +32,9 @@ public class VentanaCatalogo extends JFrame {
 	public static DefaultTableModel modeloTablaProductos;
 	public static List<Producto> productos;
 	private Cliente cliente;
+	
+	//VARIABLE PARA GUARDAR EL NOMBRE DEL USUARIO LOGEADO
+	public static String cli = "";
 
 
 	/**
@@ -84,6 +87,10 @@ public class VentanaCatalogo extends JFrame {
 		Utilidades.modifyButton(btnVolver);
 		panel_2.add(btnVolver);
 		
+		JButton btnCarrito = new JButton("CARRITO");
+		Utilidades.modifyButton(btnCarrito);
+		panel_2.add(btnCarrito);
+		
 		modeloTablaProductos=new DefaultTableModel();
 		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
 		modeloTablaProductos.setColumnIdentifiers(nombreColumnas);
@@ -123,6 +130,16 @@ public class VentanaCatalogo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				VentanaLogin v1 = new VentanaLogin();
+				v1.setVisible(true);
+			}
+		});
+		
+		btnCarrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaCarrito v1 = new VentanaCarrito();
 				v1.setVisible(true);
 			}
 		});
