@@ -188,6 +188,36 @@ public class Resource {
 		
 		return productos;
 	}
+	
+	@POST
+	@Path("/getProductosPorNombre")
+	public List<Producto> getProductosPorNombre(String nombre) {
+	    List<Producto> productos = new ArrayList<>();
+
+	    try {
+	        tx.begin();
+
+	        Extent<Producto> prodExtent = pm.getExtent(Producto.class, true);
+
+	        for (Producto p : prodExtent) {
+	            if (p.getNombre().contains(nombre)) {
+	                productos.add(p);
+	            }
+	        }
+
+	        tx.commit();
+	    } catch (Exception ex) {
+	        System.out.println("  $ Error querying products by name: " + ex.getMessage());
+	    } finally {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+
+	        pm.close();
+	    }
+
+	    return productos;
+	}
 
 	@GET
 	@Path("/hello")

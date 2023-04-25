@@ -3,6 +3,7 @@ package es.deusto.spq.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -12,7 +13,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
 
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.jdo.Producto;
@@ -25,11 +25,10 @@ import org.apache.logging.log4j.Logger;
 public class Cliente {
 
 	protected static final Logger logger = LogManager.getLogger();
-	
+
 	protected static boolean admin;
 	private Client client;
 	private static WebTarget webTarget;
-
 
 	public Cliente(String hostname, String port) {
 		client = ClientBuilder.newClient();
@@ -72,11 +71,11 @@ public class Cliente {
 				logger.info("La constrasenia es incorrecta!");
 				return false;
 			} else if (valor == 2) {
-				admin=false;
+				admin = false;
 				logger.info("Usuario logeado correctamente!");
 				return true;
 			} else if (valor == 3) {
-				admin=true;
+				admin = true;
 				logger.info("Usuario administrador logeado correctamente!");
 				return true;
 			}
@@ -119,7 +118,22 @@ public class Cliente {
 			return productos;
 		}
 	}
+	
+	public static ArrayList<Producto> getProductosPorNombre(@QueryParam("nombre") String nombre) {
+	    WebTarget getProductosUserWebTarget = webTarget.path("getProductosPorNombre").queryParam("nombre", nombre);
+	    Invocation.Builder invocationBuilder = getProductosUserWebTarget.request(MediaType.APPLICATION_JSON);
+	    Response response = invocationBuilder.post(null);
+	    if (response.getStatus() != Status.OK.getStatusCode()) {
+	        logger.error("Error connecting with the server. Code: {}", response.getStatus());
+	        return null;
+	    } else {
+	        GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {};
+	        ArrayList<Producto> productos = response.readEntity(listType);
+	        return productos;
+	    }
+	}
 
+	
 
 	public static void borrarProducto(String nombre) {
 		WebTarget borrarProductoWebTarget = webTarget.path("borrarProducto");

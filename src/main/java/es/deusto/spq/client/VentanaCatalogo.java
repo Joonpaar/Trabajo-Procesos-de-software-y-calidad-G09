@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -20,10 +23,14 @@ import javax.swing.table.DefaultTableModel;
 
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.jdo.Producto;
+import es.deusto.spq.server.jdo.TipoProducto;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class VentanaCatalogo extends JFrame {
 
@@ -35,6 +42,7 @@ public class VentanaCatalogo extends JFrame {
 	
 	//VARIABLE PARA GUARDAR EL NOMBRE DEL USUARIO LOGEADO
 	public static String cli = "";
+	private JTextField txtNombre;
 
 
 	/**
@@ -113,6 +121,16 @@ public class VentanaCatalogo extends JFrame {
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
 		
+		JPanel panel_3 = new JPanel();
+		contentPane.add(panel_3, BorderLayout.EAST);
+		
+		JLabel lblFiltro = new JLabel("Filtrar");
+		panel_3.add(lblFiltro);
+		
+		txtNombre = new JTextField();
+		panel_3.add(txtNombre);
+		txtNombre.setColumns(10);
+		
 		btnAdmin.addActionListener(new ActionListener() {
 			
 			@Override
@@ -170,6 +188,17 @@ public class VentanaCatalogo extends JFrame {
 					tablaProductos.repaint();
 				}			
 			}
+		});
+		
+		tablaProductos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 1) {
+					int fila = tablaProductos.rowAtPoint(e.getPoint());
+					Producto p = Cliente.getProductos().get(fila);
+					JOptionPane.showMessageDialog(null, "Producto: "+p.getNombre()+" | Tipo: "+p.getTipo()+" | Precio: "+p.getPrecio()+" | Stock: "+p.getStock());
+				}
+			};
 		});
 	}
 	
