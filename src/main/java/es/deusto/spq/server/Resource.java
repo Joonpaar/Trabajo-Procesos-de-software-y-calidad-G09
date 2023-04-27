@@ -13,6 +13,7 @@ import javax.jdo.Transaction;
 
 import es.deusto.spq.server.jdo.User;
 import es.deusto.spq.server.jdo.Producto;
+import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.pojo.UserData;
 
 import javax.ws.rs.GET;
@@ -208,6 +209,36 @@ public class Resource {
 	        tx.commit();
 	    } catch (Exception ex) {
 	        System.out.println("  $ Error querying products by name: " + ex.getMessage());
+	    } finally {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+
+	        pm.close();
+	    }
+
+	    return productos;
+	}
+	
+	@POST
+	@Path("/getProductosPorTipo")
+	public List<Producto> getProductosPorNombre(TipoProducto tipo) {
+	    List<Producto> productos = new ArrayList<>();
+
+	    try {
+	        tx.begin();
+
+	        Extent<Producto> prodExtent = pm.getExtent(Producto.class, true);
+
+	        for (Producto p : prodExtent) {
+	            if (p.getTipo().equals(tipo)) {
+	                productos.add(p);
+	            }
+	        }
+
+	        tx.commit();
+	    } catch (Exception ex) {
+	        System.out.println("  $ Error querying products by type: " + ex.getMessage());
 	    } finally {
 	        if (tx != null && tx.isActive()) {
 	            tx.rollback();

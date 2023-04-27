@@ -86,7 +86,6 @@ public class Cliente {
 		return false;
 	}
 
-	// Falta por verificar
 	public static void insertarProducto(String nombre, int precio, int stock, TipoProducto tipo) {
 		WebTarget insertarProductoWebTarget = webTarget.path("insertarProducto");
 		Invocation.Builder invocationBuilder = insertarProductoWebTarget.request(MediaType.APPLICATION_JSON);
@@ -132,8 +131,21 @@ public class Cliente {
 	        return productos;
 	    }
 	}
-
 	
+	//Falta por verificar
+	public static ArrayList<Producto> getProductosPorTipo(@QueryParam("tipo") TipoProducto tipo) {
+	    WebTarget getProductosUserWebTarget = webTarget.path("getProductosPorTipo").queryParam("tipo", tipo);
+	    Invocation.Builder invocationBuilder = getProductosUserWebTarget.request(MediaType.APPLICATION_JSON);
+	    Response response = invocationBuilder.post(null);
+	    if (response.getStatus() != Status.OK.getStatusCode()) {
+	        logger.error("Error connecting with the server. Code: {}", response.getStatus());
+	        return null;
+	    } else {
+	        GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {};
+	        ArrayList<Producto> productos = response.readEntity(listType);
+	        return productos;
+	    }
+	}
 
 	public static void borrarProducto(String nombre) {
 		WebTarget borrarProductoWebTarget = webTarget.path("borrarProducto");
