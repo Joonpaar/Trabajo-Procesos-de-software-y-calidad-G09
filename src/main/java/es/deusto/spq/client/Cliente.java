@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.server.jdo.User;
@@ -177,6 +178,24 @@ public class Cliente {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
 			logger.info("Producto editado");
+		}
+	}
+	
+	public static void comprarProducto(List<String> productos, List<Integer> cantidades) {
+		WebTarget editarProductoWebTarget = webTarget.path("comprarProducto");
+		Invocation.Builder invocationBuilder = editarProductoWebTarget.request(MediaType.APPLICATION_JSON);
+
+		Compra compraData = new Compra();
+		compraData.setCantidades(cantidades);
+		compraData.setFecha(System.currentTimeMillis());
+		compraData.setProductos(productos);
+		compraData.setUser("test");
+
+		Response response = invocationBuilder.post(Entity.entity(compraData, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+		} else {
+			logger.info("Compra insertada correctamente");
 		}
 	}
 

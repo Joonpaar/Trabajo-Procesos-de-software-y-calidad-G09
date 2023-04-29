@@ -1,68 +1,59 @@
 package es.deusto.spq.server.jdo;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 public class Compra {
 	@PrimaryKey
-    int id;
-    User user;
-    Date fecha;
-    ArrayList<Producto> productos;
-    ArrayList<Integer> cantidades;
+    String userLogin;
+	@PrimaryKey
+    Long fecha;
+    List<String> productos;
+    List<Integer> cantidades;
     
     public Compra() {
 		
 		}
     
-    public Compra(int id, User user, Date fecha, ArrayList<Producto> productos, ArrayList<Integer> cantidades) {
-        this.id = id;
-        this.user = user;
+    public Compra(String user,Long fecha, List<String> productos, List<Integer> cantidades) {
+        this.userLogin = user;
         this.fecha = fecha;
         this.productos = productos;
         this.cantidades = cantidades;
     }
-    
-    public int getId() {
-        return id;
+
+    public String getUser() {
+        return userLogin;
     }
     
-    public void setId(int id) {
-        this.id = id;
+    public void setUser(String user) {
+        this.userLogin = user;
     }
     
-    public User getUser() {
-        return user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
-    public Date getFecha() {
+    public Long getFecha() {
         return fecha;
     }
     
-    public void setFecha(Date fecha) {
+    public void setFecha(Long fecha) {
         this.fecha = fecha;
     }
     
-    public ArrayList<Producto> getProductos() {
+    public List<String> getProductos() {
         return productos;
     }
     
-    public void setProductos(ArrayList<Producto> productos) {
+    public void setProductos(List<String> productos) {
         this.productos = productos;
     }
     
-    public ArrayList<Integer> getCantidades() {
+    public List<Integer> getCantidades() {
         return cantidades;
     }
     
-    public void setCantidades(ArrayList<Integer> cantidades) {
+    public void setCantidades(List<Integer> cantidades) {
         this.cantidades = cantidades;
     }
 }

@@ -12,6 +12,7 @@ import javax.jdo.JDOHelper;
 import javax.jdo.Transaction;
 
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.pojo.UserData;
@@ -250,13 +251,6 @@ public class Resource {
 	    return productos;
 	}
 
-	@GET
-	@Path("/hello")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response sayHello() {
-		return Response.ok("Hello world!").build();
-	}
-
 	@POST
 	@Path("/editarProducto")
 	public Response editarProducto(Producto productoData) {
@@ -314,6 +308,27 @@ public class Resource {
 				pm.deletePersistent(producto);
 				logger.info("Producto borrado: {}", producto);
 			}
+			tx.commit();
+			return Response.ok().build();
+	    }
+	    finally
+	    {
+	        if (tx.isActive())
+	        {
+	            tx.rollback();
+	        }
+	  
+		}
+	}
+	@POST
+	@Path("/comprarProducto")
+	public Response comprarProducto(Compra compraData) {
+		try
+	    {	
+	        tx.begin();
+			Compra compra=new Compra(compraData.getUser(), compraData.getFecha(),compraData.getProductos(), compraData.getCantidades());
+			pm.makePersistent(compra);
+			logger.info("Compra añadida: {}", compra);
 			tx.commit();
 			return Response.ok().build();
 	    }
