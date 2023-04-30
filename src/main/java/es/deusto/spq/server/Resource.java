@@ -257,6 +257,32 @@ public class Resource {
 	  
 		}
 	}
+	
+	@POST
+	@Path("/getComprasDelUsuario")
+	public List<Compra> getComprasDelUsu(String nombre) {
+		List<Compra> comprasDelUsu = null;
+		try{	
+	        tx.begin();
+	        
+			
+			Query<?> query = pm.newQuery("SELECT FROM " + Compra.class.getName() + " WHERE userLogin == '" + nombre + "'");
+			query.setUnique(true);
+			comprasDelUsu = (List<Compra>) query.execute();
+			
+			tx.commit();
+	    }catch (Exception ex) {
+			System.out.println("  $ Error querying a Reto: " + ex.getMessage());
+	    }finally{
+	        if (tx.isActive())
+	        {
+	            tx.rollback();
+	        }
+		}
+		return comprasDelUsu;
+	}
+	
+	
 	@POST
 	@Path("/borrarProducto")
 	public Response borrarProducto(Producto productoData) {

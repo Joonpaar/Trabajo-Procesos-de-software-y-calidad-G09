@@ -6,12 +6,14 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 
 public class VentanaCarrito extends JFrame {
@@ -50,6 +52,13 @@ public class VentanaCarrito extends JFrame {
 
 		setContentPane(contentPane);
 		
+		List<Compra> compras = Cliente.getComprasDelUsuario(VentanaCatalogo.cli);
+		for (Compra c: compras) {
+			for (int i=0;i < c.getProductos().size();i++) {
+				System.out.println(c.getProductos().get(i) + " y la cantidad es" + c.getCantidades().get(i));
+			}
+		}
+		
 		btnVolver.addActionListener(new ActionListener() {
 			
 			@Override
@@ -62,27 +71,35 @@ public class VentanaCarrito extends JFrame {
 	}
 	
 	private void RealizarFactura() {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter("FACTURA DE " + VentanaCatalogo.cli + ".txt");
-			pw.println("FACTURA DE " + VentanaCatalogo.cli);
-			double sumaTotal = 0;
-			double suma1 = 0;
-			int i = 1;
-			ArrayList<Producto> al = null; //AQUI HAY QUE CONSEGUIR LOS PRODUCTOS COMPRADOS POR EL CLIENTE EN LA BD
-			for (Producto p: al) {
-				suma1 = (p.getPrecio() * p.getStock());
-				sumaTotal = sumaTotal + (p.getPrecio() * p.getStock());
-				pw.println(i + "- " + p.getNombre() + " " + p.getPrecio()+ " euros  " + p.getStock() + "      " + "Precio Del Mismo Articulo teniendo en cuenta las unidades compradas: " + suma1 + " euros");
-				i++;
-			}
-			pw.println("Precio total de la compra: " + sumaTotal + " euros");
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		List<Compra> compras = Cliente.getComprasDelUsuario(VentanaCatalogo.cli);
+//		for (Compra c: compras) {
+//			for (int i=0;i < c.getProductos().size();i++) {
+//				System.out.println(c.getProductos().get(i) + " y la cantidad es" + c.getCantidades().get(i));
+//			}
+//		}
+		
+		
+//		PrintWriter pw = null;
+//		try {
+//			pw = new PrintWriter("FACTURA DE " + VentanaCatalogo.cli + ".txt");
+//			pw.println("FACTURA DE " + VentanaCatalogo.cli);
+//			double sumaTotal = 0;
+//			double suma1 = 0;
+//			int i = 1;
+//			ArrayList<Producto> al = null; //AQUI HAY QUE CONSEGUIR LOS PRODUCTOS COMPRADOS POR EL CLIENTE EN LA BD
+//			for (Producto p: al) {
+//				suma1 = (p.getPrecio() * p.getStock());
+//				sumaTotal = sumaTotal + (p.getPrecio() * p.getStock());
+//				pw.println(i + "- " + p.getNombre() + " " + p.getPrecio()+ " euros  " + p.getStock() + "      " + "Precio Del Mismo Articulo teniendo en cuenta las unidades compradas: " + suma1 + " euros");
+//				i++;
+//			}
+//			pw.println("Precio total de la compra: " + sumaTotal + " euros");
+//			
+//			
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	

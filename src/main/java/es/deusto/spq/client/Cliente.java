@@ -148,6 +148,24 @@ public class Cliente {
 			logger.info("Producto borrado");
 		}
 	}
+	
+	public static ArrayList<Compra> getComprasDelUsuario(String nombre) {
+		WebTarget borrarProductoWebTarget = webTarget.path("getComprasDelUsuario");
+		Invocation.Builder invocationBuilder = borrarProductoWebTarget.request(MediaType.APPLICATION_JSON);
+
+		UserData userData = new UserData();
+		userData.setLogin(nombre);
+
+		Response response = invocationBuilder.post(Entity.entity(userData, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+			return null;
+		} else {
+			GenericType<ArrayList<Compra>> listType = new GenericType<ArrayList<Compra>>() {};
+	        ArrayList<Compra> comprasDelUsu = response.readEntity(listType);
+	        return comprasDelUsu;
+		}
+	}
 
 	public static void editarProducto(String nombre, String tipo, int stock, int precio) {
 		WebTarget editarProductoWebTarget = webTarget.path("editarProducto");
