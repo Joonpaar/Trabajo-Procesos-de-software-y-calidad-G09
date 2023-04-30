@@ -119,20 +119,6 @@ public class Cliente {
 		}
 	}
 	
-	public static ArrayList<Producto> getProductosPorNombre(@QueryParam("nombre") String nombre) {
-	    WebTarget getProductosUserWebTarget = webTarget.path("getProductosPorNombre").queryParam("nombre", nombre);
-	    Invocation.Builder invocationBuilder = getProductosUserWebTarget.request(MediaType.APPLICATION_JSON);
-	    Response response = invocationBuilder.post(null);
-	    if (response.getStatus() != Status.OK.getStatusCode()) {
-	        logger.error("Error connecting with the server. Code: {}", response.getStatus());
-	        return null;
-	    } else {
-	        GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {};
-	        ArrayList<Producto> productos = response.readEntity(listType);
-	        return productos;
-	    }
-	}
-	
 	//Falta por verificar
 	public static ArrayList<Producto> getProductosPorTipo(@QueryParam("tipo") TipoProducto tipo) {
 	    WebTarget getProductosUserWebTarget = webTarget.path("getProductosPorTipo").queryParam("tipo", tipo);

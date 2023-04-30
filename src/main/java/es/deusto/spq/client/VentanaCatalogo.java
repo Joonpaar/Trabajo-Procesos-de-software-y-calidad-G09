@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -130,6 +131,37 @@ public class VentanaCatalogo extends JFrame {
 		txtNombre = new JTextField();
 		panel_3.add(txtNombre);
 		txtNombre.setColumns(10);
+		
+		JButton btnFiltrar = new JButton("Filtrar");
+		panel_3.add(btnFiltrar);
+		
+		btnFiltrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Producto> lista = new ArrayList<>();
+				try {
+				while(modeloTablaProductos.getRowCount()> 0) {
+					modeloTablaProductos.removeRow(0);
+				}
+				} catch (ArrayIndexOutOfBoundsException e2) {
+				}
+				for(Producto p: Cliente.getProductos()) {
+					if(p.getNombre().equals(txtNombre.getText())) {
+						String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+						modeloTablaProductos.addRow(pr);
+					}
+				}
+				if(modeloTablaProductos.getRowCount() == 0) {
+					for (Producto producto: Cliente.getProductos()) {
+						String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
+						modeloTablaProductos.addRow(pr);
+					}
+				}
+			}
+		});
+		
+		
 		
 		btnAdmin.addActionListener(new ActionListener() {
 			
