@@ -13,6 +13,9 @@ import java.awt.Cursor;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
@@ -108,6 +111,20 @@ public class VentanaLogin extends JFrame{
 				}
 			}
 		});
+		
+		passwordFieldContraseña.addKeyListener(new KeyAdapter() {	
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		            // Hacer clic en el botón de inicio de sesión
+		            btnLogin.doClick();
+		        }
+				
+			}
+			
+		});
+		
 		// MouseListeners registroLabel
 		registroLabel.addMouseListener(new MouseAdapter() {
 			@SuppressWarnings({ "unchecked", "rawtypes" })

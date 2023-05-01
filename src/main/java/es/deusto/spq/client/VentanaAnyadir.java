@@ -12,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 import es.deusto.spq.server.jdo.TipoProducto;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -99,7 +101,9 @@ public class VentanaAnyadir extends JFrame {
 		txtStock.setColumns(10);
 		
 		combo = new JComboBox<>(TipoProducto.values());
-		combo.setBounds(275, 135, 86, 20);
+		combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		combo.setBackground(Color.WHITE);
+		combo.setBounds(275, 135, 86, 20);;
 		panel.add(combo);
 		
 		

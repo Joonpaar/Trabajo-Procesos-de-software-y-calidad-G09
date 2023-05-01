@@ -1,6 +1,7 @@
 package es.deusto.spq.client;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -27,6 +28,8 @@ import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -78,6 +81,7 @@ public class VentanaCatalogo extends JFrame {
 		contentPane.add(panel, BorderLayout.NORTH);
 		
 		JLabel lblTitulo = new JLabel("CATALOGO DEL BAZAR");
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTitulo);
 		
 		JPanel panel_1 = new JPanel();
@@ -125,35 +129,68 @@ public class VentanaCatalogo extends JFrame {
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, BorderLayout.EAST);
 		
-		JLabel lblFiltro = new JLabel("Filtrar");
+		JLabel lblFiltro = new JLabel("Filtrar por:");
+		lblFiltro.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_3.add(lblFiltro);
 		
+		JComboBox<String> comboBox = new JComboBox<>();
+		comboBox.addItem("Nombre");
+		comboBox.addItem("Tipo");
+		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		comboBox.setBackground(Color.WHITE);
+		panel_3.add(comboBox);
+		
 		txtNombre = new JTextField();
+		Utilidades.modifyTextField(txtNombre, false);
 		panel_3.add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		Utilidades.modifyButton(btnFiltrar);
 		panel_3.add(btnFiltrar);
 		
 		btnFiltrar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<Producto> lista = new ArrayList<>();
+				List<Producto> lista = Cliente.getProductos();
 				try {
 				while(modeloTablaProductos.getRowCount()> 0) {
 					modeloTablaProductos.removeRow(0);
 				}
 				} catch (ArrayIndexOutOfBoundsException e2) {
 				}
-				for(Producto p: Cliente.getProductos()) {
-					if(p.getNombre().equals(txtNombre.getText())) {
-						String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
-						modeloTablaProductos.addRow(pr);
+				for(Producto p: lista) {
+					if (comboBox.getSelectedItem().toString().equals("Nombre")) {
+						if(p.getNombre().equals(txtNombre.getText())) {
+							String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+							modeloTablaProductos.addRow(pr);
+						}
+						
+					}else if(comboBox.getSelectedItem().toString().equals("Tipo")){
+						if (txtNombre.getText().equals("Hogar")) {
+							if(p.getTipo().equals(TipoProducto.Hogar)) {
+								String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+								modeloTablaProductos.addRow(pr);
+							}
+						}
+						
+						else if (txtNombre.getText().equals("Jardineria")) {
+							if(p.getTipo().equals(TipoProducto.Jardineria)) {
+								String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+								modeloTablaProductos.addRow(pr);
+							}
+						}
+						else if(txtNombre.getText().equals("Limpieza")) {
+							if(p.getTipo().equals(TipoProducto.Limpieza)) {
+								String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+								modeloTablaProductos.addRow(pr);
+							}
+						}
 					}
 				}
 				if(modeloTablaProductos.getRowCount() == 0) {
-					for (Producto producto: Cliente.getProductos()) {
+					for (Producto producto: lista) {
 						String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
 						modeloTablaProductos.addRow(pr);
 					}
