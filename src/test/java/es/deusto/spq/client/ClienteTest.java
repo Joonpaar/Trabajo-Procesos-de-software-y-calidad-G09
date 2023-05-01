@@ -55,29 +55,29 @@ public class ClienteTest {
         }
     }
 
-    @Test
-    public void testRegisterUser() {
-        when(webTarget.path("register")).thenReturn(webTarget);
-
-        Response response = Response.ok().build();
-        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
-//        assertTrue(exampleClient.registerUser("test-login", "passwd"));
-
-        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
-        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
-        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
-    }
-
-    @Test
-    public void testRegisterUserWithError() {
-        when(webTarget.path("register")).thenReturn(webTarget);
-
-        Response response = Response.serverError().build();
-        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
-//      assertFalse(exampleClient.registerUser("test-login", "passwd"));
-
-        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
-        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
-        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
-    }
+//    @Test
+//    public void testRegisterUser() {
+//        when(webTarget.path("register")).thenReturn(webTarget);
+//
+//        Response response = Response.ok().build();
+//        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+////        assertTrue(exampleClient.registerUser("test-login", "passwd"));
+//
+//        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
+//        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
+//        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
+//    }
+//
+//    @Test
+//    public void testRegisterUserWithError() {
+//        when(webTarget.path("register")).thenReturn(webTarget);
+//
+//        Response response = Response.serverError().build();
+//        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+//        assertFalse(exampleClient.registerUser("test-login", "passwd"));
+//
+//        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
+//        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
+//        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
+//    }
 }

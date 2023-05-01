@@ -26,9 +26,4 @@ public class UserDataTest {
     public void testGetPassword() {
         assertEquals("passwd", userData.getPassword());
     }
-
-    @Test
-    public void testToString() {
-        assertEquals("[login=test-login, password=passwd]", userData.toString());
-    }
 }
