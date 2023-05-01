@@ -12,6 +12,7 @@ import javax.jdo.JDOHelper;
 import javax.jdo.Transaction;
 
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
@@ -65,7 +66,11 @@ public class Resource {
 			} else {
 				logger.info("Creating user: {}", user);
 				user = new User(userData.getLogin(), userData.getPassword());
-				pm.makePersistent(user);					 
+				pm.makePersistent(user);
+				List<String> prods= new ArrayList<>();
+				List<Integer> cants= new ArrayList<>();
+				Carro carro=new Carro(user.getLogin(), prods, cants);
+				pm.makePersistent(carro);
 				logger.info("User created: {}", user);
 			}
 			tx.commit();
@@ -179,7 +184,7 @@ public class Resource {
 						
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("  $ Error querying all users: " + ex.getMessage());
+			System.out.println("  $ Error: " + ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -325,6 +330,76 @@ public class Resource {
 			Compra compra=new Compra(compraData.getUser(), compraData.getFecha(),compraData.getProductos(), compraData.getCantidades());
 			pm.makePersistent(compra);
 			logger.info("Compra añadida: {}", compra);
+			tx.commit();
+			return Response.ok().build();
+	    }
+	    finally
+	    {
+	        if (tx.isActive())
+	        {
+	            tx.rollback();
+	        }
+	  
+		}
+	}
+	@POST
+	@Path("/getProducto")
+	public Producto getProducto(String nombre) {
+		System.out.println(nombre);
+
+		Producto producto=null;
+		try {
+			producto = pm.getObjectById(Producto.class, nombre);
+			System.out.println(producto.getTipo());
+		
+		} catch (Exception ex) {
+			System.out.println("  $ Error: " + ex.getMessage());
+			pm.close();
+		}
+		System.out.println(producto.getTipo());
+
+		return producto;
+	}
+	
+	@POST
+	@Path("/getCarro")
+	public Carro getCarro(String nombre) {
+		Carro carro=null;
+		try {
+			
+			carro = pm.getObjectById(Carro.class, nombre);
+		} catch (Exception ex) {
+			System.out.println("  $ Error: " + ex.getMessage());
+			pm.close();
+		}
+		if(carro.getCantidades()==null) {
+			carro.setCantidades(new ArrayList<>());
+			carro.setProductos(new ArrayList<>());
+		}
+		return carro;
+	}
+	@POST
+	@Path("/actualizarCarro")
+	public Response actualizarCarro(Carro carroData) {
+		try
+	    {	
+	        tx.begin();
+			Carro carro = null;
+			try {
+				carro = pm.getObjectById(Carro.class, carroData.getUser());
+			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
+				logger.info("Exception launched: {}", jonfe.getMessage());
+			}
+			if (carro == null) {
+				logger.info("Error actualizando el carro: {}", carro);
+			} else {
+				logger.info("Actualizando carro: {}", carro);
+				carro.setUser(carroData.getUser());
+				carro.setCantidades(carroData.getCantidades());
+				carro.setProductos(carroData.getProductos());
+				pm.flush();
+				logger.info("Carro actualizado: {}", carro);
+			}
 			tx.commit();
 			return Response.ok().build();
 	    }

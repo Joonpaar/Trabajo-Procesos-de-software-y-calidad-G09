@@ -7,23 +7,20 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
-public class Compra {
+public class Carro {
 	@PrimaryKey
     String userLogin;
-	@PrimaryKey
-    Long fecha;
 	@Element
     List<String> productos;
 	@Element
     List<Integer> cantidades;
     
-    public Compra() {
+    public Carro() {
 		
 		}
     
-    public Compra(String user,Long fecha, List<String> productos, List<Integer> cantidades) {
+    public Carro(String user, List<String> productos, List<Integer> cantidades) {
         this.userLogin = user;
-        this.fecha = fecha;
         this.productos = productos;
         this.cantidades = cantidades;
     }
@@ -34,14 +31,6 @@ public class Compra {
     
     public void setUser(String user) {
         this.userLogin = user;
-    }
-    
-    public Long getFecha() {
-        return fecha;
-    }
-    
-    public void setFecha(Long fecha) {
-        this.fecha = fecha;
     }
     
     public List<String> getProductos() {

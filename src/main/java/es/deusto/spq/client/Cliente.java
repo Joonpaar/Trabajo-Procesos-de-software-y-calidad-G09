@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
@@ -193,13 +194,59 @@ public class Cliente {
 		compraData.setCantidades(cantidades);
 		compraData.setFecha(System.currentTimeMillis());
 		compraData.setProductos(productos);
-		compraData.setUser("test");
+		compraData.setUser(VentanaCatalogo.cli);
 
 		Response response = invocationBuilder.post(Entity.entity(compraData, MediaType.APPLICATION_JSON));
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.error("Error connecting with the server. Code: {}", response.getStatus());
 		} else {
 			logger.info("Compra insertada correctamente");
+		}
+	}
+	
+	public static Producto getProducto(String nombre) {
+		WebTarget editarProductoWebTarget = webTarget.path("getProducto");
+		Invocation.Builder invocationBuilder = editarProductoWebTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(nombre, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+			return null;
+		} else {
+			logger.info("Producto obtenido");
+			Producto producto=response.readEntity(Producto.class);
+			return producto;
+		}
+	}
+	
+	public static Carro getCarro(String nombre) {
+		WebTarget editarProductoWebTarget = webTarget.path("getCarro");
+		Invocation.Builder invocationBuilder = editarProductoWebTarget.request(MediaType.APPLICATION_JSON);
+
+		Response response = invocationBuilder.post(Entity.entity(nombre, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+			return null;
+		} else {
+			logger.info("Carro obtenido");
+			Carro carro=response.readEntity(Carro.class);
+			return carro;
+		}
+	}
+	
+	public static void actualizarCarro(String user, List<String> prods, List<Integer> cant) {
+		WebTarget editarProductoWebTarget = webTarget.path("actualizarCarro");
+		Invocation.Builder invocationBuilder = editarProductoWebTarget.request(MediaType.APPLICATION_JSON);
+
+		Carro carroData = new Carro();
+		carroData.setUser(user);
+		carroData.setProductos(prods);
+		carroData.setCantidades(cant);
+
+		Response response = invocationBuilder.post(Entity.entity(carroData, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+		} else {
+			logger.info("Carro actualizado");
 		}
 	}
 

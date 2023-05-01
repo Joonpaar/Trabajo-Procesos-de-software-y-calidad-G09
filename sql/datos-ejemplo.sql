@@ -9,3 +9,5 @@ insert into producto values ('Roomba', 60, 20, 'Limpieza');
 insert into producto values ('Television', 100, 10, 'Hogar');
 insert into user values("admin", "admin", 1);
 insert into user values("Mikel", "1234", 0);
+insert into carro values("admin", null, null);
+insert into carro values("Mikel", null, null);
