@@ -1,6 +1,7 @@
 package es.deusto.spq.client;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,6 +38,7 @@ public class VentanaMenuAdmin extends JFrame {
 	public VentanaMenuAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 250);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -47,6 +49,7 @@ public class VentanaMenuAdmin extends JFrame {
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 
 		JLabel lblBienvenida = new JLabel("BIENVENIDO ADMIN");
+		lblBienvenida.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		panelNorte.add(lblBienvenida);
 
 		JPanel panel = new JPanel();

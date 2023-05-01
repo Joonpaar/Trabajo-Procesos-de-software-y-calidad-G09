@@ -6,12 +6,12 @@ Luego hay que ir al MySQL Workbench y ejecutar el contenido del archivo “creat
 
       mvn datanucleus:schema-create
 
-La carpeta también contiene el archivo datos-ejemplo.sql, que se puede ejecutar en MySQL para tener algunos datos iniciales.
+La carpeta también contiene el archivo datos-ejemplo.sql. Una vez ejecutado el anterior comando, se debe ejecutar dicho archivo en MySQL para tener algunos datos para poder interactuar con el proyecto.
 
-Una vez se construye exitosamente toca lanzar el servidor con el comando 
+Una vez se construye exitosamente toca lanzar el servidor con el comando:
 
       mvn jetty:run 
       
-Si el servidor se lanza exitosamente, hay que abrir una nueva consola desde el mismo directorio que la anterior y ejecutar el cliente con el comando 
+Si el servidor se lanza exitosamente, hay que abrir una nueva consola desde el mismo directorio que la anterior y ejecutar el cliente con el comando:
       
       mvn exec:java -Pclient
