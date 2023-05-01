@@ -67,7 +67,7 @@ public class VentanaCatalogo extends JFrame {
 	 */
 	public VentanaCatalogo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 475, 300);
+		setBounds(100, 100, 827, 493);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -198,13 +198,14 @@ public class VentanaCatalogo extends JFrame {
 			
 			@Override
 			public void tableChanged(TableModelEvent e) {
+				if (Cliente.admin) {
 				int fil = e.getFirstRow();
-				
-				String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
-				String tipo =  String.valueOf(modeloTablaProductos.getValueAt(fil, 1));
-				int stock =  Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 2)));
-				int precio = Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 3)));			
-				Cliente.editarProducto(nombre, tipo, stock, precio);
+					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
+					String tipo =  String.valueOf(modeloTablaProductos.getValueAt(fil, 1));
+					int stock =  Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 2)));
+					int precio = Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 3)));			
+					Cliente.editarProducto(nombre, tipo, stock, precio);
+				}
 			}
 		});
 		tablaProductos.addKeyListener(new KeyAdapter() {
@@ -228,7 +229,8 @@ public class VentanaCatalogo extends JFrame {
 				if(e.getClickCount() == 1) {
 					int fila = tablaProductos.rowAtPoint(e.getPoint());
 					Producto p = Cliente.getProductos().get(fila);
-					JOptionPane.showMessageDialog(null, "Producto: "+p.getNombre()+" | Tipo: "+p.getTipo()+" | Precio: "+p.getPrecio()+" | Stock: "+p.getStock());
+					String cant = JOptionPane.showInputDialog("Cuantas unidades quieres");
+					int canti = Integer.parseInt(cant);				
 				}
 			};
 		});

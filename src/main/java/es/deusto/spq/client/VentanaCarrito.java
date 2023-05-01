@@ -1,5 +1,6 @@
 package es.deusto.spq.client;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,14 +12,21 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 
 public class VentanaCarrito extends JFrame {
 
 	private JPanel contentPane;
+	public static DefaultTableModel modeloTablaProductos;
+	private JTable tablaCarro;
+
 
 	/**
 	 * Launch the application.
@@ -42,9 +50,12 @@ public class VentanaCarrito extends JFrame {
 	public VentanaCarrito() {
 		System.out.println(VentanaCatalogo.cli);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 808, 520);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
 		
 		JButton btnVolver = new JButton("VOLVER");
 		Utilidades.modifyButton(btnVolver);
@@ -52,12 +63,20 @@ public class VentanaCarrito extends JFrame {
 
 		setContentPane(contentPane);
 		
-		List<Compra> compras = Cliente.getComprasDelUsuario(VentanaCatalogo.cli);
-		for (Compra c: compras) {
-			for (int i=0;i < c.getProductos().size();i++) {
-				System.out.println(c.getProductos().get(i) + " y la cantidad es" + c.getCantidades().get(i));
-			}
+		modeloTablaProductos=new DefaultTableModel();
+		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
+		modeloTablaProductos.setColumnIdentifiers(nombreColumnas);
+		Carro carro = Cliente.getCarro(VentanaCatalogo.cli);
+		Producto p=new Producto();
+		for (int i=0;i < carro.getProductos().size(); i++) {
+			p=Cliente.getProducto(carro.getProductos().get(i));
+			String [] pr = {p.getNombre(), String.valueOf(p.getTipo()),String.valueOf(p.getPrecio()), String.valueOf(carro.getCantidades().get(i)), };
+			modeloTablaProductos.addRow(pr);
 		}
+		tablaCarro= new JTable(modeloTablaProductos);
+		
+		JScrollPane scrollTablaProductos = new JScrollPane(tablaCarro);
+		panel_1.add(scrollTablaProductos);
 		
 		btnVolver.addActionListener(new ActionListener() {
 			
