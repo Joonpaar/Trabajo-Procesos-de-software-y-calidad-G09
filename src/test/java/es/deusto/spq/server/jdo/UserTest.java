@@ -14,7 +14,6 @@ import java.time.ZonedDateTime;
 
 public class UserTest {
     
-    private static ZonedDateTime timestamp = ZonedDateTime.of(2023, 03, 23, 19, 15, 22, 0, ZoneId.of("Europe/Madrid"));
     private User user;
 
     @Before
