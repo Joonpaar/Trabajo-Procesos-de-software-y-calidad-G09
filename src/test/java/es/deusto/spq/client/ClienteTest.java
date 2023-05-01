@@ -24,11 +24,10 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import es.deusto.spq.pojo.UserData;
 
 
-public class ExampleClientTest {
+public class ClienteTest {
 
     @Mock
     private Client client;
@@ -62,7 +61,7 @@ public class ExampleClientTest {
 
         Response response = Response.ok().build();
         when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
-//      assertTrue(exampleClient.registerUser("test-login", "passwd"));
+//        assertTrue(exampleClient.registerUser("test-login", "passwd"));
 
         verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
         assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
