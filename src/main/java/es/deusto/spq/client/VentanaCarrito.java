@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -159,29 +161,53 @@ public class VentanaCarrito extends JFrame {
 	}
 	
 	public void realizarFactura() {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(new File("./" + "FACTURA DE " + VentanaCatalogo.cli + ".txt"));
-			pw.println("FACTURA DE " + VentanaCatalogo.cli);
-			pw.print("BUENOS DIAS");
-			double sumaTotal = 0;
-			double suma1 = 0;
-			int j = 1;
-			Carro carrit = Cliente.getCarro(VentanaCatalogo.cli);
-			for (int i=0; i<carrit.getProductos().size();i++) {
-				String nom = carrit.getProductos().get(i);
-				Producto p = Cliente.getProducto(nom);
-				suma1 = (p.getPrecio() * carrit.getCantidades().get(i));
-				sumaTotal = sumaTotal + (p.getPrecio() * carrit.getCantidades().get(i));
-				pw.println(j + "- " + p.getNombre() + " " + p.getPrecio()+ " euros  " + carrit.getCantidades().get(i) + "      " + "Precio Del Mismo Articulo teniendo en cuenta las unidades compradas: " + suma1 + " euros");
-				j++;
-			}
-			pw.println("Precio total de la compra: " + sumaTotal + " euros");
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 FileWriter writer;
+		 try {
+            writer = new FileWriter("FACTURA DE "+VentanaCatalogo.cli+".txt");
+            writer.write("FACTURA DE " + VentanaCatalogo.cli + "\n");
+            double sumaTotal = 0;
+            double suma = 0;
+            int j=1;
+            Carro carr = Cliente.getCarro(VentanaCatalogo.cli);
+            for(int i=0; i<carr.getProductos().size(); i++){
+                String nom = carr.getProductos().get(i);
+                Producto p = Cliente.getProducto(nom);
+                suma = (p.getPrecio()*(carr.getCantidades().get(i)));
+                sumaTotal += suma;
+                writer.write(j + "- "+p.getNombre()+"- "+p.getPrecio()+" euros - "+carr.getCantidades().get(i) +" unidades\n");
+                j++;
+            }
+            writer.write("Precio total: "+sumaTotal+" euros");
+            writer.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		
+		
+//		PrintWriter pw = null;
+//		try {
+//			pw = new PrintWriter(new File("./" + "FACTURA DE " + VentanaCatalogo.cli + ".txt"));
+//			pw.println("FACTURA DE " + VentanaCatalogo.cli);
+//			pw.print("BUENOS DIAS");
+//			double sumaTotal = 0;
+//			double suma1 = 0;
+//			int j = 1;
+//			Carro carrit = Cliente.getCarro(VentanaCatalogo.cli);
+//			for (int i=0; i<carrit.getProductos().size();i++) {
+//				String nom = carrit.getProductos().get(i);
+//				Producto p = Cliente.getProducto(nom);
+//				suma1 = (p.getPrecio() * carrit.getCantidades().get(i));
+//				sumaTotal = sumaTotal + (p.getPrecio() * carrit.getCantidades().get(i));
+//				pw.println(j + "- " + p.getNombre() + " " + p.getPrecio()+ " euros  " + carrit.getCantidades().get(i) + "      " + "Precio Del Mismo Articulo teniendo en cuenta las unidades compradas: " + suma1 + " euros");
+//				j++;
+//			}
+//			pw.println("Precio total de la compra: " + sumaTotal + " euros");
+//			
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	
