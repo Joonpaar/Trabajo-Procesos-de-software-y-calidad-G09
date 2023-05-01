@@ -141,7 +141,7 @@ public class VentanaAnyadir extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				VentanaCatalogo v1 = new VentanaCatalogo();
+				VentanaMenuAdmin v1 = new VentanaMenuAdmin();
 				v1.setVisible(true);	
 			}
 		});

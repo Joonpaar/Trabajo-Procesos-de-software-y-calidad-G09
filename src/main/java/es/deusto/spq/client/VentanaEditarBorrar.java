@@ -23,10 +23,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.cj.xdevapi.Client;
-
 import es.deusto.spq.pojo.UserData;
-import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 
@@ -39,7 +36,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
-public class VentanaCatalogo extends JFrame {
+public class VentanaEditarBorrar extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tablaProductos;
@@ -59,7 +56,7 @@ public class VentanaCatalogo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCatalogo frame = new VentanaCatalogo();
+					VentanaEditarBorrar frame = new VentanaEditarBorrar();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,41 +68,34 @@ public class VentanaCatalogo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCatalogo() {
+	public VentanaEditarBorrar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 827, 493);
+		setBounds(100, 100, 850, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setBounds(5, 5, 801, 28);
+		contentPane.add(panel);
 		
-		JLabel lblTitulo = new JLabel("CATALOGO DEL BAZAR");
+		JLabel lblTitulo = new JLabel("MODO EDICION");
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTitulo);
 		
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setBounds(5, 33, 528, 383);
+		contentPane.add(panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setBounds(5, 416, 801, 33);
+		contentPane.add(panel_2);
 		
-		JButton btnAdmin = new JButton("ADMIN");
-		Utilidades.modifyButton(btnAdmin);
-		if(cliente.admin == true) {
-			panel_2.add(btnAdmin);
-		}
-		
-		JButton btnVolver = new JButton("CERRAR SESION");
+		JButton btnVolver = new JButton("VOLVER");
 		Utilidades.modifyButton(btnVolver);
 		panel_2.add(btnVolver);
-		
-		JButton btnCarrito = new JButton("CARRITO");
-		Utilidades.modifyButton(btnCarrito);
-		panel_2.add(btnCarrito);
 		
 		modeloTablaProductos=new DefaultTableModel();
 		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
@@ -114,19 +104,33 @@ public class VentanaCatalogo extends JFrame {
 			String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
 			modeloTablaProductos.addRow(pr);
 		}
-		tablaProductos = new JTable(modeloTablaProductos);
+		tablaProductos = new JTable(modeloTablaProductos) {
+			public boolean isCellEditable(int row,int column){
+				if (Cliente.admin == true) {
+					if (column == 0) {
+						return false;
+					}
+					return true;
+				}else return false;
+
+			}
+		};
 		tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
 		
 		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3, BorderLayout.EAST);
+		panel_3.setBounds(535, 33, 271, 383);
+		contentPane.add(panel_3);
+		panel_3.setLayout(null);
 		
 		JLabel lblFiltro = new JLabel("Filtrar por:");
+		lblFiltro.setBounds(0, 9, 71, 18);
 		lblFiltro.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_3.add(lblFiltro);
 		
 		JComboBox<String> comboBox = new JComboBox<>();
+		comboBox.setBounds(76, 5, 76, 26);
 		comboBox.addItem("Nombre");
 		comboBox.addItem("Tipo");
 		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -134,13 +138,29 @@ public class VentanaCatalogo extends JFrame {
 		panel_3.add(comboBox);
 		
 		txtNombre = new JTextField();
+		txtNombre.setBounds(162, 9, 99, 20);
 		Utilidades.modifyTextField(txtNombre, false);
 		panel_3.add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setBounds(99, 42, 89, 23);
 		Utilidades.modifyButton(btnFiltrar);
 		panel_3.add(btnFiltrar);
+		
+		JButton btnAyuda = new JButton("AYUDA");
+		btnAyuda.setBounds(99, 349, 89, 23);
+		Utilidades.modifyButton(btnAyuda);
+		panel_3.add(btnAyuda);
+		
+		btnAyuda.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "PARA ELIMINAR, SELECCIONE LA FILA DEL PRODUCTO Y ACONTINUACION PULSE SUPRIMIR.\n PARA EDITAR HAGA DOBLE CLICK EN EL ATRIBUTO DE LA FILA SELECCIONADA Y CAMBIE EL ATRIBUTO POR EL DESEADO.");
+				
+			}
+		});
 		
 		btnFiltrar.addActionListener(new ActionListener() {
 			
@@ -191,92 +211,43 @@ public class VentanaCatalogo extends JFrame {
 			}
 		});
 		
-		
-		
-		btnAdmin.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaMenuAdmin ventana = new VentanaMenuAdmin();
-				ventana.setVisible(true);
-				dispose();
-				
-			}
-		});
-		
 		btnVolver.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				VentanaLogin v1 = new VentanaLogin();
+				VentanaMenuAdmin v1 = new VentanaMenuAdmin();
 				v1.setVisible(true);
 			}
 		});
 		
-		btnCarrito.addActionListener(new ActionListener() {
+		tablaProductos.getModel().addTableModelListener(new TableModelListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				VentanaCarrito v1 = new VentanaCarrito();
-				v1.setVisible(true);
+			public void tableChanged(TableModelEvent e) {
+				if (Cliente.admin) {
+				int fil = e.getFirstRow();
+					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
+					String tipo =  String.valueOf(modeloTablaProductos.getValueAt(fil, 1));
+					int stock =  Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 2)));
+					int precio = Integer.parseInt(String.valueOf(modeloTablaProductos.getValueAt(fil, 3)));			
+					Cliente.editarProducto(nombre, tipo, stock, precio);
+				}
 			}
 		});
-		
-		tablaProductos.addMouseListener(new MouseAdapter() {
+		tablaProductos.addKeyListener(new KeyAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
-					int fila = tablaProductos.rowAtPoint(e.getPoint());
-					Producto p = Cliente.getProductos().get(fila);
-					
-					int opcion = JOptionPane.showOptionDialog(null,"Producto: "+p.getNombre()+" | Tipo: "+p.getTipo()+" | Precio: "+p.getPrecio()+" | Stock: "+p.getStock(),
-						    p.getNombre(),
-						    JOptionPane.YES_NO_OPTION,
-						    JOptionPane.PLAIN_MESSAGE,
-						    null,
-						    new Object[]{"Salir", "Añadir al carro"},
-						    "Salir"  // Botón seleccionado por defecto
-						);
-
-						if (opcion == JOptionPane.YES_OPTION) {
-						} else {
-							Object[] opciones = {"Aceptar", "Cancelar"};
-							JTextField textField = new JTextField();
-							Object[] mensaje = {"Cuántas unidades quiere?:", textField};
-							int opcion2 = JOptionPane.showOptionDialog(
-							        null,                              // Parent component
-							        mensaje,                           // Mensaje a mostrar
-							        "Ingresar número",                 // Título de la ventana
-							        JOptionPane.YES_NO_OPTION,         // Tipo de ventana
-							        JOptionPane.PLAIN_MESSAGE,         // Tipo de mensaje
-							        null,                              // Icono personalizado
-							        opciones,                          // Texto de los botones
-							        opciones[0]                        // Botón seleccionado por defecto
-							);
-							
-							int numero = -1;
-							if (opcion2 == JOptionPane.YES_OPTION) {
-							    try {
-							        numero = Integer.parseInt(textField.getText());
-							    } catch (NumberFormatException e2) {
-							        JOptionPane.showMessageDialog(null, "El valor ingresado no es un número válido.");
-							    }
-							}
-							if (numero >= 0) {
-								Carro c=Cliente.getCarro(cli);
-								List<Integer> cantN=c.getCantidades();
-								cantN.add(numero);
-								List<String> prodN =c.getProductos();
-								prodN.add(p.getNombre());
-								Cliente.actualizarCarro(prodN, cantN);
-						        JOptionPane.showMessageDialog(null, "Producto añadido al carro.");
-							}
-						}
-						
-				}
-			};
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_DELETE && Cliente.admin==true) {
+					int fil = tablaProductos.getSelectedRow();
+					String nombre = String.valueOf(modeloTablaProductos.getValueAt(fil, 0));
+					Cliente.borrarProducto(nombre);
+					try {modeloTablaProductos.removeRow(fil);
+					} catch (ArrayIndexOutOfBoundsException e2) {
+					}
+					tablaProductos.repaint();
+				}			
+			}
 		});
 	}
 	
