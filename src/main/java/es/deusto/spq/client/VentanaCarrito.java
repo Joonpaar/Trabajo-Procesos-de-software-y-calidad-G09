@@ -138,7 +138,7 @@ public class VentanaCarrito extends JFrame {
 						cants.add(cant);
 						prods.add(prod);
 					}else {
-				        JOptionPane.showMessageDialog(null, "No queda suficiente " + producto.getNombre() + " en stock.");
+				        JOptionPane.showMessageDialog(null, "No queda suficiente " + producto.getNombre() + "en stock.");
 				        return;
 					}	
 				}
@@ -155,16 +155,4 @@ public class VentanaCarrito extends JFrame {
 			}
 		});
 	}
-	
-	private void realizarFactura() {
-		PrintWriter pw = null;
-//		try {
-//			pw = new PrintWriter("FACTURA DE " + VentanaCatalogo.cli + ".txt");
-//			pw.println("FACTURA DE " + VentanaCatalogo.cli);
-//			double sumaTotal = 0;
-//			double suma1 = 0;
-//			int i = 1;
-//			ArrayList<Producto> al = null;
-	}
-	
 }
