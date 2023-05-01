@@ -114,7 +114,11 @@ public class VentanaCatalogo extends JFrame {
 			String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
 			modeloTablaProductos.addRow(pr);
 		}
-		tablaProductos = new JTable(modeloTablaProductos);
+		tablaProductos = new JTable(modeloTablaProductos) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
