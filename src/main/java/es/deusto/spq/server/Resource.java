@@ -345,18 +345,14 @@ public class Resource {
 	@POST
 	@Path("/getProducto")
 	public Producto getProducto(String nombre) {
-		System.out.println(nombre);
-
 		Producto producto=null;
 		try {
 			producto = pm.getObjectById(Producto.class, nombre);
-			System.out.println(producto.getTipo());
 		
 		} catch (Exception ex) {
 			System.out.println("  $ Error: " + ex.getMessage());
 			pm.close();
 		}
-		System.out.println(producto.getTipo());
 
 		return producto;
 	}

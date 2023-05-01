@@ -233,12 +233,12 @@ public class Cliente {
 		}
 	}
 	
-	public static void actualizarCarro(String user, List<String> prods, List<Integer> cant) {
+	public static void actualizarCarro(List<String> prods, List<Integer> cant) {
 		WebTarget editarProductoWebTarget = webTarget.path("actualizarCarro");
 		Invocation.Builder invocationBuilder = editarProductoWebTarget.request(MediaType.APPLICATION_JSON);
 
 		Carro carroData = new Carro();
-		carroData.setUser(user);
+		carroData.setUser(VentanaCatalogo.cli);
 		carroData.setProductos(prods);
 		carroData.setCantidades(cant);
 

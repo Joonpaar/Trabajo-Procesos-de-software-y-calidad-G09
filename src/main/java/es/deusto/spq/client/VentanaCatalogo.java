@@ -23,7 +23,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.cj.xdevapi.Client;
+
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 
@@ -263,11 +266,54 @@ public class VentanaCatalogo extends JFrame {
 		tablaProductos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 1) {
+				if(e.getClickCount() == 2) {
 					int fila = tablaProductos.rowAtPoint(e.getPoint());
 					Producto p = Cliente.getProductos().get(fila);
-					String cant = JOptionPane.showInputDialog("Cuantas unidades quieres");
-					int canti = Integer.parseInt(cant);				
+					
+					int opcion = JOptionPane.showOptionDialog(null,"Producto: "+p.getNombre()+" | Tipo: "+p.getTipo()+" | Precio: "+p.getPrecio()+" | Stock: "+p.getStock(),
+						    p.getNombre(),
+						    JOptionPane.YES_NO_OPTION,
+						    JOptionPane.PLAIN_MESSAGE,
+						    null,
+						    new Object[]{"Salir", "Añadir al carro"},
+						    "Salir"  // Botón seleccionado por defecto
+						);
+
+						if (opcion == JOptionPane.YES_OPTION) {
+						} else {
+							Object[] opciones = {"Aceptar", "Cancelar"};
+							JTextField textField = new JTextField();
+							Object[] mensaje = {"Cuántas unidades quiere?:", textField};
+							int opcion2 = JOptionPane.showOptionDialog(
+							        null,                              // Parent component
+							        mensaje,                           // Mensaje a mostrar
+							        "Ingresar número",                 // Título de la ventana
+							        JOptionPane.YES_NO_OPTION,         // Tipo de ventana
+							        JOptionPane.PLAIN_MESSAGE,         // Tipo de mensaje
+							        null,                              // Icono personalizado
+							        opciones,                          // Texto de los botones
+							        opciones[0]                        // Botón seleccionado por defecto
+							);
+							
+							int numero = -1;
+							if (opcion2 == JOptionPane.YES_OPTION) {
+							    try {
+							        numero = Integer.parseInt(textField.getText());
+							    } catch (NumberFormatException e2) {
+							        JOptionPane.showMessageDialog(null, "El valor ingresado no es un número válido.");
+							    }
+							}
+							if (numero >= 0) {
+								Carro c=Cliente.getCarro(cli);
+								List<Integer> cantN=c.getCantidades();
+								cantN.add(numero);
+								List<String> prodN =c.getProductos();
+								prodN.add(p.getNombre());
+								Cliente.actualizarCarro(prodN, cantN);
+						        JOptionPane.showMessageDialog(null, "Producto añadido al carro.");
+							}
+						}
+						
 				}
 			};
 		});
