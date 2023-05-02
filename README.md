@@ -1,4 +1,8 @@
-Abre una consola de comandos desde el directorio donde se encuentra el archivo .pom. Escribe el siguiente comando para construir todo y realizar la tarea de “enhance” de las clases de la base de datos. 
+Abre una consola de comandos desde el directorio donde se encuentra el archivo .pom. Escribe el siguiente comando para compilar todas las clases y ejecutar los teses unitarios.
+
+      mvn test
+
+Despues, escribe el siguiente comando para construir todo y realizar la tarea de “enhance” de las clases de la base de datos. 
 
       mvn clean compile
 

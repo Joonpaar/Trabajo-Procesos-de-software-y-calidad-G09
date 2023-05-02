@@ -1,4 +1,0 @@
-FACTURA DE admin
-1- Regadera- 10 euros - 10 unidades
-2- Television- 100 euros - 5 unidades
-Precio total: 600.0 euros
