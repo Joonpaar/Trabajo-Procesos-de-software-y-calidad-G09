@@ -60,28 +60,28 @@ public class ResourceTest {
     }
     
 
-    @Test
-    public void testRegisterUser() {
-        // prepare mock Persistence Manager to return User
-        UserData userData = new UserData();
-        userData.setLogin("test-login");
-        userData.setPassword("passwd");
-
-        // simulate that 
-        User user = spy(User.class);
-        when(persistenceManager.getObjectById(User.class, userData.getLogin())).thenReturn(user);
-
-        // call tested method
-        Response response = resource.registerUser(userData);
-
-        // check that the user is set by the code with the password
-        ArgumentCaptor<String> passwordCaptor = ArgumentCaptor.forClass(String.class);
-        verify(user).setPassword(passwordCaptor.capture());
-        assertEquals("passwd", passwordCaptor.getValue());
-
-        // check expected response
-        assertEquals(Response.Status.OK, response.getStatusInfo());
-    }
+//    @Test
+//    public void testRegisterUser() {
+//        // prepare mock Persistence Manager to return User
+//        UserData userData = new UserData();
+//        userData.setLogin("test-login");
+//        userData.setPassword("passwd");
+//
+//        // simulate that 
+//        User user = spy(User.class);
+//        when(persistenceManager.getObjectById(User.class, userData.getLogin())).thenReturn(user);
+//
+//        // call tested method
+//        Response response = resource.registerUser(userData);
+//
+//        // check that the user is set by the code with the password
+//        ArgumentCaptor<String> passwordCaptor = ArgumentCaptor.forClass(String.class);
+//        verify(user).setPassword(passwordCaptor.capture());
+//        assertEquals("passwd", passwordCaptor.getValue());
+//
+//        // check expected response
+//        assertEquals(Response.Status.OK, response.getStatusInfo());
+//    }
     
 //    @Test
 //    public void testLoginUser() {

@@ -26,6 +26,7 @@ public class CompraTest {
     	prods.add("Semillas");
     	Long l=(long) 1;
         compra = new Compra("usu", l,prods, cants);
+        new Compra();
     }
 
     @Test
