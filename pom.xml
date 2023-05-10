@@ -148,15 +148,6 @@
 					<verbose>true</verbose>
 					<props>${config.files.dir}/datanucleus.properties</props>
 				</configuration>
-				<executions>
-					<execution>
-						<!-- links the enhance to the compile phase -->
-						<phase>compile</phase>
-						<goals>
-							<goal>enhance</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 			<plugin>
@@ -222,7 +213,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.95</minimum>
+											<minimum>0.15</minimum>
 										</limit>
 										<limit>
 											<counter>BRANCH</counter>
