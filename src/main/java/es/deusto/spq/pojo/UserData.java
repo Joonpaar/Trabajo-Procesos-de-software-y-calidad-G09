@@ -5,6 +5,7 @@ public class UserData {
     private String login;
     private String password;
     private int tipoUser;
+    private int valoracion;
 
    
 
@@ -36,7 +37,15 @@ public class UserData {
 		this.tipoUser = tipoUser;
 	}
 
-    public String toString() {
-        return "[login=" + login + ", password=" + password + ", tipoUser=" + tipoUser + "]";
+    public int getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
+	}
+
+	public String toString() {
+        return "[login=" + login + ", password=" + password + ", tipoUser=" + tipoUser + ", valoracion=" + valoracion + "]";
     }
 }

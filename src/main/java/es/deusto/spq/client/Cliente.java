@@ -251,6 +251,36 @@ public class Cliente {
 			logger.info("Carro actualizado");
 		}
 	}
+	
+	public static User getUsuarioPorNombre(String nombre) {
+		WebTarget getUsuarioPorNombreWebTarget = webTarget.path("getUsuarioPorNombre");
+		Invocation.Builder invocationBuilder = getUsuarioPorNombreWebTarget.request(MediaType.APPLICATION_JSON);
+
+		Response response = invocationBuilder.post(Entity.entity(nombre, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+			return null;
+		} else {
+			User usuario = response.readEntity(User.class);
+			return usuario;
+		}
+	}
+	
+	public static void editarUser(String nombre,int valoracion) {
+		WebTarget editarUserWebTarget = webTarget.path("editarUser");
+		Invocation.Builder invocationBuilder = editarUserWebTarget.request(MediaType.APPLICATION_JSON);
+
+		UserData userData = new UserData();
+		userData.setLogin(nombre);
+		userData.setValoracion(valoracion);
+
+		Response response = invocationBuilder.post(Entity.entity(userData, MediaType.APPLICATION_JSON));
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+		} else {
+			logger.info("User editado");
+		}
+	}
 
 	public static void main(String[] args) {
 		if (args.length != 2) {

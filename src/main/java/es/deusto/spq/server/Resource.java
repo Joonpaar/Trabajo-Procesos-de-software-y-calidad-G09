@@ -65,7 +65,8 @@ public class Resource {
 				logger.info("Password set user: {}", user);
 			} else {
 				logger.info("Creating user: {}", user);
-				user = new User(userData.getLogin(), userData.getPassword());
+//				user = new User(userData.getLogin(), userData.getPassword());
+				user = new User(userData.getLogin(), userData.getPassword(), 0, -1);
 				pm.makePersistent(user);
 				List<String> prods= new ArrayList<>();
 				List<Integer> cants= new ArrayList<>();
@@ -342,6 +343,7 @@ public class Resource {
 	  
 		}
 	}
+	
 	@POST
 	@Path("/getProducto")
 	public Producto getProducto(String nombre) {
@@ -355,6 +357,23 @@ public class Resource {
 		}
 
 		return producto;
+	}
+	
+	
+	@POST
+	@Path("/getUsuarioPorNombre")
+	public User getUsuarioPorNombre(String nombre) {
+		User usuario = null;
+		System.out.println("LLEGA");
+		try {
+			usuario = pm.getObjectById(User.class, nombre);
+		
+		} catch (Exception ex) {
+			System.out.println("  $ Error: " + ex.getMessage());
+			pm.close();
+		}
+
+		return usuario;
 	}
 	
 	@POST
@@ -374,6 +393,42 @@ public class Resource {
 		}
 		return carro;
 	}
+	
+	@POST
+	@Path("/editarUser")
+	public Response editarUser(UserData userData) {
+		try
+	    {	
+	        tx.begin();
+	        logger.info("Checking whether the product exits or not: '{}'", userData.getLogin());
+			User usuario = null;
+			try {
+				usuario = pm.getObjectById(User.class, userData.getLogin());
+			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
+				logger.info("Exception launched: {}", jonfe.getMessage());
+			}
+			logger.info("Usuario: {}", usuario);
+			if (usuario == null) {
+				logger.info("Error editando el usuario: {}", usuario);
+			} else {
+				logger.info("Editando producto: {}", usuario);
+				usuario.setValoracion((userData.getValoracion()));
+				pm.flush();
+				logger.info("Producto editado: {}", usuario);
+			}
+			tx.commit();
+			return Response.ok().build();
+	    }
+	    finally
+	    {
+	        if (tx.isActive())
+	        {
+	            tx.rollback();
+	        }
+	  
+		}
+	}
+	
 	@POST
 	@Path("/actualizarCarro")
 	public Response actualizarCarro(Carro carroData) {

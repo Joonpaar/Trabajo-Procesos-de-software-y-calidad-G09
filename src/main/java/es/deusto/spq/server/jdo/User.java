@@ -13,7 +13,8 @@ public class User {
 	@PrimaryKey
 	String login=null;
 	String password=null;
-	int tipoUser;	
+	int tipoUser;
+	int valoracion;
 	
 	
 	public User(String login, String password) {
@@ -28,6 +29,14 @@ public class User {
 		this.login = login;
 		this.password = password;
 		this.tipoUser = tipoUser;
+	}
+	
+	public User(String login, String password, int tipoUser, int valoracion) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.tipoUser = tipoUser;
+		this.valoracion = valoracion;
 	}
 
 	public int getTipoUser() {
@@ -49,5 +58,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public int getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
+	}
+	
+	
 	
 }

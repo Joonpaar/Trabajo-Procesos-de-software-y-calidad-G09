@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -15,23 +17,35 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
+import es.deusto.spq.server.jdo.User;
 
 public class VentanaCarrito extends JFrame {
 
 	private JPanel contentPane;
 	public static DefaultTableModel modeloTablaProductos;
 	private JTable tablaCarro;
-
+	
+	//VARIABLES PARA LA VALORACION DEL SERVICIO
+	private JProgressBar pb;
+	private SpinnerModel modelosp;
+	private JSpinner sp;
 
 	/**
 	 * Launch the application.
@@ -63,6 +77,26 @@ public class VentanaCarrito extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(84, 10, 462, 412);
 		contentPane.add(panel_1);
+		
+		//INICIALIZACION DEL SPINNER
+		JLabel lblValorar = new JLabel("VALORANOS: 0-100");
+		lblValorar.setBounds(564, 110, 115, 29);
+		contentPane.add(lblValorar);
+		lblValorar.setVisible(false);
+		
+		
+		modelosp = new SpinnerNumberModel(50, 0, 100, 1);
+		sp = new JSpinner(modelosp);
+		sp.setVisible(false);
+		sp.setBounds(564, 147, 37, 30);
+		contentPane.add(sp);
+		
+		pb = new JProgressBar(0, 100);
+		pb.setValue(50);
+		pb.setVisible(false);
+		pb.setBounds(615, 147, 115, 29);
+		contentPane.add(pb);
+		
 		
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.setBounds(564, 202, 115, 29);
@@ -96,6 +130,8 @@ public class VentanaCarrito extends JFrame {
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaCarro);
 		panel_1.add(scrollTablaProductos);
 		
+
+		
 		btnBorrar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -127,6 +163,37 @@ public class VentanaCarrito extends JFrame {
 				v1.setVisible(true);
 			}
 		});
+		
+		sp.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				int valor = (int) sp.getValue();
+				pb.setValue(valor);
+			}
+		});
+		
+		pb.addMouseListener(new MouseAdapter() {
+			
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int resp = JOptionPane.showConfirmDialog(null,"¿ESTA SEGURO DE SU OPCION?");
+				if(resp == JOptionPane.OK_OPTION) {
+					int valor = pb.getValue();
+					Cliente.editarUser(VentanaCatalogo.cli, valor);
+					JOptionPane.showMessageDialog(null, "GRACIAS POR COLABORAR!!!", "GRACIAS!!!", JOptionPane.NO_OPTION);
+					lblValorar.setVisible(false);
+					sp.setVisible(false);
+					pb.setVisible(false);
+
+					
+				}
+				
+			}
+		});
+		
 		btnComprar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -154,6 +221,17 @@ public class VentanaCarrito extends JFrame {
 					Cliente.actualizarCarro(prods, cants);
 			        JOptionPane.showMessageDialog(null, "Compra realizada.");
 			        modeloTablaProductos.setRowCount(0);
+			        System.out.println("LLEGO");
+			        User usuario = Cliente.getUsuarioPorNombre(VentanaCatalogo.cli);
+			        System.out.println("EL usuario es:" + usuario.getLogin() + " " + usuario.getValoracion());
+			        if (usuario.getValoracion() == -1) {
+			        	JOptionPane.showMessageDialog(null, "VALORONAS DEL 0 AL 100 MEDIANTE LA BARRA Y GUARDA TU RESPUESTA HACIENDO CLICK ENCIMA DE ELLA", "GRACIAS!!!", JOptionPane.NO_OPTION);
+				        lblValorar.setVisible(true);
+				        sp.setVisible(true);
+				        pb.setVisible(true);
+				        System.out.println("PETA");
+			        }
+
 				}else {
 			        JOptionPane.showMessageDialog(null, "No tienes productos.");
 				}
