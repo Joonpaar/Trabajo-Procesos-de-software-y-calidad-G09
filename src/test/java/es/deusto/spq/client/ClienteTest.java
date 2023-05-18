@@ -8,10 +8,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,6 +29,9 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.jdo.Carro;
+import es.deusto.spq.server.jdo.Producto;
+import es.deusto.spq.server.jdo.TipoProducto;
 
 
 public class ClienteTest {
@@ -41,6 +48,9 @@ public class ClienteTest {
    
 
     private Cliente exampleClient;
+    private Producto exampleProducto;
+    private List<Producto> listaProductos;
+    private Carro exampleCarro;
 
     @Before
     public void setUp() {
@@ -52,6 +62,12 @@ public class ClienteTest {
             when(client.target("http://localhost:8080/rest/resource")).thenReturn(webTarget);
 
             exampleClient = new Cliente("localhost", "8080");
+            exampleProducto=new Producto("prodcuto", 1, 1, TipoProducto.Jardineria);
+            listaProductos=new ArrayList<>();
+            listaProductos.add(exampleProducto);
+            List<String> prods=new ArrayList<>();
+            List<Integer> cants=new ArrayList<>();
+            exampleCarro=new Carro("test-login", prods, cants);
         }
     }
 
@@ -81,28 +97,107 @@ public class ClienteTest {
         assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
     }
     
-//    @Test
-//    public void testGetAll() {
-//        when(webTarget.path("getProductos")).thenReturn(webTarget);
-//
-//        Response response = Response.serverError().build();
-//        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
-//        assertFalse(Cliente.registerUser("test-login", "passwd"));
-//
-//        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
-//        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
-//        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
-//    }
+    @Test
+    public void testLoginUser() {
+    	when(webTarget.path("login")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(Integer.class)).thenReturn(3);
+        assertTrue(Cliente.loginUser("test-login", "passwd"));
+        
+        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
+        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
+        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
+    }
     
-//    @Test
-//    public void testLoginUser() {
-//    	when(webTarget.path("login")).thenReturn(webTarget);
-//    	Response response = Response.ok().build();;
-//        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
-//        assertTrue(Cliente.loginUser("test-login", "passwd"));
-//        
-//        verify(webTarget.request(MediaType.APPLICATION_JSON)).post(userDataEntityCaptor.capture());
-//        assertEquals("test-login", userDataEntityCaptor.getValue().getEntity().getLogin());
-//        assertEquals("passwd", userDataEntityCaptor.getValue().getEntity().getPassword());
-//    }
+    @Test
+    public void testInsertarProducto() {
+    	when(webTarget.path("insertarProducto")).thenReturn(webTarget);
+    	Response response = Response.ok().build();
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        Cliente.insertarProducto("producto", 1, 1, TipoProducto.Jardineria);
+
+    }
+    @Test
+    public void testGetProductos() {
+    	when(webTarget.path("getProductos")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+    	GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {};
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(listType)).thenReturn((ArrayList<Producto>) listaProductos);
+        Cliente.getProductos();
+
+    }
+    @Test
+    public void testGetProductosPorTipo() {
+    	when(webTarget.path("getProductosPorTipo")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+    	GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {};
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(listType)).thenReturn((ArrayList<Producto>) listaProductos);
+        Cliente.getProductosPorTipo(TipoProducto.Jardineria);
+    }
+    @Test
+    public void testBorrarProducto() {
+    	when(webTarget.path("borrarProducto")).thenReturn(webTarget);
+    	Response response = Response.ok().build();
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        Cliente.borrarProducto("producto");
+    }
+    @Test
+    public void testGetComprasDelUsuario() {
+    	when(webTarget.path("getComprasDelUsuario")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+    	GenericType<ArrayList<Producto>> listType = new GenericType<ArrayList<Producto>>() {};
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(listType)).thenReturn((ArrayList<Producto>) listaProductos);
+        Cliente.getComprasDelUsuario("test-login");
+    }
+    @Test
+    public void testEditarProducto() {
+    	when(webTarget.path("editarProducto")).thenReturn(webTarget);
+    	Response response = Response.ok().build();
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        Cliente.editarProducto("producto", TipoProducto.Jardineria.name(),2, 2);
+    }
+    @Test
+    public void testComprarProducto() {
+    	when(webTarget.path("comprarProducto")).thenReturn(webTarget);
+    	Response response = Response.ok().build();
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        List<String> prods=new ArrayList<>();
+        List<Integer> cants=new ArrayList<>();
+        Cliente.comprarProducto(prods, cants);
+    }
+    @Test
+    public void testGetProducto() {
+    	when(webTarget.path("getComprasDelUsuario")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(Producto.class)).thenReturn(exampleProducto);
+        Cliente.getProducto("producto");
+    }
+    @Test
+    public void testGetCarro() {
+    	when(webTarget.path("getCarro")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(Carro.class)).thenReturn(exampleCarro);
+        Cliente.getCarro("test-login");
+    }
+    @Test
+    public void testActualizarCarro() {
+    	when(webTarget.path("actualizarCarro")).thenReturn(webTarget);
+    	Response response = Response.ok().build();
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        List<String> prods=new ArrayList<>();
+        List<Integer> cants=new ArrayList<>();
+        Cliente.actualizarCarro(prods, cants);
+    }
 }

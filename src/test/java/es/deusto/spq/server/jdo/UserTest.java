@@ -15,10 +15,13 @@ import java.time.ZonedDateTime;
 public class UserTest {
     
     private User user;
+    private User user2;
+
 
     @Before
     public void setUp() {
         user = new User("test-login", "passwd");
+        user2 = new User("usuario", "123", 0);
     }
 
     @Test
@@ -35,5 +38,15 @@ public class UserTest {
     public void testSetPassword() {
         user.setPassword("newpasswd");
         assertEquals("newpasswd", user.getPassword());
+    }
+    @Test
+    public void testGetTipoUser() {
+        assertEquals(0, user2.getTipoUser());
+    }
+
+    @Test
+    public void testSetTipoUser() {
+        user2.setTipoUser(1);
+        assertEquals(1, user2.getTipoUser());
     }
 }

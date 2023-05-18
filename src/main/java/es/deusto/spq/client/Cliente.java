@@ -54,7 +54,6 @@ public class Cliente {
 		}
 	}
 
-	// FALTA POR HACER
 	public static boolean loginUser(String login, String password) {
 		WebTarget loginUserWebTarget = webTarget.path("login");
 		Invocation.Builder invocationBuilder = loginUserWebTarget.request(MediaType.APPLICATION_JSON);
@@ -84,7 +83,7 @@ public class Cliente {
 				return true;
 			}
 
-			logger.info("Error de login correctamente!");
+			logger.info("Error de login!");
 			return false;
 		}
 		return false;
@@ -282,17 +281,17 @@ public class Cliente {
 		}
 	}
 
-	public static void main(String[] args) {
-		if (args.length != 2) {
-			logger.info("Use: java Client.Client [host] [port]");
-			System.exit(0);
-		}
-
-		String hostname = args[0];
-		String port = args[1];
-
-		Cliente exampleClient = new Cliente(hostname, port);
-		VentanaLogin v1 = new VentanaLogin();
-		v1.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		if (args.length != 2) {
+//			logger.info("Use: java Client.Client [host] [port]");
+//			System.exit(0);
+//		}
+//
+//		String hostname = args[0];
+//		String port = args[1];
+//
+//		Cliente exampleClient = new Cliente(hostname, port);
+//		VentanaLogin v1 = new VentanaLogin();
+//		v1.setVisible(true);
+//	}
 }
