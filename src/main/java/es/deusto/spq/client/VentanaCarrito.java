@@ -221,7 +221,6 @@ public class VentanaCarrito extends JFrame {
 					Cliente.actualizarCarro(prods, cants);
 			        JOptionPane.showMessageDialog(null, "Compra realizada.");
 			        modeloTablaProductos.setRowCount(0);
-			        System.out.println("LLEGO");
 			        User usuario = Cliente.getUsuarioPorNombre(VentanaCatalogo.cli);
 			        System.out.println("EL usuario es:" + usuario.getLogin() + " " + usuario.getValoracion());
 			        if (usuario.getValoracion() == -1) {
@@ -229,7 +228,6 @@ public class VentanaCarrito extends JFrame {
 				        lblValorar.setVisible(true);
 				        sp.setVisible(true);
 				        pb.setVisible(true);
-				        System.out.println("PETA");
 			        }
 
 				}else {

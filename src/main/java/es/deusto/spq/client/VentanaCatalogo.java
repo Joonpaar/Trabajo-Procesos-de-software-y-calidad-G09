@@ -15,9 +15,13 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -50,6 +54,7 @@ public class VentanaCatalogo extends JFrame {
 	//VARIABLE PARA GUARDAR EL NOMBRE DEL USUARIO LOGEADO
 	public static String cli = "";
 	private JTextField txtNombre;
+	
 
 
 	/**
