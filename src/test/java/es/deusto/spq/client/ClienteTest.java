@@ -32,6 +32,7 @@ import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
+import es.deusto.spq.server.jdo.User;
 
 
 public class ClienteTest {
@@ -51,6 +52,7 @@ public class ClienteTest {
     private Producto exampleProducto;
     private List<Producto> listaProductos;
     private Carro exampleCarro;
+    private User exampleUsuario;
 
     @Before
     public void setUp() {
@@ -68,6 +70,7 @@ public class ClienteTest {
             List<String> prods=new ArrayList<>();
             List<Integer> cants=new ArrayList<>();
             exampleCarro=new Carro("test-login", prods, cants);
+            exampleUsuario=new User("test-login", "passwd", 0, 0);
         }
     }
 
@@ -199,5 +202,21 @@ public class ClienteTest {
         List<String> prods=new ArrayList<>();
         List<Integer> cants=new ArrayList<>();
         Cliente.actualizarCarro(prods, cants);
+    }
+    @Test
+    public void testGetUsuarioPorNombre() {
+    	when(webTarget.path("getUsuarioPorNombre")).thenReturn(webTarget);
+    	Response response = mock(Response.class);
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.readEntity(User.class)).thenReturn(exampleUsuario);
+        Cliente.getUsuarioPorNombre("test-login");
+    }
+    
+    @Test
+    public void testEditarUser() {
+    	when(webTarget.path("editarUser")).thenReturn(webTarget);
+    	Response response = Response.ok().build();
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        Cliente.editarUser("test-login", 1);
     }
 }

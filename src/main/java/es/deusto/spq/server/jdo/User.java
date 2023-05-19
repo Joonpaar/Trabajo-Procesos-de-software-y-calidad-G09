@@ -16,6 +16,9 @@ public class User {
 	int tipoUser;
 	int valoracion;
 	
+	public User() {
+		
+	}
 	
 	public User(String login, String password) {
 		this.login = login;

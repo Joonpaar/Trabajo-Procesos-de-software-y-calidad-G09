@@ -49,4 +49,9 @@ public class UserTest {
         user2.setTipoUser(1);
         assertEquals(1, user2.getTipoUser());
     }
+    @Test
+    public void testGetValoracion() {
+        user2.setValoracion(1);
+        assertEquals(1, user2.getValoracion());
+    }
 }

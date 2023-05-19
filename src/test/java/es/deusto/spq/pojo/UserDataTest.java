@@ -17,6 +17,7 @@ public class UserDataTest {
         userData.setLogin("test-login");
         userData.setPassword("passwd");
         userData.setTipoUser(0);
+        userData.setValoracion(0);
     }
 
     @Test
@@ -31,6 +32,10 @@ public class UserDataTest {
     @Test
     public void testGetTipo() {
         assertEquals(0, userData.getTipoUser());
+    }
+    @Test
+    public void testGetValoracion() {
+        assertEquals(0, userData.getValoracion());
     }
     @Test
     public void testToString() {
