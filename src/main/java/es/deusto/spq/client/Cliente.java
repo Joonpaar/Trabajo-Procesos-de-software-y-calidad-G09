@@ -281,17 +281,17 @@ public class Cliente {
 		}
 	}
 
-//	public static void main(String[] args) {
-//		if (args.length != 2) {
-//			logger.info("Use: java Client.Client [host] [port]");
-//			System.exit(0);
-//		}
-//
-//		String hostname = args[0];
-//		String port = args[1];
-//
-//		Cliente exampleClient = new Cliente(hostname, port);
-//		VentanaLogin v1 = new VentanaLogin();
-//		v1.setVisible(true);
-//	}
+	public static void main(String[] args) {
+		if (args.length != 2) {
+			logger.info("Use: java Client.Client [host] [port]");
+			System.exit(0);
+		}
+
+		String hostname = args[0];
+		String port = args[1];
+
+		Cliente exampleClient = new Cliente(hostname, port);
+		VentanaLogin v1 = new VentanaLogin();
+		v1.setVisible(true);
+	}
 }

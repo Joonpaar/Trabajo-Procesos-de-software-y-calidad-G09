@@ -2,6 +2,7 @@ package es.deusto.spq.client;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -10,6 +11,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +43,8 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -50,12 +56,10 @@ public class VentanaCatalogo extends JFrame {
 	public static DefaultTableModel modeloTablaProductos;
 	public static List<Producto> productos;
 	private Cliente cliente;
-	
-	//VARIABLE PARA GUARDAR EL NOMBRE DEL USUARIO LOGEADO
+
+	// VARIABLE PARA GUARDAR EL NOMBRE DEL USUARIO LOGEADO
 	public static String cli = "";
 	private JTextField txtNombre;
-	
-
 
 	/**
 	 * Launch the application.
@@ -85,39 +89,40 @@ public class VentanaCatalogo extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
-		
+
 		JLabel lblTitulo = new JLabel("CATALOGO DEL BAZAR");
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTitulo);
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		
+
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
-		
+
 		JButton btnAdmin = new JButton("ADMIN");
 		Utilidades.modifyButton(btnAdmin);
-		if(cliente.admin == true) {
+		if (cliente.admin == true) {
 			panel_2.add(btnAdmin);
 		}
-		
+
 		JButton btnVolver = new JButton("CERRAR SESION");
 		Utilidades.modifyButton(btnVolver);
 		panel_2.add(btnVolver);
-		
+
 		JButton btnCarrito = new JButton("CARRITO");
 		Utilidades.modifyButton(btnCarrito);
 		panel_2.add(btnCarrito);
-		
-		modeloTablaProductos=new DefaultTableModel();
-		String [] nombreColumnas = {"Nombre", "Tipo", "Stock", "Precio"};
+
+		modeloTablaProductos = new DefaultTableModel();
+		String[] nombreColumnas = { "Nombre", "Tipo", "Stock", "Precio" };
 		modeloTablaProductos.setColumnIdentifiers(nombreColumnas);
-		for (Producto producto: Cliente.getProductos()) {
-			String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
+		for (Producto producto : Cliente.getProductos()) {
+			String[] pr = { producto.getNombre(), String.valueOf(producto.getTipo()),
+					String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio()) };
 			modeloTablaProductos.addRow(pr);
 		}
 		tablaProductos = new JTable(modeloTablaProductos) {
@@ -128,94 +133,149 @@ public class VentanaCatalogo extends JFrame {
 		tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
-		
+
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, BorderLayout.EAST);
-		
+
 		JLabel lblFiltro = new JLabel("Filtrar por:");
 		lblFiltro.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_3.add(lblFiltro);
-		
+
 		JComboBox<String> comboBox = new JComboBox<>();
 		comboBox.addItem("Nombre");
 		comboBox.addItem("Tipo");
 		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		comboBox.setBackground(Color.WHITE);
 		panel_3.add(comboBox);
-		
+
 		txtNombre = new JTextField();
 		Utilidades.modifyTextField(txtNombre, false);
 		panel_3.add(txtNombre);
 		txtNombre.setColumns(10);
-		
+
 		JButton btnFiltrar = new JButton("Filtrar");
 		Utilidades.modifyButton(btnFiltrar);
 		panel_3.add(btnFiltrar);
-		
+
+		JLabel lblImagen = new JLabel("");
+		contentPane.add(lblImagen, BorderLayout.WEST);
+
+		tablaProductos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int fila = tablaProductos.rowAtPoint(e.getPoint());
+					Producto p = Cliente.getProductos().get(fila);
+					String rutaImagen = "/Imagenes/" + p.getNombre() + ".png";
+					if (!p.getNombre().equals("Television")) {
+						try {
+							// Leer la imagen original
+							InputStream inputStream = VentanaCatalogo.class.getResourceAsStream(rutaImagen);
+							BufferedImage imagenOriginal = ImageIO.read(inputStream);
+
+							// Redimensionar la imagen al mismo tamaño
+							int anchoDeseado = 200; // Tamaño deseado en píxeles
+							int altoDeseado = 200;
+							Image imagenRedimensionada = imagenOriginal.getScaledInstance(anchoDeseado, altoDeseado,
+									Image.SCALE_SMOOTH);
+
+							// Establecer la imagen redimensionada como ícono en lblImagen
+							lblImagen.setIcon(new ImageIcon(imagenRedimensionada));
+
+							System.out.println(p.getNombre());
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
+					} else {
+						try {
+							// Leer la imagen original
+							InputStream inputStream = VentanaCatalogo.class.getResourceAsStream(rutaImagen);
+							BufferedImage imagenOriginal = ImageIO.read(inputStream);
+
+							// Redimensionar la imagen al mismo tamaño
+							int anchoDeseado = 300; // Tamaño deseado en píxeles
+							int altoDeseado = 200;
+							Image imagenRedimensionada = imagenOriginal.getScaledInstance(anchoDeseado, altoDeseado,
+									Image.SCALE_SMOOTH);
+
+							// Establecer la imagen redimensionada como ícono en lblImagen
+							lblImagen.setIcon(new ImageIcon(imagenRedimensionada));
+
+							System.out.println(p.getNombre());
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
+			};
+		});
+
 		btnFiltrar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Producto> lista = Cliente.getProductos();
 				try {
-				while(modeloTablaProductos.getRowCount()> 0) {
-					modeloTablaProductos.removeRow(0);
-				}
+					while (modeloTablaProductos.getRowCount() > 0) {
+						modeloTablaProductos.removeRow(0);
+					}
 				} catch (ArrayIndexOutOfBoundsException e2) {
 				}
-				for(Producto p: lista) {
+				for (Producto p : lista) {
 					if (comboBox.getSelectedItem().toString().equals("Nombre")) {
-						if(p.getNombre().equals(txtNombre.getText())) {
-							String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+						if (p.getNombre().equals(txtNombre.getText())) {
+							String[] pr = { p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()),
+									String.valueOf(p.getPrecio()) };
 							modeloTablaProductos.addRow(pr);
 						}
-						
-					}else if(comboBox.getSelectedItem().toString().equals("Tipo")){
+
+					} else if (comboBox.getSelectedItem().toString().equals("Tipo")) {
 						if (txtNombre.getText().equals("Hogar")) {
-							if(p.getTipo().equals(TipoProducto.Hogar)) {
-								String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+							if (p.getTipo().equals(TipoProducto.Hogar)) {
+								String[] pr = { p.getNombre(), String.valueOf(p.getTipo()),
+										String.valueOf(p.getStock()), String.valueOf(p.getPrecio()) };
 								modeloTablaProductos.addRow(pr);
 							}
 						}
-						
+
 						else if (txtNombre.getText().equals("Jardineria")) {
-							if(p.getTipo().equals(TipoProducto.Jardineria)) {
-								String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+							if (p.getTipo().equals(TipoProducto.Jardineria)) {
+								String[] pr = { p.getNombre(), String.valueOf(p.getTipo()),
+										String.valueOf(p.getStock()), String.valueOf(p.getPrecio()) };
 								modeloTablaProductos.addRow(pr);
 							}
-						}
-						else if(txtNombre.getText().equals("Limpieza")) {
-							if(p.getTipo().equals(TipoProducto.Limpieza)) {
-								String [] pr = {p.getNombre(), String.valueOf(p.getTipo()), String.valueOf(p.getStock()), String.valueOf(p.getPrecio())};
+						} else if (txtNombre.getText().equals("Limpieza")) {
+							if (p.getTipo().equals(TipoProducto.Limpieza)) {
+								String[] pr = { p.getNombre(), String.valueOf(p.getTipo()),
+										String.valueOf(p.getStock()), String.valueOf(p.getPrecio()) };
 								modeloTablaProductos.addRow(pr);
 							}
 						}
 					}
 				}
-				if(modeloTablaProductos.getRowCount() == 0) {
-					for (Producto producto: lista) {
-						String [] pr = {producto.getNombre(), String.valueOf(producto.getTipo()), String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio())};
+				if (modeloTablaProductos.getRowCount() == 0) {
+					for (Producto producto : lista) {
+						String[] pr = { producto.getNombre(), String.valueOf(producto.getTipo()),
+								String.valueOf(producto.getStock()), String.valueOf(producto.getPrecio()) };
 						modeloTablaProductos.addRow(pr);
 					}
 				}
 			}
 		});
-		
-		
-		
+
 		btnAdmin.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaMenuAdmin ventana = new VentanaMenuAdmin();
 				ventana.setVisible(true);
 				dispose();
-				
+
 			}
 		});
-		
+
 		btnVolver.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -223,9 +283,9 @@ public class VentanaCatalogo extends JFrame {
 				v1.setVisible(true);
 			}
 		});
-		
+
 		btnCarrito.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -233,63 +293,58 @@ public class VentanaCatalogo extends JFrame {
 				v1.setVisible(true);
 			}
 		});
-		
+
 		tablaProductos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
+				if (e.getClickCount() == 2) {
 					int fila = tablaProductos.rowAtPoint(e.getPoint());
 					Producto p = Cliente.getProductos().get(fila);
-					
-					int opcion = JOptionPane.showOptionDialog(null,"Producto: "+p.getNombre()+" | Tipo: "+p.getTipo()+" | Precio: "+p.getPrecio()+" | Stock: "+p.getStock(),
-						    p.getNombre(),
-						    JOptionPane.YES_NO_OPTION,
-						    JOptionPane.PLAIN_MESSAGE,
-						    null,
-						    new Object[]{"Salir", "Añadir al carro"},
-						    "Salir"  // Botón seleccionado por defecto
+
+					int opcion = JOptionPane.showOptionDialog(null,
+							"Producto: " + p.getNombre() + " | Tipo: " + p.getTipo() + " | Precio: " + p.getPrecio()
+									+ " | Stock: " + p.getStock(),
+							p.getNombre(), JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+							new Object[] { "Salir", "Añadir al carro" }, "Salir" // Botón seleccionado por defecto
+					);
+
+					if (opcion == JOptionPane.YES_OPTION) {
+					} else {
+						Object[] opciones = { "Aceptar", "Cancelar" };
+						JTextField textField = new JTextField();
+						Object[] mensaje = { "Cuántas unidades quiere?:", textField };
+						int opcion2 = JOptionPane.showOptionDialog(null, // Parent component
+								mensaje, // Mensaje a mostrar
+								"Ingresar número", // Título de la ventana
+								JOptionPane.YES_NO_OPTION, // Tipo de ventana
+								JOptionPane.PLAIN_MESSAGE, // Tipo de mensaje
+								null, // Icono personalizado
+								opciones, // Texto de los botones
+								opciones[0] // Botón seleccionado por defecto
 						);
 
-						if (opcion == JOptionPane.YES_OPTION) {
-						} else {
-							Object[] opciones = {"Aceptar", "Cancelar"};
-							JTextField textField = new JTextField();
-							Object[] mensaje = {"Cuántas unidades quiere?:", textField};
-							int opcion2 = JOptionPane.showOptionDialog(
-							        null,                              // Parent component
-							        mensaje,                           // Mensaje a mostrar
-							        "Ingresar número",                 // Título de la ventana
-							        JOptionPane.YES_NO_OPTION,         // Tipo de ventana
-							        JOptionPane.PLAIN_MESSAGE,         // Tipo de mensaje
-							        null,                              // Icono personalizado
-							        opciones,                          // Texto de los botones
-							        opciones[0]                        // Botón seleccionado por defecto
-							);
-							
-							int numero = -1;
-							if (opcion2 == JOptionPane.YES_OPTION) {
-							    try {
-							        numero = Integer.parseInt(textField.getText());
-							    } catch (NumberFormatException e2) {
-							        JOptionPane.showMessageDialog(null, "El valor ingresado no es un número válido.");
-							    }
-							}
-							if (numero >= 0) {
-								Carro c=Cliente.getCarro(cli);
-								List<Integer> cantN=c.getCantidades();
-								cantN.add(numero);
-								List<String> prodN =c.getProductos();
-								prodN.add(p.getNombre());
-								Cliente.actualizarCarro(prodN, cantN);
-						        JOptionPane.showMessageDialog(null, "Producto añadido al carro.");
+						int numero = -1;
+						if (opcion2 == JOptionPane.YES_OPTION) {
+							try {
+								numero = Integer.parseInt(textField.getText());
+							} catch (NumberFormatException e2) {
+								JOptionPane.showMessageDialog(null, "El valor ingresado no es un número válido.");
 							}
 						}
-						
+						if (numero >= 0) {
+							Carro c = Cliente.getCarro(cli);
+							List<Integer> cantN = c.getCantidades();
+							cantN.add(numero);
+							List<String> prodN = c.getProductos();
+							prodN.add(p.getNombre());
+							Cliente.actualizarCarro(prodN, cantN);
+							JOptionPane.showMessageDialog(null, "Producto añadido al carro.");
+						}
+					}
+
 				}
 			};
 		});
 	}
-	
-	
 
 }
