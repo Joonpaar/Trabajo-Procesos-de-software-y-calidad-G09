@@ -1,6 +1,7 @@
 package es.deusto.spq.server;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -113,12 +114,63 @@ public class ResourceTest {
     }
     
     @Test
+    public void testLoginUser2() {
+    	UserData userData = new UserData();
+        userData.setLogin("test-login");
+        userData.setPassword("admin");
+        
+        User user = spy(User.class);
+        when(persistenceManager.getObjectById(User.class, userData.getLogin())).thenReturn(user);
+        when(user.getPassword()).thenReturn("passwd");
+        int response = resource.loginUser(userData);
+
+       // check expected response
+        assertEquals(response, 1);
+    }
+    
+    @Test
+    public void testLoginUser3() {
+    	UserData userData = new UserData();
+        userData.setLogin("admin");
+        userData.setPassword("admin");
+        userData.setTipoUser(1);
+        
+        User user = spy(User.class);
+        when(persistenceManager.getObjectById(User.class, userData.getLogin())).thenReturn(user);
+        when(user.getPassword()).thenReturn("admin");
+        when(user.getTipoUser()).thenReturn(1);
+        int response = resource.loginUser(userData);
+
+       // check expected response
+        assertEquals(response, 3);
+    }
+    
+    @Test
+    public void testNoLogin() {
+        // prepare mock Persistence Manager to return User
+        UserData userData = new UserData();
+        userData.setLogin("test-login");
+        userData.setPassword("passwd");
+        
+        // simulate that the object is not found in the database
+        when(persistenceManager.getObjectById(any(), anyString())).thenThrow(new JDOObjectNotFoundException());
+
+        // prepare mock transaction behaviour
+        when(transaction.isActive()).thenReturn(true);
+
+        // call tested method
+        int response = resource.loginUser(userData);
+    }
+    
+    
+    
+    @Test
     public void testRegisterUserNotFound() {
         // prepare mock Persistence Manager to return User
         UserData userData = new UserData();
         userData.setLogin("test-login");
         userData.setPassword("passwd");
-
+        
         // simulate that the object is not found in the database
         when(persistenceManager.getObjectById(any(), anyString())).thenThrow(new JDOObjectNotFoundException());
 
@@ -137,6 +189,7 @@ public class ResourceTest {
 //        // check expected response
 //        assertEquals(Response.Status.OK, response.getStatusInfo());
     }
+    
     @Test
     public void testInsertarProducto() {
     	Producto producto = new Producto("producto", 1, 1, TipoProducto.Jardineria);
@@ -146,17 +199,34 @@ public class ResourceTest {
     }
     
     @Test
+    public void testNoInsertarProducto() {
+    	Producto producto = new Producto("producto", 2, 2, TipoProducto.Jardineria);
+        when(persistenceManager.getObjectById(Producto.class, producto.getNombre())).thenThrow(new JDOObjectNotFoundException());
+        when(transaction.isActive()).thenReturn(true);
+        Response response = resource.insertarProducto(producto);
+    }
+    
+    @Test
     public void testGetAll() {
     	Extent<Producto> prodExtent=mock(Extent.class);
     	when(persistenceManager.getExtent(Producto.class, true)).thenReturn(prodExtent);
         List<Producto> response = resource.getAll();
     }
+    
+    @Test
+    public void testNoGetAll() {
+    	Extent<Producto> prodExtent=mock(Extent.class);
+    	when(persistenceManager.getExtent(Producto.class, true)).thenThrow(new JDOObjectNotFoundException());
+        List<Producto> response = resource.getAll();
+    }
+    
     @Test
     public void testGetProductosPorTipo() {
     	Extent<Producto> prodExtent=mock(Extent.class);
     	when(persistenceManager.getExtent(Producto.class, true)).thenReturn(prodExtent);
         List<Producto> response = resource.getProductosPorTIpo(TipoProducto.Jardineria);
     }
+    
     @Test
     public void testEditarProducto() {
     	Producto producto=new Producto("producto", 2, 2, TipoProducto.Jardineria);
@@ -164,6 +234,15 @@ public class ResourceTest {
         Response response = resource.editarProducto(producto);
         assertEquals(Response.Status.OK, response.getStatusInfo());
     }
+    
+    @Test
+    public void testNoEditarProducto() {
+    	Producto producto = new Producto("producto", 2, 2, TipoProducto.Jardineria);
+        when(persistenceManager.getObjectById(Producto.class, producto.getNombre())).thenThrow(new JDOObjectNotFoundException());
+        when(transaction.isActive()).thenReturn(true);
+        Response response = resource.editarProducto(producto);
+    }
+    
     @Test
     public void testGetComprasDelUsu() {
     	String nombre="test-login";
@@ -183,6 +262,16 @@ public class ResourceTest {
         Response response = resource.borrarProducto(producto);
         assertEquals(Response.Status.OK, response.getStatusInfo());
     }
+    
+    @Test
+    public void testNoBorrarProducto() {
+    	Producto producto = new Producto("producto", 2, 2, TipoProducto.Jardineria);
+        when(persistenceManager.getObjectById(Producto.class, producto.getNombre())).thenThrow(new JDOObjectNotFoundException());
+        when(transaction.isActive()).thenReturn(true);
+        Response response = resource.borrarProducto(producto);
+    }
+    
+    
     @Test
     public void testComprarProducto() {
     	Compra compra=new Compra();
@@ -218,6 +307,22 @@ public class ResourceTest {
         Response response = resource.editarUser(userData);
         assertEquals(Response.Status.OK, response.getStatusInfo());
     }
+    
+    @Test
+    public void testNoEditaruser() {
+        // prepare mock Persistence Manager to return User
+        UserData userData = new UserData();
+        userData.setLogin("test-login");
+        userData.setPassword("passwd");
+
+        when(persistenceManager.getObjectById(any(), anyString())).thenThrow(new JDOObjectNotFoundException());
+
+        when(transaction.isActive()).thenReturn(true);
+
+        Response response = resource.editarUser(userData);
+    }
+    
+    
     @Test
     public void testActualizarCarro() {
     	List<String> prods=new ArrayList<>();
@@ -228,5 +333,15 @@ public class ResourceTest {
     	String nombre="test-login";
     	when(persistenceManager.getObjectById(Carro.class, carroData.getUser())).thenReturn(carro);
         Response response = resource.actualizarCarro(carroData);
+    }
+    
+    @Test
+    public void testNoActualizarCarro() {
+    	List<String> prods=new ArrayList<>();
+    	List<Integer> cants=new ArrayList<>();
+    	Carro carro=new Carro("test-login", prods, cants);
+        when(persistenceManager.getObjectById(any(), anyString())).thenThrow(new JDOObjectNotFoundException());
+        when(transaction.isActive()).thenReturn(true);
+        Response response = resource.actualizarCarro(carro);
     }
 }
