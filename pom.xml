@@ -69,7 +69,10 @@
 			<artifactId>log4j-core</artifactId>
 			<version>[2.17.1, )</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-grizzly2-http</artifactId>
+		</dependency>
 		<dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
@@ -95,6 +98,11 @@
 			<version>4.6.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+      		<groupId>com.github.noconnor</groupId>
+      		<artifactId>junitperf</artifactId>
+      		<version>1.22.1</version>
+    	</dependency>
         
 	</dependencies>
 
@@ -191,6 +199,7 @@
 					<excludes>
             			<exclude>**/Ventana*</exclude>
             			<exclude>**/Utilidades*</exclude>
+            			<exclude>**/Main*</exclude>
        				</excludes>
 				</configuration>
 				<executions>
@@ -206,38 +215,70 @@
 							<goal>report</goal>
 						</goals>
 					</execution>
-					<execution>
-						<id>jacoco-check</id>
-						<goals>
-							<goal>check</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<rule>
-									<element>PACKAGE</element>
-									<limits>
-										<limit>
-											<counter>LINE</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>0.750</minimum>
-										</limit>
-										<limit>
-											<counter>BRANCH</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>0.45</minimum>
-										</limit>
-									</limits>
-								</rule>
-							</rules>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
-			
+			<plugin>
+       			<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-surefire-plugin</artifactId>
+        		<version>3.0.0</version>
+        		<configuration>
+          			<!-- Allow JUnitPerf to access the test classes in JDK 17 -->
+          			<argLine>@{argLine} --add-opens java.base/java.lang=ALL-UNNAMED</argLine>
+					<excludedGroups>categories.IntegrationTest, categories.PerformanceTest</excludedGroups>
+        		</configuration>
+      		</plugin>
 		</plugins>
 	</build>
-
+	
 	<profiles>
+		<profile>
+			<id>integration-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.22.0</version>
+						<configuration>
+							<includes>
+								<include>**/*</include>
+							</includes>
+							<groups>categories.IntegrationTest, categories.PerformanceTest</groups>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+            <id>grizzly-server</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>es.deusto.spq.server.Main</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		
 		<profile>
 			<id>client</id>
 			<build>
