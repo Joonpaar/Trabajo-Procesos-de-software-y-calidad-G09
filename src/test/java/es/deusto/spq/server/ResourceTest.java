@@ -344,4 +344,18 @@ public class ResourceTest {
         when(transaction.isActive()).thenReturn(true);
         Response response = resource.actualizarCarro(carro);
     }
+    
+    @Test
+    public void testGetAllUsu() {
+        Extent<User> prodExtent=mock(Extent.class);
+        when(persistenceManager.getExtent(User.class, true)).thenReturn(prodExtent);
+        List<User> response = resource.getUsuarios();
+    }
+
+    @Test
+    public void testNoGetAllUsu() {
+        Extent<User> prodExtent=mock(Extent.class);
+        when(persistenceManager.getExtent(User.class, true)).thenThrow(new JDOObjectNotFoundException());
+        List<User> response = resource.getUsuarios();
+    }
 }

@@ -228,4 +228,14 @@ public class ClienteTest {
         when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
         Cliente.editarUser("test-login", 1);
     }
+    
+    @Test
+    public void testGetUsuarios() {
+        when(webTarget.path("getUsuarios")).thenReturn(webTarget);
+        Response response = mock(Response.class);
+        when(webTarget.request(MediaType.APPLICATION_JSON).post(any(Entity.class))).thenReturn(response);
+        when(response.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
+        when(response.readEntity(User.class)).thenReturn(exampleUsuario);
+        Cliente.getUsuarios();
+    }
 }
