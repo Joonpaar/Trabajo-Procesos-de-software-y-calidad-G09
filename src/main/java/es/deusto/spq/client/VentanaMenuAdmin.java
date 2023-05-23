@@ -39,7 +39,7 @@ public class VentanaMenuAdmin extends JFrame {
 	 */
 	public VentanaMenuAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 350, 250);
+		setBounds(100, 100, 350, 350);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,9 +72,14 @@ public class VentanaMenuAdmin extends JFrame {
 		btnEditar.setBounds(58, 84, 202, 23);
 		Utilidades.modifyButton(btnEditar);
 		panel.add(btnEditar);
+		
+		JButton btnEstadisticas = new JButton("ESTADÍSTICAS");
+		btnEstadisticas.setBounds(76, 140, 162, 23);
+		Utilidades.modifyButton(btnEstadisticas);
+		panel.add(btnEstadisticas);
 
 		JButton btnVolver = new JButton("VOLVER");
-		btnVolver.setBounds(76, 140, 162, 23);
+		btnVolver.setBounds(76, 220, 162, 23);
 		Utilidades.modifyButton(btnVolver);
 		panel.add(btnVolver);
 
@@ -105,6 +110,17 @@ public class VentanaMenuAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaCatalogo ventana = new VentanaCatalogo();
+				ventana.setVisible(true);
+				dispose();
+
+			}
+		});
+		
+		btnEstadisticas.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaEstadisticas ventana = new VentanaEstadisticas();
 				ventana.setVisible(true);
 				dispose();
 

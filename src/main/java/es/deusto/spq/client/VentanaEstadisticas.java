@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.User;
 
 import java.awt.BorderLayout;
@@ -14,18 +15,21 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class VentanaEstadisticas extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textDinero;
+	private JTextField textValoracion;
 
 	/**
 	 * Launch the application.
@@ -48,7 +52,7 @@ public class VentanaEstadisticas extends JFrame {
 	 */
 	public VentanaEstadisticas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 339);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,14 +91,54 @@ public class VentanaEstadisticas extends JFrame {
 		lblNewLabel_3.setBounds(59, 163, 129, 13);
 		panel_1.add(lblNewLabel_3);
 		
-		textField = new JTextField();
-		textField.setBounds(198, 104, 114, 16);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		textDinero = new JTextField();
+		textDinero.setBounds(198, 104, 114, 16);
+		panel_1.add(textDinero);
+		textDinero.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(198, 160, 114, 16);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		textValoracion = new JTextField();
+		textValoracion.setBounds(198, 160, 114, 16);
+		panel_1.add(textValoracion);
+		textValoracion.setColumns(10);
+		
+		JButton btnCalcular = new JButton("Calcular");
+		btnCalcular.setBounds(331, 37, 85, 21);
+		panel_1.add(btnCalcular);
+		
+		JButton btnVolver = new JButton("VOLVER");
+		btnVolver.setBounds(176, 238, 85, 21);
+		panel_1.add(btnVolver);
+		
+		textDinero.setText(comboBox.getSelectedItem().toString());
+		
+		btnCalcular.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Compra> comprasUsuario = Cliente.getComprasDelUsuario(comboBox.getSelectedItem().toString());
+				
+				if (comprasUsuario != null) {
+					int suma = 0;
+					for (Compra c : comprasUsuario) {
+						for (String p : c.getProductos()) {
+							suma = suma + Cliente.getProducto(p).getPrecio();
+						}
+					}
+					textDinero.setText(suma + "");
+				}
+			}
+		});
+		
+		btnVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaMenuAdmin v1 = new VentanaMenuAdmin();
+				v1.setVisible(true);
+				
+			}
+		});
+		
 	}
 }

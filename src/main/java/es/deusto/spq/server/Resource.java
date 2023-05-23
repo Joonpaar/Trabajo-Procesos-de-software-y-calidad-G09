@@ -360,7 +360,7 @@ public class Resource {
 	}
 	
 	@POST
-	@Path("/getProductos")
+	@Path("/getUsuarios")
 	public List<User> getUsuarios() {
 		
 		List<User> usuarios = new ArrayList<>();
