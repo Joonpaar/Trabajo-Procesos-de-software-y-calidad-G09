@@ -2,6 +2,7 @@ package es.deusto.spq.client;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -50,52 +52,67 @@ public class VentanaLogin extends JFrame{
 	}
 	
 	public VentanaLogin() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setTitle("Login");
+		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
+		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		ImageIcon iconoRedimensionado = new ImageIcon(imagenIcono);
+		setIconImage(iconoRedimensionado.getImage());
 		
 		//Panel principal
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		//Boton
 		JButton btnLogin = new JButton("Iniciar Sesión");
-		btnLogin.setBounds(165, 170, 117, 21);
+		btnLogin.setBounds(165, 280, 117, 21);
 		Utilidades.modifyButton(btnLogin);
 		panel.add(btnLogin);
 		
 		//Componentes de texto y demas
 		JTextField textFieldUsuario = new JTextField();
-		textFieldUsuario.setBounds(200, 56, 115, 19);
+		textFieldUsuario.setBounds(200, 186, 115, 19);
 		panel.add(textFieldUsuario);
 		Utilidades.modifyTextField(textFieldUsuario, true);
 		textFieldUsuario.setColumns(10);
 		
 		JPasswordField passwordFieldContraseña = new JPasswordField();
-		passwordFieldContraseña.setBounds(200, 101, 115, 19);
+		passwordFieldContraseña.setBounds(200, 231, 115, 19);
 		panel.add(passwordFieldContraseña);
 		Utilidades.modifyPasswordField(passwordFieldContraseña);
 		passwordFieldContraseña.setColumns(10);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario.setBounds(100, 60, 67, 13);
+		lblUsuario.setBounds(100, 190, 67, 13);
 		lblUsuario.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblUsuario);
 		
 		JLabel lblContraseña = new JLabel("Contraseña:");
+		lblContraseña.setForeground(Color.WHITE);
 		lblContraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContraseña.setBounds(100, 105, 81, 13);
+		lblContraseña.setBounds(100, 235, 81, 13);
 		lblContraseña.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblContraseña);
 		
 		JLabel registroLabel = new JLabel("¿No tienes cuenta? Regístrate");
+		registroLabel.setForeground(Color.WHITE);
 		registroLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		registroLabel.setBounds(135, 210, 200, 23);
+		registroLabel.setBounds(135, 325, 200, 23);
 		panel.add(registroLabel);
+		
+		JLabel logo = new JLabel();
+		logo.setBounds(100, 10, 234, 160);
+		ImageIcon im = new ImageIcon("src\\main\\java\\Imagenes\\logoFinal.png");
+		ImageIcon imDimensiones = new ImageIcon(im.getImage().getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_DEFAULT));
+		logo.setIcon(imDimensiones);
+		panel.add(logo);
 		
 		//Acciones de los componentes
 		btnLogin.addActionListener(new ActionListener() {
@@ -139,7 +156,7 @@ public class VentanaLogin extends JFrame{
 
 			public void mouseExited(MouseEvent evt) {
 				registroLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-				registroLabel.setForeground(Color.BLACK);
+				registroLabel.setForeground(Color.white);
 			}
 		});
 				

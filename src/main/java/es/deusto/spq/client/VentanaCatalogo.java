@@ -89,6 +89,11 @@ public class VentanaCatalogo extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
+		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		ImageIcon iconoRedimensionado = new ImageIcon(imagenIcono);
+		setIconImage(iconoRedimensionado.getImage());
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);

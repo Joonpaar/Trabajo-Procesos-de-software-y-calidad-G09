@@ -2,6 +2,7 @@ package es.deusto.spq.client;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class VentanaRegistro extends JFrame {
@@ -52,6 +54,10 @@ public class VentanaRegistro extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setTitle("Registro");
+		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
+		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		ImageIcon iconoRedimensionado = new ImageIcon(imagenIcono);
+		setIconImage(iconoRedimensionado.getImage());
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));

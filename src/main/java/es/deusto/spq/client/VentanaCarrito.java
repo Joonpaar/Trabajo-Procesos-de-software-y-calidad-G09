@@ -2,6 +2,7 @@ package es.deusto.spq.client;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,6 +75,10 @@ public class VentanaCarrito extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
+		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
+		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		ImageIcon iconoRedimensionado = new ImageIcon(imagenIcono);
+		setIconImage(iconoRedimensionado.getImage());
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(84, 10, 462, 412);
