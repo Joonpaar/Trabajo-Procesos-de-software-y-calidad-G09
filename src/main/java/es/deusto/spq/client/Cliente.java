@@ -262,6 +262,21 @@ public class Cliente {
 		}
 	}
 	
+	public static ArrayList<User> getUsuarios() {
+		WebTarget getUsuariosUserWebTarget = webTarget.path("getUsuarios");
+		Invocation.Builder invocationBuilder = getUsuariosUserWebTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(null);
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			logger.error("Error connecting with the server. Code: {}", response.getStatus());
+			return null;
+		} else {
+			GenericType<ArrayList<User>> listType = new GenericType<ArrayList<User>>() {
+			};
+			ArrayList<User> usuarios = response.readEntity(listType);
+			return usuarios;
+		}
+	}
+	
 	public static User getUsuarioPorNombre(String nombre) {
 		WebTarget getUsuarioPorNombreWebTarget = webTarget.path("getUsuarioPorNombre");
 		Invocation.Builder invocationBuilder = getUsuarioPorNombreWebTarget.request(MediaType.APPLICATION_JSON);

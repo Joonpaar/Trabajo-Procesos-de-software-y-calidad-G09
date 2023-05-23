@@ -359,6 +359,34 @@ public class Resource {
 		return producto;
 	}
 	
+	@POST
+	@Path("/getProductos")
+	public List<User> getUsuarios() {
+		
+		List<User> usuarios = new ArrayList<>();
+
+		try {
+			tx.begin();
+			
+			Extent<User> userExtent = pm.getExtent(User.class, true);
+			
+			for (User u : userExtent) {
+				usuarios.add(u);
+			}
+						
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+		
+		return usuarios;
+	}
 	
 	@POST
 	@Path("/getUsuarioPorNombre")
