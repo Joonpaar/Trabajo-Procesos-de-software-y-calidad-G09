@@ -2,6 +2,8 @@ package es.deusto.spq.server;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.jdo.JDOHelper;
@@ -32,6 +34,7 @@ import categories.IntegrationTest;
 import categories.PerformanceTest;
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.jdo.Carro;
+import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.server.jdo.User;
@@ -84,6 +87,7 @@ public class ResourcePerfTest {
             pm.newQuery(User.class).deletePersistentAll();
             pm.newQuery(Carro.class).deletePersistentAll();
             pm.newQuery(Producto.class).deletePersistentAll();
+            pm.newQuery(Compra.class).deletePersistentAll();
             tx.commit();
         } finally {
             if (tx.isActive()) {
@@ -122,30 +126,25 @@ public class ResourcePerfTest {
         assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
     }
     
-//    @Test
-//    @JUnitPerfTest(threads = 10, durationMs = 2000)
-//    public void testLoginUser() {
-//    	UserData user = new UserData();
-//    	user.setLogin("admin");
-//    	user.setPassword("admin");
-//    	
-//    	Response response = target.path("login")
-//    			.request(MediaType.APPLICATION_JSON)
-//    			.post(Entity.entity(user, MediaType.APPLICATION_JSON));
-//    	
-//    	assertEquals(2, response.getStatusInfo().getFamily());
-//    }
-    
-//    @Test
-//    @JUnitPerfTest(threads = 10, durationMs = 2000)
-//    public void testEditarProducto() {
-//    	Producto producto=new Producto("producto", 2, 2, TipoProducto.Jardineria);
-//    	Response response = target.path("editarProducto")
-//    			.request(MediaType.APPLICATION_JSON)
-//    			.post(Entity.entity(producto, MediaType.APPLICATION_JSON));
-//    	
-//    	assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
-//    }
+    @Test
+    @JUnitPerfTest(threads = 10, durationMs = 2000)
+    public void testComprarProducto() {
+    	List<String> prods=new ArrayList<>();
+    	prods.add("producto");
+        List<Integer> cants=new ArrayList<>();
+        cants.add(1);
+        Compra compra = new Compra();
+        compra.setUser(UUID.randomUUID().toString());
+        compra.setFecha(System.currentTimeMillis());
+        compra.setCantidades(cants);
+        compra.setProductos(prods);
+
+        Response response = target.path("comprarProducto")
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(compra, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
+    }
     
     
     

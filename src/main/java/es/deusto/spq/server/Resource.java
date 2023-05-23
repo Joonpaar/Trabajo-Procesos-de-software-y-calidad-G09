@@ -58,13 +58,12 @@ public class Resource {
 			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
 				logger.info("Exception launched: {}", jonfe.getMessage());
 			}
-			logger.info("User: {}", user);
 			if (user != null) {
-				logger.info("Setting password user: {}", user);
+				logger.info("Setting password user: {}", user.getLogin());
 				user.setPassword(userData.getPassword());
-				logger.info("Password set user: {}", user);
+				logger.info("Password set");
 			} else {
-				logger.info("Creating user: {}", user);
+				logger.info("Creating user: {}", userData.getLogin());
 //				user = new User(userData.getLogin(), userData.getPassword());
 				user = new User(userData.getLogin(), userData.getPassword(), 0, -1);
 				pm.makePersistent(user);
@@ -72,7 +71,7 @@ public class Resource {
 				List<Integer> cants= new ArrayList<>();
 				Carro carro=new Carro(user.getLogin(), prods, cants);
 				pm.makePersistent(carro);
-				logger.info("User created: {}", user);
+				logger.info("User created: {}", userData.getLogin());
 			}
 			tx.commit();
 			return Response.ok().build();
@@ -100,14 +99,13 @@ public class Resource {
 			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
 				logger.info("Exception launched: {}", jonfe.getMessage());
 			}
-			logger.info("Product: {}", producto);
 			if (producto != null) {
-				logger.info("The product already exits: {}", producto);
+				logger.info("The product already exits: {}", producto.getNombre());
 			} else {
-				logger.info("Creating producto: {}", producto);
+				logger.info("Creating producto: {}", productoData.getNombre());
 				producto = new Producto(productoData.getNombre(), productoData.getPrecio(), productoData.getStock(), productoData.getTipo());
 				pm.makePersistent(producto);					 
-				logger.info("Product created: {}", producto);
+				logger.info("Product created: {}", productoData.getNombre());
 			}
 			tx.commit();
 			return Response.ok().build();
@@ -136,7 +134,6 @@ public class Resource {
 			} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
 				logger.info("Exception launched: {}", jonfe.getMessage());
 			}
-			logger.info("User: {}", user);
 			if (user != null) {
 				if (user.getPassword().equals(userData.getPassword())) {
 					logger.info("Setting password user: {}", user);
@@ -242,14 +239,14 @@ public class Resource {
 			}
 			logger.info("Product: {}", producto);
 			if (producto == null) {
-				logger.info("Error editando el producto: {}", producto);
+				logger.info("Error editando el producto: {}");
 			} else {
-				logger.info("Editando producto: {}", producto);
+				logger.info("Editando producto: {}", producto.getNombre());
 				producto.setPrecio(productoData.getPrecio());
 				producto.setStock(productoData.getStock());
 				producto.setTipo(productoData.getTipo());
 				pm.flush();
-				logger.info("Producto editado: {}", producto);
+				logger.info("Producto editado: {}", producto.getNombre());
 			}
 			tx.commit();
 			return Response.ok().build();
@@ -304,11 +301,11 @@ public class Resource {
 			}
 			logger.info("Product: {}", producto);
 			if (producto == null) {
-				logger.info("Error borrando el producto: {}", producto);
+				logger.info("Error borrando el producto: {}");
 			} else {
-				logger.info("Borrando producto: {}", producto);
+				logger.info("Borrando producto: {}", producto.getNombre());
 				pm.deletePersistent(producto);
-				logger.info("Producto borrado: {}", producto);
+				logger.info("Producto borrado: {}", producto.getNombre());
 			}
 			tx.commit();
 			return Response.ok().build();
@@ -330,7 +327,7 @@ public class Resource {
 	        tx.begin();
 			Compra compra=new Compra(compraData.getUser(), compraData.getFecha(),compraData.getProductos(), compraData.getCantidades());
 			pm.makePersistent(compra);
-			logger.info("Compra añadida: {}", compra);
+			logger.info("Compra añadida: {}");
 			tx.commit();
 			return Response.ok().build();
 	    }
