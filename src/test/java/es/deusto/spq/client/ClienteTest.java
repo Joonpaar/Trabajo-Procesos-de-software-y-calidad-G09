@@ -1,6 +1,7 @@
 package es.deusto.spq.client;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,6 +35,13 @@ import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.server.jdo.User;
 
+/**
+ * @author      bazarDeusto;
+ * @version     1.0                                    
+ * @since       2023-05-23
+ * <p>This program tests all the functionality of a money handling system. It operates over the Money and MoneyBag instances. All the methods in this class except testBagMultiply() are executed 5 times. Furhermore, they all must be executed within 1.2 seconds and with an average speed of 250 milliseconds. </p> 
+ *
+ */
 
 public class ClienteTest {
 
@@ -46,8 +54,9 @@ public class ClienteTest {
     @Captor
     private ArgumentCaptor<Entity<UserData>> userDataEntityCaptor;
 
-   
-
+    /**
+	 * Variables para las pruebas
+	 */
     private Cliente exampleClient;
     private Producto exampleProducto;
     private List<Producto> listaProductos;

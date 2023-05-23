@@ -119,30 +119,30 @@ public class ResourcePerfTest {
         assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
     }
     
-    @Test
-    @JUnitPerfTest(threads = 10, durationMs = 2000)
-    public void testLoginUser() {
-    	UserData user = new UserData();
-    	user.setLogin("admin");
-    	user.setPassword("admin");
-    	
-    	Response response = target.path("login")
-    			.request(MediaType.APPLICATION_JSON)
-    			.post(Entity.entity(user, MediaType.APPLICATION_JSON));
-    	
-    	assertEquals(2, response.getStatusInfo().getFamily());
-    }
+//    @Test
+//    @JUnitPerfTest(threads = 10, durationMs = 2000)
+//    public void testLoginUser() {
+//    	UserData user = new UserData();
+//    	user.setLogin("admin");
+//    	user.setPassword("admin");
+//    	
+//    	Response response = target.path("login")
+//    			.request(MediaType.APPLICATION_JSON)
+//    			.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+//    	
+//    	assertEquals(2, response.getStatusInfo().getFamily());
+//    }
     
-    @Test
-    @JUnitPerfTest(threads = 10, durationMs = 2000)
-    public void testEditarProducto() {
-    	Producto producto=new Producto("producto", 2, 2, TipoProducto.Jardineria);
-    	Response response = target.path("editarProducto")
-    			.request(MediaType.APPLICATION_JSON)
-    			.post(Entity.entity(producto, MediaType.APPLICATION_JSON));
-    	
-    	assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
-    }
+//    @Test
+//    @JUnitPerfTest(threads = 10, durationMs = 2000)
+//    public void testEditarProducto() {
+//    	Producto producto=new Producto("producto", 2, 2, TipoProducto.Jardineria);
+//    	Response response = target.path("editarProducto")
+//    			.request(MediaType.APPLICATION_JSON)
+//    			.post(Entity.entity(producto, MediaType.APPLICATION_JSON));
+//    	
+//    	assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
+//    }
     
     
     

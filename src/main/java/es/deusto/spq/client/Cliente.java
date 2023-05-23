@@ -1,3 +1,9 @@
+/** @package es.deusto.spq.client
+    @brief This is the brief documentation for the Java package es.deusto.testing.junit intended for testing Doxygen. May 12, 2014
+
+    This is the detailed description of a package composed by classes Money and MoneyBag which inherit from IMoney and are tested in class MoneyPerfTest
+*/
+
 package es.deusto.spq.client;
 
 import java.util.ArrayList;
@@ -36,7 +42,9 @@ public class Cliente {
 		client = ClientBuilder.newClient();
 		webTarget = client.target(String.format("http://%s:%s/rest/resource", hostname, port));
 	}
-
+	/**
+	 * Registra un usuario
+	 */
 	public static boolean registerUser(String login, String password) {
 		WebTarget registerUserWebTarget = webTarget.path("register");
 		Invocation.Builder invocationBuilder = registerUserWebTarget.request(MediaType.APPLICATION_JSON);
@@ -53,7 +61,10 @@ public class Cliente {
 			return true;
 		}
 	}
-
+	
+	/**
+	 * Login del usuario
+	 */
 	public static boolean loginUser(String login, String password) {
 		WebTarget loginUserWebTarget = webTarget.path("login");
 		Invocation.Builder invocationBuilder = loginUserWebTarget.request(MediaType.APPLICATION_JSON);

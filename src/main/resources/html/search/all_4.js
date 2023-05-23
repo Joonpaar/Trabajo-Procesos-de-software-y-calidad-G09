@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['main_0',['Main',['../classes_1_1deusto_1_1spq_1_1server_1_1_main.html',1,'es::deusto::spq::server']]],
+  ['main_1',['main',['../classes_1_1deusto_1_1spq_1_1client_1_1_ventana_anyadir.html#aa84f060e9484bdf2a9a995621aabb825',1,'es.deusto.spq.client.VentanaAnyadir.main()'],['../classes_1_1deusto_1_1spq_1_1client_1_1_ventana_carrito.html#a75760fc8248335d0c9584e943a46db6a',1,'es.deusto.spq.client.VentanaCarrito.main()'],['../classes_1_1deusto_1_1spq_1_1client_1_1_ventana_catalogo.html#a56becc8f99fb68b829482cdb01536abf',1,'es.deusto.spq.client.VentanaCatalogo.main()'],['../classes_1_1deusto_1_1spq_1_1client_1_1_ventana_editar_borrar.html#a21e1fccf6172413ffded83c1bd3ba34c',1,'es.deusto.spq.client.VentanaEditarBorrar.main()'],['../classes_1_1deusto_1_1spq_1_1client_1_1_ventana_menu_admin.html#a9ba11dd312fd8ce1a42120f724599c36',1,'es.deusto.spq.client.VentanaMenuAdmin.main()'],['../classes_1_1deusto_1_1spq_1_1client_1_1_ventana_registro.html#a9e0318272aab24f193cac0c33978b418',1,'es.deusto.spq.client.VentanaRegistro.main()']]]
+];

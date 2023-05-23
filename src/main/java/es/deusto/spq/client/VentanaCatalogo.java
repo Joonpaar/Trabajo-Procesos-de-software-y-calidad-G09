@@ -157,7 +157,7 @@ public class VentanaCatalogo extends JFrame {
 		Utilidades.modifyButton(btnFiltrar);
 		panel_3.add(btnFiltrar);
 
-		JLabel lblImagen = new JLabel("");
+		JLabel lblImagen = new JLabel("BUENAS TARDES, ESTOY AQUI");
 		contentPane.add(lblImagen, BorderLayout.WEST);
 
 		tablaProductos.addMouseListener(new MouseAdapter() {
@@ -167,6 +167,7 @@ public class VentanaCatalogo extends JFrame {
 					int fila = tablaProductos.rowAtPoint(e.getPoint());
 					Producto p = Cliente.getProductos().get(fila);
 					String rutaImagen = "/Imagenes/" + p.getNombre() + ".png";
+					System.out.println(rutaImagen);
 					if (!p.getNombre().equals("Television")) {
 						try {
 							// Leer la imagen original

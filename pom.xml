@@ -103,6 +103,17 @@
       		<artifactId>junitperf</artifactId>
       		<version>1.22.1</version>
     	</dependency>
+    	<dependency>
+            <groupId>org.databene</groupId>
+            <artifactId>contiperf</artifactId>
+            <version>2.3.4</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.28</version>
+		</dependency>
         
 	</dependencies>
 
@@ -119,6 +130,41 @@
 		</resources>
 
 		<plugins>
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>doxygen-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<configurationFile>${doxygen.config.file}</configurationFile>
+				</configuration>
+			</plugin>
+			
+			
+			
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/docs</outputDirectory>
+								<resources>          
+									<resource>
+									<directory>${basedir}/target/doxygen/html</directory>
+									<filtering>true</filtering>
+									</resource>
+								</resources>              
+						</configuration>            
+					</execution>
+				</executions>
+			</plugin>
+		
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.2.0</version>
