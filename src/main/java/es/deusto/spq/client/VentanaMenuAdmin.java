@@ -13,6 +13,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class VentanaMenuAdmin extends JFrame {
 
@@ -42,6 +43,7 @@ public class VentanaMenuAdmin extends JFrame {
 		setBounds(100, 100, 350, 350);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -53,13 +55,16 @@ public class VentanaMenuAdmin extends JFrame {
 		setIconImage(iconoRedimensionado.getImage());
 
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBackground(Color.DARK_GRAY);
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 
 		JLabel lblBienvenida = new JLabel("BIENVENIDO ADMIN");
+		lblBienvenida.setForeground(Color.WHITE);
 		lblBienvenida.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		panelNorte.add(lblBienvenida);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 

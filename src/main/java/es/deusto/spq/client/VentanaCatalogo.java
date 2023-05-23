@@ -29,6 +29,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.xdevapi.Client;
@@ -81,10 +82,12 @@ public class VentanaCatalogo extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaCatalogo() {
+		setBackground(Color.DARK_GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 493);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -96,16 +99,20 @@ public class VentanaCatalogo extends JFrame {
 		setIconImage(iconoRedimensionado.getImage());
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel, BorderLayout.NORTH);
 
 		JLabel lblTitulo = new JLabel("CATALOGO DEL BAZAR");
+		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTitulo);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 
 		JButton btnAdmin = new JButton("ADMIN");
@@ -135,14 +142,17 @@ public class VentanaCatalogo extends JFrame {
 				return false;
 			}
 		};
+
 		tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollTablaProductos = new JScrollPane(tablaProductos);
 		panel_1.add(scrollTablaProductos);
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel_3, BorderLayout.EAST);
 
 		JLabel lblFiltro = new JLabel("Filtrar por:");
+		lblFiltro.setForeground(Color.WHITE);
 		lblFiltro.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_3.add(lblFiltro);
 

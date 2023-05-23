@@ -37,6 +37,7 @@ import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Compra;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.User;
+import java.awt.Color;
 
 public class VentanaCarrito extends JFrame {
 
@@ -73,6 +74,7 @@ public class VentanaCarrito extends JFrame {
 		setBounds(100, 100, 808, 520);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
@@ -81,6 +83,7 @@ public class VentanaCarrito extends JFrame {
 		setIconImage(iconoRedimensionado.getImage());
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setBounds(84, 10, 462, 412);
 		contentPane.add(panel_1);
 		
@@ -93,11 +96,13 @@ public class VentanaCarrito extends JFrame {
 		
 		modelosp = new SpinnerNumberModel(50, 0, 100, 1);
 		sp = new JSpinner(modelosp);
+		sp.setBackground(Color.DARK_GRAY);
 		sp.setVisible(false);
 		sp.setBounds(564, 147, 37, 30);
 		contentPane.add(sp);
 		
 		pb = new JProgressBar(0, 100);
+		pb.setBackground(Color.DARK_GRAY);
 		pb.setValue(50);
 		pb.setVisible(false);
 		pb.setBounds(615, 147, 115, 29);

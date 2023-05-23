@@ -15,6 +15,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class VentanaEstadisticas extends JFrame {
@@ -60,19 +62,31 @@ public class VentanaEstadisticas extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setBackground(Color.DARK_GRAY);
+		
+		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
+		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		ImageIcon iconoRedimensionado = new ImageIcon(imagenIcono);
+		setIconImage(iconoRedimensionado.getImage());
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel, BorderLayout.NORTH);
 		
 		JLabel lblNewLabel = new JLabel("DATOS");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Selecciona un usuario:");
-		lblNewLabel_1.setBounds(59, 41, 129, 13);
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		lblNewLabel_1.setBounds(44, 41, 144, 13);
 		panel_1.add(lblNewLabel_1);
 		
 		JComboBox<String> comboBox = new JComboBox<>();
@@ -87,38 +101,49 @@ public class VentanaEstadisticas extends JFrame {
 		panel_1.add(comboBox);
 		
 		JLabel lblContrasenia = new JLabel("Constraseña: ");
-		lblContrasenia.setBounds(59, 101, 129, 13);
+		lblContrasenia.setForeground(Color.WHITE);
+		lblContrasenia.setBounds(44, 100, 129, 13);
+		lblContrasenia.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_1.add(lblContrasenia);
 		
 		JLabel lblTipoUsuario = new JLabel("Tipo de usuario :");
-		lblTipoUsuario.setBounds(59, 139, 129, 13);
+		lblTipoUsuario.setForeground(Color.WHITE);
+		lblTipoUsuario.setBounds(44, 138, 129, 13);
+		lblTipoUsuario.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_1.add(lblTipoUsuario);
 		
 		textContra = new JTextField();
 		textContra.setBounds(198, 99, 114, 16);
+		Utilidades.modifyTextField(textContra, false);
 		panel_1.add(textContra);
 		textContra.setColumns(10);
 		
 		textTipoUsuario = new JTextField();
 		textTipoUsuario.setBounds(198, 137, 114, 16);
+		Utilidades.modifyTextField(textTipoUsuario, false);
 		panel_1.add(textTipoUsuario);
 		textTipoUsuario.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(331, 37, 85, 21);
+		Utilidades.modifyButton(btnBuscar);
 		panel_1.add(btnBuscar);
 		
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.setBounds(176, 238, 85, 21);
+		Utilidades.modifyButton(btnVolver);
 		panel_1.add(btnVolver);
 		
 		JLabel lblValoracion = new JLabel("Valoración realizada:");
-		lblValoracion.setBounds(59, 179, 129, 13);
+		lblValoracion.setForeground(Color.WHITE);
+		lblValoracion.setBounds(44, 177, 129, 13);
+		lblValoracion.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_1.add(lblValoracion);
 		
 		textValoracion = new JTextField();
 		textValoracion.setColumns(10);
 		textValoracion.setBounds(198, 176, 114, 16);
+		Utilidades.modifyTextField(textValoracion, false);
 		panel_1.add(textValoracion);
 		
 		btnBuscar.addActionListener(new ActionListener() {

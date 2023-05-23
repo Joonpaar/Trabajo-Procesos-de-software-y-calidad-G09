@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -50,6 +52,7 @@ public class VentanaRegistro extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 345);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -58,22 +61,27 @@ public class VentanaRegistro extends JFrame {
 		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon iconoRedimensionado = new ImageIcon(imagenIcono);
 		setIconImage(iconoRedimensionado.getImage());
-
+		
+		setBackground(Color.DARK_GRAY);
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setBackground(Color.DARK_GRAY);
 		
 		JLabel lblTitulo = new JLabel("REGISTRO");
+		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTitulo);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setLayout(null);
 		
-		JLabel lblNombre = new JLabel("Nombre usuario");
+		JLabel lblNombre = new JLabel("Nombre usuario:");
+		lblNombre.setForeground(Color.WHITE);
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombre.setBounds(46, 35, 151, 14);
 		lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -86,7 +94,8 @@ public class VentanaRegistro extends JFrame {
 		panel_1.add(txtNombre);
 		txtNombre.setColumns(10);
 		
-		JLabel lblContrasenya = new JLabel("Contraseña");
+		JLabel lblContrasenya = new JLabel("Contraseña:");
+		lblContrasenya.setForeground(Color.WHITE);
 		lblContrasenya.setHorizontalAlignment(SwingConstants.CENTER);
 		lblContrasenya.setBounds(46, 76, 151, 14);
 		lblContrasenya.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -98,20 +107,6 @@ public class VentanaRegistro extends JFrame {
 		Utilidades.modifyPasswordField(passwordField);
 		panel_1.add(passwordField);
 		
-//		JRadioButton radioAdmin = new JRadioButton("ADMIN");
-//		radioAdmin.setBounds(132, 153, 85, 23);
-//		radioAdmin.setFont(new Font("Segoe UI", Font.BOLD, 13));
-//		panel_1.add(radioAdmin);
-//		
-//		JRadioButton radioUser = new JRadioButton("USUARIO");
-//		radioUser.setBounds(212, 153, 85, 23);
-//		radioUser.setFont(new Font("Segoe UI", Font.BOLD, 13));
-//		panel_1.add(radioUser);
-		
-//		ButtonGroup group = new ButtonGroup();
-//		group.add(radioAdmin);
-//		group.add(radioUser);
-//		
 		JButton btnCrear = new JButton("REGISTRARSE");
 		btnCrear.setBounds(154, 193, 118, 23);
 		Utilidades.modifyButton(btnCrear);
@@ -122,7 +117,8 @@ public class VentanaRegistro extends JFrame {
 		Utilidades.modifyPasswordField(passwordField_1);
 		panel_1.add(passwordField_1);
 		
-		JLabel lblRepetirContra = new JLabel("Repita la contraseña");
+		JLabel lblRepetirContra = new JLabel("Repita la contraseña:");
+		lblRepetirContra.setForeground(Color.WHITE);
 		lblRepetirContra.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRepetirContra.setBounds(46, 117, 151, 14);
 		lblRepetirContra.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -131,6 +127,7 @@ public class VentanaRegistro extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setBackground(Color.DARK_GRAY);
 		
 		JButton btnVolver = new JButton("VOLVER");
 		panel_2.add(btnVolver);

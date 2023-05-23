@@ -75,6 +75,7 @@ public class VentanaEditarBorrar extends JFrame {
 		setBounds(100, 100, 850, 600);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -86,18 +87,22 @@ public class VentanaEditarBorrar extends JFrame {
 		setIconImage(iconoRedimensionado.getImage());
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
 		panel.setBounds(5, 5, 801, 28);
 		contentPane.add(panel);
 		
 		JLabel lblTitulo = new JLabel("MODO EDICION");
+		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTitulo);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setBounds(5, 33, 528, 383);
 		contentPane.add(panel_1);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.DARK_GRAY);
 		panel_2.setBounds(5, 416, 801, 33);
 		contentPane.add(panel_2);
 		
@@ -128,11 +133,13 @@ public class VentanaEditarBorrar extends JFrame {
 		panel_1.add(scrollTablaProductos);
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.DARK_GRAY);
 		panel_3.setBounds(535, 33, 271, 383);
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel lblFiltro = new JLabel("Filtrar por:");
+		lblFiltro.setForeground(Color.WHITE);
 		lblFiltro.setBounds(0, 9, 71, 18);
 		lblFiltro.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_3.add(lblFiltro);

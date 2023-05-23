@@ -59,6 +59,7 @@ public class VentanaAnyadir extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setBackground(Color.DARK_GRAY);
 		
 		ImageIcon icono = new ImageIcon("src\\main\\java\\Imagenes\\B.png");
 		Image imagenIcono = icono.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
@@ -67,24 +68,29 @@ public class VentanaAnyadir extends JFrame {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setBackground(Color.DARK_GRAY);
 		panel.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setForeground(Color.WHITE);
 		lblNombre.setBounds(29, 44, 55, 14);
 		lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblNombre);
 		
 		JLabel lblPrecio = new JLabel("Precio");
+		lblPrecio.setForeground(Color.WHITE);
 		lblPrecio.setBounds(29, 138, 46, 14);
 		lblPrecio.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblPrecio);
 		
 		JLabel lblStock = new JLabel("Stock");
+		lblStock.setForeground(Color.WHITE);
 		lblStock.setBounds(225, 44, 46, 14);
 		lblStock.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblStock);
 		
 		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo.setForeground(Color.WHITE);
 		lblTipo.setBounds(225, 138, 46, 14);
 		lblTipo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel.add(lblTipo);
@@ -111,18 +117,20 @@ public class VentanaAnyadir extends JFrame {
 		combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		combo.setBackground(Color.WHITE);
 		combo.setBounds(275, 135, 86, 20);;
-		panel.add(combo);
-		
+		panel.add(combo);	
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.NORTH);
+		panel_1.setBackground(Color.DARK_GRAY);
 		
 		JLabel lblTitulo = new JLabel("INDIQUE LOS DATOS DEL PRODUCTO");
+		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panel_1.add(lblTitulo);
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setBackground(Color.DARK_GRAY);
 		
 		JButton btnVolver = new JButton("VOLVER");
 		Utilidades.modifyButton(btnVolver);
@@ -131,7 +139,7 @@ public class VentanaAnyadir extends JFrame {
 		JButton btnAnyadir = new JButton("AÑADIR");
 		Utilidades.modifyButton(btnAnyadir);
 		panel_2.add(btnAnyadir);
-		
+	
 		btnAnyadir.addActionListener(new ActionListener() {
 			
 			@Override
