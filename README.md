@@ -2,15 +2,20 @@ Abre una consola de comandos desde el directorio donde se encuentra el archivo .
 
       mvn test
 
-Despues, escribe el siguiente comando para construir todo y realizar la tarea de “enhance” de las clases de la base de datos. 
+Luego hay que ir al MySQL Workbench y ejecutar el contenido del archivo “create-message.sql” dentro de la carpeta sql para conceder los permisos necesarios y crear la base de datos. Después vuelve a la consola y escribe este comando para hacer el enhance de las clases.
 
-      mvn clean compile
+      mvn datanucleus:enhance
 
-Luego hay que ir al MySQL Workbench y ejecutar el contenido del archivo “create-message.sql” dentro de la carpeta sql. Después volvemos a la consola y ejecutamos el siguiente comando para crear el esquema de la base de datos. 
+
+Ahora ejecuta el siguiente comando para crear el esquema de la base de datos. 
 
       mvn datanucleus:schema-create
+      
+Con la base de datos creada se pueden ejecutar los test de rendimiento mediante este comando:
 
-La carpeta también contiene el archivo datos-ejemplo.sql. Una vez ejecutado el anterior comando, se debe ejecutar dicho archivo en MySQL para tener algunos datos para poder interactuar con el proyecto.
+      mvn verify -Pintegration-tests
+
+La carpeta también contiene el archivo datos-ejemplo.sql, que se puede ejecutar en MySQL para tener algunos datos de ejemplo.
 
 Una vez se construye exitosamente toca lanzar el servidor con el comando:
 
