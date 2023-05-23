@@ -28,7 +28,8 @@ import javax.swing.JButton;
 public class VentanaEstadisticas extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textDinero;
+	private JTextField textContra;
+	private JTextField textTipoUsuario;
 	private JTextField textValoracion;
 
 	/**
@@ -63,69 +64,77 @@ public class VentanaEstadisticas extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("ESTADÍSTICAS");
+		JLabel lblNewLabel = new JLabel("DATOS");
 		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Selecciona un cliente:");
+		JLabel lblNewLabel_1 = new JLabel("Selecciona un usuario:");
 		lblNewLabel_1.setBounds(59, 41, 129, 13);
 		panel_1.add(lblNewLabel_1);
 		
 		JComboBox<String> comboBox = new JComboBox<>();
 		for (User u : Cliente.getUsuarios()) {
-			comboBox.addItem(u.getLogin());
+			if (!u.getLogin().contains("0")) {
+				comboBox.addItem(u.getLogin());
+			}
 		}
 		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setBounds(198, 37, 114, 17);
 		panel_1.add(comboBox);
 		
-		JLabel lblNewLabel_2 = new JLabel("Dinero gastado:");
-		lblNewLabel_2.setBounds(59, 107, 129, 13);
-		panel_1.add(lblNewLabel_2);
+		JLabel lblContrasenia = new JLabel("Constraseña: ");
+		lblContrasenia.setBounds(59, 101, 129, 13);
+		panel_1.add(lblContrasenia);
 		
-		JLabel lblNewLabel_3 = new JLabel("Valoración realizada:");
-		lblNewLabel_3.setBounds(59, 163, 129, 13);
-		panel_1.add(lblNewLabel_3);
+		JLabel lblTipoUsuario = new JLabel("Tipo de usuario :");
+		lblTipoUsuario.setBounds(59, 139, 129, 13);
+		panel_1.add(lblTipoUsuario);
 		
-		textDinero = new JTextField();
-		textDinero.setBounds(198, 104, 114, 16);
-		panel_1.add(textDinero);
-		textDinero.setColumns(10);
+		textContra = new JTextField();
+		textContra.setBounds(198, 99, 114, 16);
+		panel_1.add(textContra);
+		textContra.setColumns(10);
 		
-		textValoracion = new JTextField();
-		textValoracion.setBounds(198, 160, 114, 16);
-		panel_1.add(textValoracion);
-		textValoracion.setColumns(10);
+		textTipoUsuario = new JTextField();
+		textTipoUsuario.setBounds(198, 137, 114, 16);
+		panel_1.add(textTipoUsuario);
+		textTipoUsuario.setColumns(10);
 		
-		JButton btnCalcular = new JButton("Calcular");
-		btnCalcular.setBounds(331, 37, 85, 21);
-		panel_1.add(btnCalcular);
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(331, 37, 85, 21);
+		panel_1.add(btnBuscar);
 		
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.setBounds(176, 238, 85, 21);
 		panel_1.add(btnVolver);
 		
-		textDinero.setText(comboBox.getSelectedItem().toString());
+		JLabel lblValoracion = new JLabel("Valoración realizada:");
+		lblValoracion.setBounds(59, 179, 129, 13);
+		panel_1.add(lblValoracion);
 		
-		btnCalcular.addActionListener(new ActionListener() {
+		textValoracion = new JTextField();
+		textValoracion.setColumns(10);
+		textValoracion.setBounds(198, 176, 114, 16);
+		panel_1.add(textValoracion);
+		
+		btnBuscar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<Compra> comprasUsuario = Cliente.getComprasDelUsuario(comboBox.getSelectedItem().toString());
+				textContra.setText(Cliente.getUsuarioPorNombre(comboBox.getSelectedItem().toString()).getPassword());
 				
-				if (comprasUsuario != null) {
-					int suma = 0;
-					for (Compra c : comprasUsuario) {
-						for (String p : c.getProductos()) {
-							suma = suma + Cliente.getProducto(p).getPrecio();
-						}
-					}
-					textDinero.setText(suma + "");
+				if (Cliente.getUsuarioPorNombre(comboBox.getSelectedItem().toString()).getTipoUser() == 1) {
+					textTipoUsuario.setText("Admin");
+				}else {
+					textTipoUsuario.setText("Usuario");
 				}
+				textTipoUsuario.setText(Cliente.getUsuarioPorNombre(comboBox.getSelectedItem().toString()).getTipoUser() + "");
+				textValoracion.setText(Cliente.getUsuarioPorNombre(comboBox.getSelectedItem().toString()).getValoracion() + "");
+				
 			}
 		});
 		

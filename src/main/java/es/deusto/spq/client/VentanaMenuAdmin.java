@@ -73,7 +73,7 @@ public class VentanaMenuAdmin extends JFrame {
 		Utilidades.modifyButton(btnEditar);
 		panel.add(btnEditar);
 		
-		JButton btnEstadisticas = new JButton("ESTADÍSTICAS");
+		JButton btnEstadisticas = new JButton("DATOS");
 		btnEstadisticas.setBounds(76, 140, 162, 23);
 		Utilidades.modifyButton(btnEstadisticas);
 		panel.add(btnEstadisticas);

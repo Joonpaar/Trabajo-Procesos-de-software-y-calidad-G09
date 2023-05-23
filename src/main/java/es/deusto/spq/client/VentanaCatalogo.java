@@ -82,7 +82,7 @@ public class VentanaCatalogo extends JFrame {
 	 */
 	public VentanaCatalogo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 827, 493);
+		setBounds(100, 100, 840, 493);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -161,60 +161,6 @@ public class VentanaCatalogo extends JFrame {
 		JButton btnFiltrar = new JButton("Filtrar");
 		Utilidades.modifyButton(btnFiltrar);
 		panel_3.add(btnFiltrar);
-
-		JLabel lblImagen = new JLabel("BUENAS TARDES, ESTOY AQUI");
-		contentPane.add(lblImagen, BorderLayout.WEST);
-
-		tablaProductos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					int fila = tablaProductos.rowAtPoint(e.getPoint());
-					Producto p = Cliente.getProductos().get(fila);
-					String rutaImagen = "/Imagenes/" + p.getNombre() + ".png";
-					System.out.println(rutaImagen);
-					if (!p.getNombre().equals("Television")) {
-						try {
-							// Leer la imagen original
-							InputStream inputStream = VentanaCatalogo.class.getResourceAsStream(rutaImagen);
-							BufferedImage imagenOriginal = ImageIO.read(inputStream);
-
-							// Redimensionar la imagen al mismo tamaño
-							int anchoDeseado = 200; // Tamaño deseado en píxeles
-							int altoDeseado = 200;
-							Image imagenRedimensionada = imagenOriginal.getScaledInstance(anchoDeseado, altoDeseado,
-									Image.SCALE_SMOOTH);
-
-							// Establecer la imagen redimensionada como ícono en lblImagen
-							lblImagen.setIcon(new ImageIcon(imagenRedimensionada));
-
-							System.out.println(p.getNombre());
-						} catch (IOException ex) {
-							ex.printStackTrace();
-						}
-					} else {
-						try {
-							// Leer la imagen original
-							InputStream inputStream = VentanaCatalogo.class.getResourceAsStream(rutaImagen);
-							BufferedImage imagenOriginal = ImageIO.read(inputStream);
-
-							// Redimensionar la imagen al mismo tamaño
-							int anchoDeseado = 300; // Tamaño deseado en píxeles
-							int altoDeseado = 200;
-							Image imagenRedimensionada = imagenOriginal.getScaledInstance(anchoDeseado, altoDeseado,
-									Image.SCALE_SMOOTH);
-
-							// Establecer la imagen redimensionada como ícono en lblImagen
-							lblImagen.setIcon(new ImageIcon(imagenRedimensionada));
-
-							System.out.println(p.getNombre());
-						} catch (IOException ex) {
-							ex.printStackTrace();
-						}
-					}
-				}
-			};
-		});
 
 		btnFiltrar.addActionListener(new ActionListener() {
 

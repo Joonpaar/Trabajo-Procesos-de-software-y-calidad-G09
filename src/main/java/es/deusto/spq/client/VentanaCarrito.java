@@ -266,33 +266,5 @@ public class VentanaCarrito extends JFrame {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		
-		
-//		PrintWriter pw = null;
-//		try {
-//			pw = new PrintWriter(new File("./" + "FACTURA DE " + VentanaCatalogo.cli + ".txt"));
-//			pw.println("FACTURA DE " + VentanaCatalogo.cli);
-//			pw.print("BUENOS DIAS");
-//			double sumaTotal = 0;
-//			double suma1 = 0;
-//			int j = 1;
-//			Carro carrit = Cliente.getCarro(VentanaCatalogo.cli);
-//			for (int i=0; i<carrit.getProductos().size();i++) {
-//				String nom = carrit.getProductos().get(i);
-//				Producto p = Cliente.getProducto(nom);
-//				suma1 = (p.getPrecio() * carrit.getCantidades().get(i));
-//				sumaTotal = sumaTotal + (p.getPrecio() * carrit.getCantidades().get(i));
-//				pw.println(j + "- " + p.getNombre() + " " + p.getPrecio()+ " euros  " + carrit.getCantidades().get(i) + "      " + "Precio Del Mismo Articulo teniendo en cuenta las unidades compradas: " + suma1 + " euros");
-//				j++;
-//			}
-//			pw.println("Precio total de la compra: " + sumaTotal + " euros");
-//			
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
-	
-	
-	
 }

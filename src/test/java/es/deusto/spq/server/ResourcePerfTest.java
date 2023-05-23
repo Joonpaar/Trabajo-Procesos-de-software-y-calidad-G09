@@ -31,6 +31,7 @@ import com.github.noconnor.junitperf.reporting.providers.HtmlReportGenerator;
 import categories.IntegrationTest;
 import categories.PerformanceTest;
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.jdo.Carro;
 import es.deusto.spq.server.jdo.Producto;
 import es.deusto.spq.server.jdo.TipoProducto;
 import es.deusto.spq.server.jdo.User;
@@ -81,6 +82,8 @@ public class ResourcePerfTest {
         try {
             tx.begin();
             pm.newQuery(User.class).deletePersistentAll();
+            pm.newQuery(Carro.class).deletePersistentAll();
+            pm.newQuery(Producto.class).deletePersistentAll();
             tx.commit();
         } finally {
             if (tx.isActive()) {

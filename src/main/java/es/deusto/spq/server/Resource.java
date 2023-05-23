@@ -392,7 +392,6 @@ public class Resource {
 	@Path("/getUsuarioPorNombre")
 	public User getUsuarioPorNombre(String nombre) {
 		User usuario = null;
-		System.out.println("LLEGA");
 		try {
 			usuario = pm.getObjectById(User.class, nombre);
 		
